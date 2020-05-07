@@ -1,0 +1,52 @@
+
+
+But de l'application:
+
+Permettre aux particuliers de trouver des producteurs / artisants / commercants locaux (recherche sur critères géographique)
+Permettre aux producteurs / artisants / commercants d'avoir une visibilitée 
+Mise en relation et vente
+Valorisé les producteurs / artisants / commercants de proximité
+
+
+
+
+
+
+
+dépendences : Bootstrap / primefraces
+
+
+
+Ridge 1 Composent d'accueil (type blablacar):
+
+	Recherche d'offres
+	possibilité d'aller à la carte
+	recherche par critère déjà définit (guider l'utilisateur avec des recherches prédéfinies de produits les plus recherchés)
+	description du service : dir pourquoi c'est cool
+
+Anna 2  Composent Barre de navigation : 
+	accueil
+	rechercher
+	proposer JOB
+	inscription
+	connexion / Profil --> menu dépliant avec choix : Esapce perso / profil / déconnexion 
+	
+	
+Anna 3 Composent d'inscription
+	champs d'inputs 
+	
+Ridge 4 Composent recherche produits / producteurs
+	carte
+
+Yannis 5 Composent annonces "jobs"
+	avec recherche sur critères (géographiques / durée / types d'artisants)
+
+Yannis 6 composent profil particulier
+	favoris 
+	historique achats 
+	panier
+	
+ Anna 7 composent profil Professionnel
+	ajouter des produits / quantité
+	Si producteur ajout / gestion annonce jobs
+ 
