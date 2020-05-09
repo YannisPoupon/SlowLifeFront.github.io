@@ -1,1 +1,64 @@
-<p>nav-bar works!</p>
+<nav *ngIf="connecte==false" class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:  rgb(128, 230, 145); height: 70px;">
+    <div class="row col-sm-12 d-flex justify-content-between">
+        <div class="row col-sm-4 ml-5">
+        <a class="navbar-brand" href="home" 
+        style="font-style: italic;font-family: 'Times New Roman', Times, serif;font-size: xx-large;">
+            Slow<span style="text-decoration: underline overline #FF3028;">Life</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        </div>
+        <div class="row col-sm-6 collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="page_recherche" style="font-size:larger;"><i class="pi pi-search" style="font-size: 1em"></i> Rechercher</a></li>
+                <li class="nav-item"><a	class="nav-link" href="#" style="font-size:larger;" data-toggle="modal" data-target="#accesRefuse"><i class="pi pi-plus-circle" style="font-size: 1em"></i> Publier une annonce</a></li>
+                <li class="nav-item"><a class="nav-link" href="page_connexion" style="font-size:larger;"><i class="pi pi-sign-in" style="font-size: 1em"></i> Connexion</a></li>
+                <li class="nav-item"><a class="nav-link" href="page_creation_compte" style="font-size:larger;"><i class="fas fa-user-plus"><i class="pi pi-user-plus" style="font-size: 1em"></i></i> Inscription</a></li>
+            </ul>
+        </div>
+    </div>
+    </nav>
+    
+    <nav *ngIf="connecte==true" class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:  rgb(128, 230, 145); height: 70px;">
+		<div class="row col-sm-12 d-flex justify-content-between">
+            <div class="row col-sm-4 ml-5">
+                <a class="navbar-brand" href="home" 
+                style="font-style: italic;font-family: 'Times New Roman', Times, serif;font-size: xx-large;">
+                    Slow<span style="text-decoration: underline overline #FF3028;">Life</span>
+                </a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarNav" aria-controls="navbarNav"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
+			<div class="row col-sm-5 collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="page_recherche" style="font-size:larger;"><i class="pi pi-search" style="font-size: 1em"></i> Rechercher</a></li>
+                    <li class="nav-item"><a	class="nav-link" href="#" style="font-size:larger;" data-toggle="modal" data-target="#accesRefuse"><i class="pi pi-plus-circle" style="font-size: 1em"></i> Publier une annonce</a></li>
+				</ul>
+				<div class="dropdown show">
+					<a class="dropdown-toggle" href="#" role="button"
+						id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+						style="font-size:larger;"
+						aria-expanded="false"> Connecté : NomUser</a> 
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<a class="dropdown-item" href="#" style="font-size:larger;"><i class="pi pi-user" style="font-size: 1em"></i> Profil</a> 
+						<a class="dropdown-item" href="#" style="font-size:larger;"><i class="pi pi-copy" style="font-size: 1em"></i>Mes annonces</a> 
+						<a class="dropdown-item" href="#" style="font-size:larger;"><i class="pi pi-chart-line" style="font-size: 1em"></i> Ventes & achats</a>
+						 <div class="dropdown-divider"></div>
+                        <span class="d-flex justify-content-around">
+                        
+                        <Button style="background:none;border:none;font-size:larger;">
+                            <i class="pi pi-power-off" style="font-size: 1em;color: red;"></i>
+                            Déconnexion</Button>
+                        </span>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</nav>

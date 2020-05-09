@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
+//deconnecte=true;connecte=false;
 
+deconnecte=false;connecte=true;
   constructor() { }
 
   ngOnInit(): void {
