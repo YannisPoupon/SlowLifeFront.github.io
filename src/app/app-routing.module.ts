@@ -5,13 +5,21 @@ import { InscriptionComponent } from './inscription/inscription.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AcceuilComponent } from './acceuil/acceuil.component';
 import { RechercheproduitComponent } from './rechercheproduit/rechercheproduit.component';
+import { EspaceParticulierComponent } from './espace-particulier/espace-particulier.component';
+import { ConnexionComponent } from './connexion/connexion.component';
+import { EspaceProfessionnelComponent } from './espace-professionnel/espace-professionnel.component';
 
 
 const routes: Routes = [
   {path : 'inscription', component : InscriptionComponent},
   {path : 'navbar', component : NavBarComponent},
   { path: 'acceuil', component:AcceuilComponent },
-  { path: 'rechercheproduit', component:RechercheproduitComponent }
+  { path: 'rechercheproduit', component:RechercheproduitComponent },
+  { path: 'espaceparticulier', component:EspaceParticulierComponent },
+  { path: 'connexion', component:ConnexionComponent },
+  { path: 'espaceprofessionnel', component:EspaceProfessionnelComponent },
+  { path: '', component:AcceuilComponent },
+
 
 
 ];

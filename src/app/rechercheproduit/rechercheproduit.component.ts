@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {GMapModule} from 'primeng/gmap';
-import { ArticleService } from 'src/service_ridge/article.service';
+
 import { FormGroup, FormControl } from '@angular/forms';
 import { google } from "google-maps";
+import { ArticleService } from '../services/article.service';
 
 
 @Component({
