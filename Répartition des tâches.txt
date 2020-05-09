@@ -1,4 +1,4 @@
-
+﻿
 
 But de l'application:
 
@@ -41,12 +41,12 @@ Ridge 4 Composent recherche produits / producteurs
 Yannis 5 Composent annonces "jobs"
 	avec recherche sur critères (géographiques / durée / types d'artisants)
 
-Yannis 6 composent profil particulier
+Yannis 6 composent Espace particulier
 	favoris 
 	historique achats 
 	panier
 	
- Anna 7 composent profil Professionnel
+ Anna 7 composent Espace Professionnel
 	ajouter des produits / quantité
 	Si producteur ajout / gestion annonce jobs
  
