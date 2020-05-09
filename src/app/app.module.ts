@@ -13,6 +13,9 @@ import { InscriptionComponent } from './inscription/inscription.component';
 import { EspaceParticulierComponent } from './espace-particulier/espace-particulier.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConnexionComponent } from './connexion/connexion.component';
+import { AnnonceJobComponent } from './annonce-job/annonce-job.component';
+import { EspaceProfessionnelComponent } from './espace-professionnel/espace-professionnel.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     InscriptionComponent,
     EspaceParticulierComponent,
     AcceuilComponent,
-    RechercheproduitComponent
+    RechercheproduitComponent,
+    ConnexionComponent,
+    AnnonceJobComponent,
+    EspaceProfessionnelComponent
 
   ],
   imports: [
