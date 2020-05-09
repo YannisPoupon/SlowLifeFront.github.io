@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Formulaire d'inscription</h2>
+  <i>Merci de bien vouloir remplir <code>tous</code> les champs :</i>
+  <form [formGroup]="formUser" (ngSubmit)="inscription()">
+    <div class="form-group">
+      <label for="uname">Prénom :</label>
+      <input type="text" class="form-control" formControlName="prenom" placeholder="Entrer prenom" name="uname" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Merci de remplir ce champs.</div>
+    </div>
+    <div class="form-group">
+        <label for="uname">Nom :</label>
+        <input type="text" class="form-control" formControlName="nom" placeholder="Entrer nom" name="uname" required>
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">Merci de remplir ce champs.</div>
+      </div>
+      <div class="form-group">
+        <label for="uname">Login:</label>
+        <input type="text" class="form-control" formControlName="login" placeholder="Entrer login" name="uname" required>
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">Merci de remplir ce champs.</div>
+      </div>
+      <div class="form-group">
+        <label for="uname">Adresse email:</label>
+        <input type="text" class="form-control" formControlName="mail" placeholder="Entrer mail" name="uname" required>
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">Merci de remplir ce champs.</div>
+      </div>
+      <div class="form-group">
+        <label for="uname">Mot de passe:</label>
+        <input type="password" class="form-control" formControlName="password" placeholder="Entrer password" name="uname" required>
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">Merci de remplir ce champs.</div>
+      </div>
+      <div class="form-group">
+        <label for="uname">Rue:</label>
+        <input type="text" class="form-control" formControlName="rue" placeholder="Entrer rue" name="uname" required>
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">Merci de remplir ce champs.</div>
+      </div>
+    <div class="form-group">
+      <label for="pwd">Ville:</label>
+      <input type="text" class="form-control" formControlName="ville" placeholder="Entrer ville" name="pswd" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Merci de remplir ce champs.</div>
+    </div>
+    <div class="form-group">
+      <label for="pwd">Département:</label>
+      <input type="number" class="form-control" formControlName="département" placeholder="Entrer département" name="pswd" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Merci de remplir ce champs.</div>
+    </div>
+
+
+
+      <div class="form-row align-items-center">
+        <div class="col-auto my-1">
+          <label class="mr-sm-2" for="inlineFormCustomSelect">Vous êtes :</label>
+          <select  class="custom-select mr-sm-2" formControlName="privilege" (change)="choisis($event)" >
+            
+            <option  value="1">Un producteur</option>
+            <option  value="2">Un artisant</option>
+            <option value="3" >Un particulier</option>
+            <option  value="4">Un commerçant</option>
+
+          </select>
+        </div>
+      </div>
+
+<!-- ______________________________FORMULAIRE AVEC EN PLUSSSS RAISON SOCIALE ET SIRET___________________________-->
+<div *ngIf="BoolAutres" >
+      <form  [formGroup]="formOther" >
+        <div class="form-group">
+          <label for="uname">Raison Sociale :</label>
+          <input type="text" class="form-control" formControlName="raisonSociale" placeholder="Entrer raison sociale" name="uname" required>
+          <div class="valid-feedback">Valid.</div>
+          <div class="invalid-feedback">Merci de remplir ce champs.</div>
+        </div>
+        <div class="form-group">
+          <label for="uname">Siret :</label>
+          <input type="text" class="form-control" formControlName="siret" placeholder="Entrer siret" name="uname" required>
+          <div class="valid-feedback">Valid.</div>
+          <div class="invalid-feedback">Merci de remplir ce champs.</div>
+        </div>
+      </form>
+    </div>
+   <!--_________________________________________________________________________________________________________-->
+
+    <div class="form-group form-check">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="remember" required> J'ai bien lu les conditions blabla
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">Veuillez accepter avant de continuer</div>
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="onvalide()">S'inscrire</button> 
+  </form>
+</div>
+
+</body>
+</html>
