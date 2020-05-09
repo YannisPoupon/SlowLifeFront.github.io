@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConnexionService } from '../services/connexion.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import 'rxjs/add/observable/interval';
+
 
 @Component({
   selector: 'app-connexion',
@@ -36,7 +36,7 @@ currentId : any;
        console.log(data.idUser)
       localStorage.setItem(this.currentUserKey, data.idUser)
         if(data.privilege=="Particulier")
-        this.router.navigate(['espaceParticulier']);
+        this.router.navigate(['espaceparticulier']);
       }
       
     })

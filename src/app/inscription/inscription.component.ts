@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { InscriptionService } from '../ServiceAnna/inscription.service';
+
 import { FormControl, FormGroup } from '@angular/forms';
+import { InscriptionService } from '../services/inscription.service';
 //import {NgForm} from '@angular/forms';
 
 @Component({
