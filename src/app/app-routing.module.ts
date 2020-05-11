@@ -13,7 +13,7 @@ import { EspaceProfessionnelComponent } from './espace-professionnel/espace-prof
 const routes: Routes = [
   {path : 'inscription', component : InscriptionComponent},
   {path : 'navbar', component : NavBarComponent},
-  { path: 'acceuil', component:AcceuilComponent },
+  { path: 'accueil', component:AcceuilComponent },
   { path: 'rechercheproduit', component:RechercheproduitComponent },
   { path: 'espaceparticulier', component:EspaceParticulierComponent },
   { path: 'connexion', component:ConnexionComponent },
