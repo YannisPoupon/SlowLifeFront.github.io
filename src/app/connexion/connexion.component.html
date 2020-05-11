@@ -1,6 +1,8 @@
+<app-nav-bar></app-nav-bar>
 <br />
 
 <br />
+<div class="col mx-auto text-center">
 <form [formGroup]="formConnex" (ngSubmit)="connexionUser()" style="margin-top: 70px;">
     <input placeholder="Login" formControlName="login"><br /><br />
     <input placeholder="Mot de pass" formControlName="password"><br /><br />
@@ -15,4 +17,5 @@
     <br />
     <button type="submit" class="btn btn-success">Clear</button>
 </form>
+</div>
 
