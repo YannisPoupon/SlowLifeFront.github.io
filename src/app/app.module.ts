@@ -16,6 +16,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { AnnonceJobComponent } from './annonce-job/annonce-job.component';
 import { EspaceProfessionnelComponent } from './espace-professionnel/espace-professionnel.component';
+import {MessageService} from 'primeng/api';
+import {ToastModule} from 'primeng/toast';
+
+
 
 @NgModule({
   declarations: [
@@ -35,13 +39,13 @@ import { EspaceProfessionnelComponent } from './espace-professionnel/espace-prof
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-
     ReactiveFormsModule,
     GMapModule,
-    FormsModule
+    FormsModule,
+    ToastModule
 
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 
 <h3 style="margin-top: 70px;">Rechercher des produits autours de chez vous</h3>
+<p-toast  [style]="{marginTop: '72px'}"></p-toast>
 <div class="d-flex justify-content-center"> 
     <form class="form my-4 d-flex justify-content-around d-flex align-items-center col-sm-10" [formGroup]="rechercheForm" (ngSubmit)="getByNom()">
         <div class="col-sm-4">
@@ -18,9 +19,7 @@
                 <div class="col-sm-4">
                     <input type="email" class="form-control" formControlName="ville" id="ville" placeholder="Saisir une ville">
                 </div>
-                <div class="col-sm-4 d-flex justify-content-around d-flex align-items-center">
-                    OU
-                </div>
+               
                 <div *ngIf="!enableGeoLoc" (click)="geolocalisation()" 
                     class="form-group col-sm-4 d-flex justify-content-around align-items-center">
                     <i class="pi pi-globe" style="font-size: 2em"></i>utiliser ma position
@@ -43,8 +42,8 @@
 
 <!-- Carte GMAP -->
 <div class="col-sm-12 d-flex justify-content-around">
-    <div class="shadow col-sm-10 rounded" id="test">
-        <p-gmap [options]="options" class="border border-light" [overlays]="overlays" 
+    <div class="shadow col-sm-10 rounded">
+        <p-gmap [options]="options" *ngIf="afficher" id="test" class="border border-light" [overlays]="overlays" 
         (onOverlayClick)="handleOverlayClick($event)" [style]="{'width':'100%','height':'400px'}" ></p-gmap>
     </div>
 </div>
@@ -73,4 +72,3 @@
         </div>
     </div>
 </div>
-
