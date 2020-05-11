@@ -1,0 +1,112 @@
+<br /><br /><br />
+
+<br /><br />
+<h4> →  Liste de vos annonces :</h4>
+<br /><br />
+<table  class="table" >
+    <thead>
+    <tr>
+<td>Date de Début  </td>
+<td>Date de fin </td>
+<td>Type d'annonce </td>
+<td>Nombre de place </td>
+<td>Compensation </td>
+<td>Supprimer ?</td>
+<td>Modifier ?</td>
+    </tr> 
+</thead>
+<tbody>
+    <tr *ngFor="let a of listAnn">
+ <td>{{a.dateDebut}}</td>
+<td>{{a.dateFin}}</td>
+<td>{{a.typeannonce}}</td>
+<td>{{a.nombrePlace}}</td>
+<td>{{a.compensation}}</td>
+<td> <button (click)="deleteAnnonce(a.idAnnonce)" class="btn btn-secondary">Supprimer</button>
+</td>
+<td> <button (click)="updateAnnonce(a)" class="btn btn-secondary">Modifier</button>
+</td>
+    </tr> 
+</tbody>
+</table>
+
+<br /><br />
+
+
+<!-- _________________________________________Button trigger modal _____________________________________________-->
+<button type="button" class="btn btn-lg btn-outline-success shadow" data-toggle="modal" data-target="#exampleModalCenter"style="border-radius: 30px; width: 220px;">
+    Publier une annonce  </button>
+
+  
+  <!-- _____________________________________________Modal _____________________________________________-->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter une annonce</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+
+
+
+            <div class="container p-3 my-3 bg-dark text-white" style="margin-top: 70px;">
+               
+                <form [formGroup]="formAnn" (ngSubmit)="ajoutAnnonce()">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date de début :</label>
+                        <input type="text" class="form-control" formControlName="dateDebut" aria-describedby="emailHelp" placeholder="Date de début ">
+                        <small id="emailHelp" class="form-text text-muted">exemple 2014-24-06</small>
+                      </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date de fin :</label>
+                        <input type="text" class="form-control" formControlName="dateFin" aria-describedby="emailHelp" placeholder="Date de fin">
+                        <small id="emailHelp" class="form-text text-muted">exemple 2014-24-06</small>
+                      </div>
+                     
+                      <div class="form-row align-items-center">
+                        <div class="col-auto my-1">
+                          <label class="mr-sm-2" for="inlineFormCustomSelect">Type Annonce :</label>
+                          <select  class="custom-select mr-sm-2" formControlName="typeannonce" >
+                            
+                            <option  value="1">Maraîchage</option>
+                            <option  value="2">Viticole</option>
+                            <option value="3" >Manuelle</option>
+                            <option  value="4">Agricole</option>
+                
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Nombre de place disponible :</label>
+                        <input type="text" class="form-control" formControlName="nombrePlace" aria-describedby="emailHelp" placeholder="Nombre de place">
+                        <small id="emailHelp" class="form-text text-muted"></small>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Compensation envisagée :</label>
+                        <input type="text" class="form-control" formControlName="compensation" aria-describedby="emailHelp" placeholder="Compensation">
+                        <small id="emailHelp" class="form-text text-muted"></small>
+                      </div>
+                
+                
+                    
+                    
+                    </form>
+                      </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-secondary"data-dismiss="modal">Ajouter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
