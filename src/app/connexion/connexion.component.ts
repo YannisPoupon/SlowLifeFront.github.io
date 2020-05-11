@@ -14,8 +14,8 @@ connexionStatus : any ;
 login : any ;
 password : any ;
 formConnex : any;
-currentUserKey : any;
 currentId : any;
+privilege :any;
   constructor( private conServ : ConnexionService, private router: Router ) { }
 
   ngOnInit(): void {
@@ -34,9 +34,9 @@ currentId : any;
       
       if (data!=null){
        console.log(data.idUser)
-      localStorage.setItem(this.currentUserKey, data.idUser)
-        if(data.privilege=="Particulier")
-        this.router.navigate(['espaceparticulier']);
+      localStorage.setItem('currentUser', JSON.stringify(data))
+       // if(data.privilege=="Particulier")
+        this.router.navigate(['accueil']);
       }
       
     })
