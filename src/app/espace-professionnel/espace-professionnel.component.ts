@@ -7,8 +7,6 @@ import { EspaceParticulierService } from '../services/espace-professionnel.servi
   styleUrls: ['./espace-professionnel.component.css']
 })
 export class EspaceProfessionnelComponent implements OnInit {
-  currentUserId : any;
-  currentUserKey : any;
   currentUser : any;
   listArt : any;
   listCom : any;
@@ -18,28 +16,14 @@ Boolprod: boolean=false;
   constructor(private profServ: EspaceParticulierService) { }
 
   ngOnInit(): void {
-    if (this.currentUser.value.privilege == 1){
-    this.currentUserId = localStorage.getItem(this.currentUserKey);
-    console.log(this.currentUserKey)
-    this.producteur(this.currentUserId)
-  }else if (this.currentUser.value.privilege == 2){
-    this.currentUserId = localStorage.getItem(this.currentUserKey);
-    console.log(this.currentUserKey)
-    this.artisant(this.currentUserId)
-  }else if (this.currentUser.value.privilege == 4){
-    this.currentUserId = localStorage.getItem(this.currentUserKey);
-    console.log(this.currentUserKey)
-    this.commercant(this.currentUserId)
-  }
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+
 //_________________Condition affichage annonces si jamais producteur______________
-if (this.currentUser.value.privilege == 1){
+if (this.currentUser.privilege =="Producteur"){
   this.Boolprod=true;
 }else {
   this.Boolprod=false;
 }
-this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-this.currentUser.idUser
-
 
 }
 
