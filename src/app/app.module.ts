@@ -16,6 +16,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { AnnonceJobComponent } from './annonce-job/annonce-job.component';
 import { EspaceProfessionnelComponent } from './espace-professionnel/espace-professionnel.component';
+import { ModifProfilProfessionnelComponent } from './modif-profil-professionnel/modif-profil-professionnel.component';
+import { CreationAnnonceComponent } from './creation-annonce/creation-annonce.component';
+import { CreationArticleComponent } from './creation-article/creation-article.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { EspaceProfessionnelComponent } from './espace-professionnel/espace-prof
     RechercheproduitComponent,
     ConnexionComponent,
     AnnonceJobComponent,
-    EspaceProfessionnelComponent
+    EspaceProfessionnelComponent,
+    ModifProfilProfessionnelComponent,
+    CreationAnnonceComponent,
+    CreationArticleComponent
 
   ],
   imports: [

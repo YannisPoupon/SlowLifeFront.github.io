@@ -1,0 +1,138 @@
+<br /><br /><br />
+
+<br /><br />
+<h4> →  Liste de vos articles :</h4>
+<br /><br />
+<table  class="table" >
+    <thead>
+    <tr>
+<td>Nom  </td>
+<td>Type d'article</td>
+<td>Prix</td>
+<td>Quantité disponible </td>
+<td>Supprimer ?</td>
+<td>Modifier ?</td>
+    </tr> 
+</thead>
+<tbody>
+    <tr *ngFor="let a of listArt">
+ <td>{{a.nom}}</td>
+<td>{{a.typearticle}}</td>
+<td>{{a.prix}}</td>
+<td>{{a.quantiteDisponible}}</td>
+<td> <button (click)="deleteArticle(a.idArticle)" class="btn btn-danger">Supprimer</button>
+</td>
+
+<td> <button (click)="updateArticle(a)" class="btn btn-success">Modifier</button>
+</td>
+    </tr> 
+</tbody>
+</table>
+
+<br /><br />
+  <!-- _____________________apparition conditionnelle pour le update ________________________-->
+  <form  [formGroup]="formArt" (ngSubmit)="ajoutArticle()">
+    <div class="form-row" >
+      <div class="form-group">
+        <label for="inputEmail4"> Nom de l'article</label>
+        <input type="text" class="form-control" *ngFor="let s of listArt" formControlName="nom"  placeholder="Nom">
+      </div>
+      <div class="form-group">
+        <label for="inputPassword4">Type d'article</label>
+        <input type="text" class="form-control" *ngFor="let s of listArt" formControlName="typearticle" placeholder="Type d'article">
+      </div>
+
+    <div class="form-group">
+      <label for="inputCity">Prix unitaire</label>
+      <input type="text" class="form-control" *ngFor="let s of listArt" formControlName="prix" placeholder="Prix">
+    </div>
+  
+    <div class="form-group">
+      <label for="inputCity">Quantité disponible</label>
+      <input type="text" class="form-control" *ngFor="let s of listArt" formControlName="quantiteDisponible" placeholder="Quantité">
+    </div>
+    </div>
+    <button type="submit" class="btn btn-secondary" >Valider</button>
+  </form>
+
+
+
+<br /><br /><br />
+
+
+
+<!-- _________________________________________Button trigger modal _____________________________________________-->
+<button type="button" class="btn btn-lg btn-outline-success shadow" data-toggle="modal" data-target="#exampleModalCenter"style="border-radius: 30px; width: 220px;">
+    Publier un article  </button>
+
+  
+  <!-- _____________________________________________Modal _____________________________________________-->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter un article</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+
+
+
+            <div class="container p-3 my-3 bg-dark text-white" style="margin-top: 70px;">
+               
+                <form [formGroup]="formArt" (ngSubmit)="ajoutArticle()">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nom :</label>
+                        <input type="text" class="form-control" formControlName="nom" aria-describedby="emailHelp" placeholder="Date de début ">
+                        <small id="emailHelp" class="form-text text-muted"></small>
+                      </div>
+                   
+                      <div class="form-row align-items-center">
+                        <div class="col-auto my-1">
+                          <label class="mr-sm-2" for="inlineFormCustomSelect">Type d'article :</label>
+                          <select  class="custom-select mr-sm-2" formControlName="typearticle" >
+                            
+                            <option  value="1">Legume</option>
+                            <option  value="2">Fruit</option>
+                            <option value="3" >Viande</option>
+                            <option  value="4">Alcool</option>
+                            <option value="3" >Laitage</option>
+                            <option  value="4">Artisanat</option>
+                          </select>
+                        </div>
+                      </div>
+
+
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Prix unitaire :</label>
+                        <input type="text" class="form-control" formControlName="prix" aria-describedby="emailHelp" placeholder="Nombre de place">
+                        <small id="emailHelp" class="form-text text-muted"></small>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Quantité disponible :</label>
+                        <input type="number" class="form-control" formControlName="quantiteDisponible" aria-describedby="emailHelp" placeholder="Compensation">
+                        <small id="emailHelp" class="form-text text-muted"></small>
+                      </div>
+                
+                
+                    
+                    
+                    </form>
+                      </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-secondary"data-dismiss="modal">Ajouter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+

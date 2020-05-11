@@ -9,23 +9,31 @@ export class EspaceParticulierService {
   constructor(private Http : HttpClient) { }
 
 
-  getParticulier(){
-    return this.Http.get("http://localhost:8080/Particuliers");
-  }
-  getArtisant(){
+  Artisants(){
     return this.Http.get("http://localhost:8080/Artisants");
   }
-  getCommercant(){
+  Commercants(){
     return this.Http.get("http://localhost:8080/Commercants");
   }
-  getProducteur(){
+  Producteurs(){
     return this.Http.get("http://localhost:8080/Producteurs");
   }
-  getAnnonce(){
+  Annonces(){
     return this.Http.get("http://localhost:8080/Annonces");
   }
-  getArticle(){
+  Articles(){
     return this.Http.get("http://localhost:8080/Articles");
   }
+
+  Artisant(id : any){
+    return this.Http.get("http://localhost:8080/User/"+id)
+  }
+  Commercant(id : any){
+    return this.Http.get("http://localhost:8080/User/"+id)
+  }
+  Producteur(id : any){
+    return this.Http.get("http://localhost:8080/User/"+id)
+  }
+
 
 }
