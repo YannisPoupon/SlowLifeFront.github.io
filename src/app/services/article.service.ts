@@ -8,8 +8,8 @@ export class ArticleService {
 
   constructor(private http:HttpClient) { }
 
-getArticleByNom(nom:string){
-  return this.http.get("http://localhost:8080/getArticlesByNom/"+nom)
+findArticles(nom:string,ville:string){
+  return this.http.get("http://localhost:8080/findArticles/"+nom+"/"+ville)
 }
 
 }

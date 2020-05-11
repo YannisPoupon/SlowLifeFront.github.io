@@ -16,9 +16,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { AnnonceJobComponent } from './annonce-job/annonce-job.component';
 import { EspaceProfessionnelComponent } from './espace-professionnel/espace-professionnel.component';
+
+import {MessageService} from 'primeng/api';
+import {ToastModule} from 'primeng/toast';
 import { ModifProfilProfessionnelComponent } from './modif-profil-professionnel/modif-profil-professionnel.component';
 import { CreationAnnonceComponent } from './creation-annonce/creation-annonce.component';
 import { CreationArticleComponent } from './creation-article/creation-article.component';
+
 
 @NgModule({
   declarations: [
@@ -41,13 +45,13 @@ import { CreationArticleComponent } from './creation-article/creation-article.co
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-
     ReactiveFormsModule,
     GMapModule,
-    FormsModule
+    FormsModule,
+    ToastModule
 
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,6 +4,8 @@ import {GMapModule} from 'primeng/gmap';
 import { FormGroup, FormControl } from '@angular/forms';
 import { google } from "google-maps";
 import { ArticleService } from '../services/article.service';
+import {MessageService} from 'primeng/api';
+import {ToastModule} from 'primeng/toast';
 
 
 @Component({
@@ -14,7 +16,6 @@ import { ArticleService } from '../services/article.service';
 export class RechercheproduitComponent implements OnInit {
   articlesListe:any;
   rechercheForm:any;
-  options: any;
   overlays: any[];
   google : google;
   infoWindow: any;
@@ -22,14 +23,16 @@ export class RechercheproduitComponent implements OnInit {
   myLat:any;
   myLng:any;
   map:any;
-
-  constructor(private aServ:ArticleService) { }
+  center={lat: 47.092901, lng: 2.388634};
+  options = {
+    center: this.center,
+    zoom: 5.8
+  };
+  afficher=true;
+  constructor(private aServ:ArticleService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.options = {
-      center: {lat: 36.890257, lng: 30.707417},
-      zoom: 12
-    };
+    
     this.enableGeoLoc=false;
     this.overlays = [
       // new google.maps.Marker({position: {lat: 36.879466, lng: 30.667648}, title:"Konyaalti"}),
@@ -46,30 +49,45 @@ export class RechercheproduitComponent implements OnInit {
 
       this.infoWindow = new google.maps.InfoWindow();
   }
-
-  getByNom(){
-    console.log(this.rechercheForm.value);
+  showSuccess() {
+    console.log("oo");
     
-     this.aServ.getArticleByNom(this.rechercheForm.value.nom).subscribe((data)=>{
-       this.articlesListe=data
-       this.rechercheForm.reset()
-       console.log(this.articlesListe);
-       
-     })
+    this.messageService.add({key: 'c', severity:'success', summary: 'Success Message', detail:'Order submitted'});
+}
+  getByNom(){
+    console.log(this.rechercheForm.value.nom);
+    console.log(this.rechercheForm.value.ville);
+    console.log(this.enableGeoLoc);
+    if(this.rechercheForm.value.nom==null || this.rechercheForm.value.nom.length==0){
+      this.messageService.add({severity:'error', summary: 'Produit', detail:'le champ «Produit» est requis'});
+    }else if((this.rechercheForm.value.ville==null  || this.rechercheForm.value.ville.length==0) && !this.enableGeoLoc){
+      this.messageService.add({severity:'error', summary: 'Lieu', detail:'Définir un lieu de recherche'});
+    }else{
+      this.aServ.findArticles(this.rechercheForm.value.nom, this.rechercheForm.value.ville).subscribe((data)=>{
+      this.articlesListe=data
+      this.rechercheForm.reset()
+      this.showResultMessage(this.articlesListe.length)
+    })
+    }
   }
 
+  showResultMessage(nb){
+    if(nb==0){
+      this.messageService.add({severity:'warn', summary: 'Aucun résultat', detail:'pas de résultat pour cette recherche'});
+    }else if(nb==1){
+      this.messageService.add({severity:'success', summary: 'Succès', detail:this.articlesListe.length+' résustat'});
+    }else{
+      this.messageService.add({severity:'success', summary: 'Succès', detail:this.articlesListe.length+' résustats'});
+    }
+  }
   handleOverlayClick(event) {
     let isMarker = event.overlay.getTitle != undefined;
-
     if (isMarker) {
         let title = event.overlay.getTitle();
         this.infoWindow.setContent('' + title + '');
         this.infoWindow.open(event.map, event.overlay);
         event.map.setCenter(event.overlay.getPosition());
-
-       // this.messageService.add({severity:'info', summary:'Marker Selected', detail: title});
-       console.log("OK");
-       
+        console.log("OK");
     }
     else {
        console.log("NOK");
@@ -77,27 +95,32 @@ export class RechercheproduitComponent implements OnInit {
     }
   }
 
-  geolocalisation(){
-    if(this.enableGeoLoc){this.enableGeoLoc=false}
-    else{
-      this.enableGeoLoc=true
-      if(navigator.geolocation)
-      navigator.geolocation.getCurrentPosition((data)=>{
-        this.myLat=data.coords.latitude
-        this.myLng=data.coords.longitude
-        console.log(this.myLat);
-        console.log(this.myLng);
-        this.overlays.push(new google.maps.Marker({position:{lat: this.myLat, lng: this.myLng}, title:"Moi"}));
-     //   this.options.center={lat: this.myLat, lng: this.myLng}
-        this.options = {
-          center: {lat: this.myLat, lng: this.myLng},
-          zoom: 12
-        };
-           
-        });
-    
-    }
+  onReject() {
+    console.log("ee");
+    this.messageService.clear('c');
   }
+  geolocalisation(){
+      if(this.enableGeoLoc){this.enableGeoLoc=false}
+      else{
+        this.afficher=false;
+        this.enableGeoLoc=true
+        if(navigator.geolocation)
+        navigator.geolocation.getCurrentPosition((data)=>{
+          this.myLat=data.coords.latitude
+          this.myLng=data.coords.longitude
+          console.log(this.myLat);
+          console.log(this.myLng);
+          this.overlays.push(new google.maps.Marker({position:{lat: this.myLat, lng: this.myLng}, title:"Moi"}));
+          this.center={lat:this.myLat, lng:this.myLng}
+          this.options = {
+            center: this.center,
+            zoom: 12
+          };
+          this.afficher=true;
+          });
+      }
+    }
+
 
 
 }
