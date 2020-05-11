@@ -1,6 +1,50 @@
 
-<app-nav-bar></app-nav-bar>
-<br />
-<br />
-<br />
-<p>espace-professionnel works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center"  style="margin-top: 70px;">
+  <h2>Bienvenue </h2>
+  <p>{{currentUser?.prenom}} {{currentUser?.nom}}</p> 
+</div>
+  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+     
+      <div class="d-flex justify-content-center">
+        <i class="pi pi-user-minus" style="font-size: 3em;color: rgb(128, 230, 145);"></i> </div><br />
+        <h4>Mon profil :</h4>
+      <a routerLink="/modificationprofilpro">Modifier votre compte ici.</a>
+      </div>
+   
+    <div class="col-sm-4" *ngIf="Boolprod">
+      <div class="d-flex justify-content-center">
+      <i class="pi pi-align-justify" style="font-size: 3em;color: rgb(128, 230, 145);"></i> </div><br />
+      <h4>Mes annonces :</h4>
+      <a routerLink="/creationannonce">Modifier, ajouter ou supprimer vos annonces.</a>
+
+    </div>
+    <div class="col-sm-4">
+        <div class="d-flex justify-content-center">
+        <i class="pi pi-list" style="font-size: 3em;color: rgb(128, 230, 145);"></i> </div><br />
+        <h4>Mes produits :</h4>
+        <a routerLink="/creationarticle">Modifier, ajouter ou supprimer vos produits.</a>
+       
+      </div>
+  </div>
+</div>
+
+</body>
+</html>
+
+

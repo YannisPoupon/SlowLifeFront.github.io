@@ -39,9 +39,20 @@ BoolAutres : boolean = false;
       password: new FormControl(),
       rue: new FormControl(),
       ville: new FormControl(),
-      département: new FormControl()
-      
+      département: new FormControl(),
+    producteur :new FormGroup({
+      raisonSociale: new FormControl(),
+    siret: new FormControl(),
+    artisant :new FormGroup({
+      raisonSociale: new FormControl(),
+    siret: new FormControl(),
+    commercant :new FormGroup({
+      raisonSociale: new FormControl(),
+    siret: new FormControl(),
+  })
+  })
     })
+  })
    this.formOther = new FormGroup({
     privilege: new FormControl(),
     idUser : new FormControl(),

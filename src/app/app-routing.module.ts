@@ -8,6 +8,9 @@ import { RechercheproduitComponent } from './rechercheproduit/rechercheproduit.c
 import { EspaceParticulierComponent } from './espace-particulier/espace-particulier.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { EspaceProfessionnelComponent } from './espace-professionnel/espace-professionnel.component';
+import { ModifProfilProfessionnelComponent } from './modif-profil-professionnel/modif-profil-professionnel.component';
+import { CreationArticleComponent } from './creation-article/creation-article.component';
+import { CreationAnnonceComponent } from './creation-annonce/creation-annonce.component';
 
 
 const routes: Routes = [
@@ -19,8 +22,10 @@ const routes: Routes = [
   { path: 'connexion', component:ConnexionComponent },
   { path: 'espaceprofessionnel', component:EspaceProfessionnelComponent },
   { path: '', component:AcceuilComponent },
-
-
+  { path: 'modificationprofilpro', component:ModifProfilProfessionnelComponent },
+  { path: 'creationarticle', component:CreationArticleComponent },
+  { path: 'creationannonce', component:CreationAnnonceComponent }
+  
 
 ];
 
