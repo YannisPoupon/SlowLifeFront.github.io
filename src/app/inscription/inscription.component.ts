@@ -31,7 +31,7 @@ BooleanProf:any;
   ngOnInit(): void {
     this.formUser=new FormGroup({
       privilege: new FormControl(),
-       idUser : new FormControl(),
+      // idUser : new FormControl(),
       prenom: new FormControl(),
       nom: new FormControl(),
       login: new FormControl(),
@@ -71,41 +71,11 @@ BooleanProf:any;
   
   }
 
-  ajoutCommercant(){
-    this.is.ajoutCommercant(this.formUser.value).subscribe(()=>this.getCommercant())
   }
-  ajoutProducteur(){
-    this.is.ajoutProducteur(this.formUser.value).subscribe(()=>this.getProducteur())
-  }
-  ajoutParticulier(){
-    this.is.ajoutParticulier(this.formUser.value).subscribe(()=>this.getParticulier())
-  }
-  ajoutArtisant(){
-    this.is.ajoutParticulier(this.formUser.value).subscribe(()=>this.getArtisant())
-  }
-  getParticulier(){
-    this.is.getParticulier().subscribe((data)=>{
-      this.listPart=data;
-  })
-}
-getCommercant(){
-  this.is.getCommercant().subscribe((data)=>{
-    this.listCom=data;
-})
-}  getArtisant(){
-  this.is.getArtisant().subscribe((data)=>{
-    this.listArt=data;
-})
-}
- getProducteur(){
-  this.is.getProducteur().subscribe((data)=>{
-    this.listProd=data;
-})
-}
 //________________________________________________FONCTIONS DU FORM_______________________________________________________
 
 
-
+/*Fonction d'inscription */
  inscription() {
   console.log(this.formUser.value.privilege)
   if (this.formUser.value.privilege == 3) { 
@@ -116,18 +86,12 @@ getCommercant(){
     }
    }
 
+  /*Fonction pour afficher le reste des inputs en fonction du privilège*/
  choisis(event : any){
-   this.inscription()
-   console.log(this.formUser.value.privilege)
-  if (this.formUser.value.privilege == 1){
-  this.BooleanProd = true;
- }else if (this.formUser.value.privilege == 2){
-   this.BooleanArt = true;
- }else if (this.formUser.value.privilege == 3){
-  this.BooleanPart = true;
-}else if (this.formUser.value.privilege == 4){
-  this.BooleanCom =true;
- }
+  var test = this.formUser.value.privilege
+  if (test == 1 || test== 2 || test== 4){
+  this.BoolAutres=true
+ }else{this.BoolAutres=false}
  }
  
 onvalide(){

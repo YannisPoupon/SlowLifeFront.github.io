@@ -25,5 +25,9 @@ export class AnnonceJobService {
   delAnnonce(id : any){
     return this.http.delete("http://localhost:8080/delAnnonce/"+id);
   }
+
+  findAnnonces(coord:any){
+    return this.http.post("http://localhost:8080/findAnnonce/", coord);
+  }
 }
 

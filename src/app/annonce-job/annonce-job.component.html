@@ -1,3 +1,75 @@
 <app-nav-bar></app-nav-bar>
+<app-nav-bar></app-nav-bar>
+<h3 style="margin-top: 70px;">Rechercher des missions autours de chez vous</h3>
+<p-toast  [style]="{marginTop: '72px'}"></p-toast>
+<div class="d-flex justify-content-center"> 
+    <form class="form my-4 d-flex justify-content-around d-flex align-items-center col-sm-10" [formGroup]="rechercheForm" (ngSubmit)="getByNom()">
+        <div class="col-sm-4">
+            <div class="text-muted font-italic my-3">
+                Que recherchez-vous?
+            </div>
+            <div>
+                <input type="text" class="form-control col-sm-7" formControlName="nom" id="produit" placeholder="Maraîchage, vendanges...">
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="text-muted font-italic my-3">
+                A quel endroit?
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <input type="email" class="form-control" formControlName="ville" id="ville" placeholder="Saisir une ville">
+                </div>
+               
+                <div *ngIf="!enableGeoLoc" (click)="geolocalisation()" 
+                    class="form-group col-sm-4 d-flex justify-content-around align-items-center">
+                    <i class="pi pi-globe" style="font-size: 2em"></i>utiliser ma position
+                </div>
+                <div *ngIf="enableGeoLoc" (click)="geolocalisation()" 
+                    class="shadow form-group col-sm-4 d-flex justify-content-around align-items-center"
+                    style="color: red;">
+                    <i class="pi pi-globe" style="font-size: 2em;color: red;"></i>utiliser ma position
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-flex align-items-center">
+            <button type="submit" style="width: 100px;" class="btn btn-outline-success">
+                <i class="pi pi-search" style="font-size: 1.5em"></i>
+            </button>
+        </div>
+    </form>
+</div>
 
-<p>annonce-job works!</p>
+<!-- Carte GMAP -->
+<div class="col-sm-12 d-flex justify-content-around">
+    <div class="shadow col-sm-10 rounded">
+        <p-gmap [options]="options" *ngIf="afficher" id="test" class="border border-light" [overlays]="overlays" 
+        (onOverlayClick)="handleOverlayClick($event)" [style]="{'width':'100%','height':'400px'}" ></p-gmap>
+    </div>
+</div>
+
+<!-- Résultat recherche -->
+<div class="col-sm-12 d-flex justify-content-around" *ngFor="let art of articlesListe">
+    <div class="shadow card col-sm-10 card-body my-3">
+        <div class="row d-flex justify-content-around mb-4">
+            <div class="col-sm-5  d-flex justify-content-start">
+                <i class="pi pi-star" style="font-size: 1.5em;color: rgb(226, 230, 36);"></i>
+                <i class="pi pi-star" *ngIf="art.quantiteDisponible>10" style="font-size: 1.5em;color: rgb(226, 230, 36);"></i>
+                <i class="pi pi-star" *ngIf="art.quantiteDisponible>20"style="font-size: 1.5em;color: rgb(226, 230, 36);"></i>
+                {{art.quantiteDisponible}} disponibles
+            </div>
+            <div class="col-sm-5 d-flex justify-content-end">
+                <i class="pi pi-shopping-cart" style="font-size: 1.5em;"></i> : {{art.prix}} €/kg
+            </div>
+        </div>
+        <div class="row d-flex justify-content-around mt-4">
+            <div class="col-sm-5 d-flex justify-content-start">
+                <i class="pi pi-user" style="font-size: 1.5em;color: rgb(128, 230, 145);"></i>{{art.producteur.nom}}
+            </div>
+            <div class="col-sm-5 d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-success rounded-pill">Acheter</button>
+            </div>
+        </div>
+    </div>
+</div>
