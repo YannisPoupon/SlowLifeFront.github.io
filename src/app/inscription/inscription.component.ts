@@ -39,7 +39,7 @@ BoolAutres : boolean = false;
       password: new FormControl(),
       rue: new FormControl(),
       ville: new FormControl(),
-      département: new FormControl(),
+      departement: new FormControl(),
       raisonSociale:new FormControl(),
       siret:new FormControl()
     
