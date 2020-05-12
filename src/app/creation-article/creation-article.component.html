@@ -24,7 +24,7 @@
 <td> <button (click)="deleteArticle(a.idArticle)" class="btn btn-danger">Supprimer</button>
 </td>
 
-<td> <button (click)="updateArticle(a)" class="btn btn-success">Modifier</button>
+<td> <button (click)="modifierArticle(a)" class="btn btn-success">Modifier</button>
 </td>
     </tr> 
 </tbody>
@@ -32,25 +32,25 @@
 
 <br /><br />
   <!-- _____________________apparition conditionnelle pour le update ________________________-->
-  <form  [formGroup]="formArt" (ngSubmit)="ajoutArticle()">
+  <form *ngIf="BooleanForm" [formGroup]="formArt" (ngSubmit)="ajoutArticle()">
     <div class="form-row" >
       <div class="form-group">
         <label for="inputEmail4"> Nom de l'article</label>
-        <input type="text" class="form-control" *ngFor="let s of listArt" formControlName="nom"  placeholder="Nom">
+        <input type="text" class="form-control" *ngFor="let s of listArt" formControlName="nom"  value={{s.nom}}>
       </div>
       <div class="form-group">
         <label for="inputPassword4">Type d'article</label>
-        <input type="text" class="form-control" *ngFor="let s of listArt" formControlName="typearticle" placeholder="Type d'article">
+        <input type="text" class="form-control" *ngFor="let s of listArt" formControlName="typearticle" value={{s.typearticle}}>
       </div>
 
     <div class="form-group">
       <label for="inputCity">Prix unitaire</label>
-      <input type="text" class="form-control" *ngFor="let s of listArt" formControlName="prix" placeholder="Prix">
+      <input type="text" class="form-control" *ngFor="let s of listArt" formControlName="prix" value={{s.prix}}>
     </div>
   
     <div class="form-group">
       <label for="inputCity">Quantité disponible</label>
-      <input type="text" class="form-control" *ngFor="let s of listArt" formControlName="quantiteDisponible" placeholder="Quantité">
+      <input type="text" class="form-control" *ngFor="let s of listArt" formControlName="quantiteDisponible" value={{s.quantiteDisponible}}>
     </div>
     </div>
     <button type="submit" class="btn btn-secondary" >Valider</button>
@@ -84,10 +84,10 @@
 
             <div class="container p-3 my-3 bg-dark text-white" style="margin-top: 70px;">
                
-                <form [formGroup]="formArt" (ngSubmit)="ajoutArticle()">
+                <form [formGroup]="formArt" >
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nom :</label>
-                        <input type="text" class="form-control" formControlName="nom" aria-describedby="emailHelp" placeholder="Date de début ">
+                        <input type="text" class="form-control" formControlName="nom" aria-describedby="emailHelp" placeholder="Nom">
                         <small id="emailHelp" class="form-text text-muted"></small>
                       </div>
                    
@@ -109,12 +109,12 @@
 
                       <div class="form-group">
                         <label for="exampleInputEmail1">Prix unitaire :</label>
-                        <input type="text" class="form-control" formControlName="prix" aria-describedby="emailHelp" placeholder="Nombre de place">
+                        <input type="text" class="form-control" formControlName="prix" aria-describedby="emailHelp" placeholder="Prix unitaire">
                         <small id="emailHelp" class="form-text text-muted"></small>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Quantité disponible :</label>
-                        <input type="number" class="form-control" formControlName="quantiteDisponible" aria-describedby="emailHelp" placeholder="Compensation">
+                        <input type="number" class="form-control" formControlName="quantiteDisponible" aria-describedby="emailHelp" placeholder="Quantité disponible">
                         <small id="emailHelp" class="form-text text-muted"></small>
                       </div>
                 
@@ -128,7 +128,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-secondary"data-dismiss="modal">Ajouter</button>
+          <button type="submit" class="btn btn-secondary"data-dismiss="modal" >Ajouter</button>
         </div>
       </div>
     </div>

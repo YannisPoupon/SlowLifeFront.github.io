@@ -9,7 +9,15 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class ModifProfilProfessionnelComponent implements OnInit {
 
+currentUser: any;
 formMod : any;
+prod: any;
+art:any;
+com:any;
+listProd :any;
+listCom : any;
+listArt : any;
+
 
 
   constructor(private mods:ModifProfilProfessionnelService) { }
@@ -24,56 +32,91 @@ formMod : any;
       prenom : new FormControl(),
       rue : new FormControl(),
       ville : new FormControl(),
-      département : new FormControl(),
+      departement : new FormControl(),
+      privilege :new FormControl(),
       producteur :new FormGroup({
-        raisonSociale: new FormControl(),
-      siret: new FormControl(),
+        raisonSociale: new FormControl(), 
+        siret: new FormControl()}),
       artisant :new FormGroup({
         raisonSociale: new FormControl(),
-      siret: new FormControl(),
+        siret: new FormControl() }),
       commercant :new FormGroup({
         raisonSociale: new FormControl(),
-      siret: new FormControl(),
+        siret: new FormControl()})
     })
-    })
-      })
-    })
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    
+      if (this.currentUser.privilege == "Producteur"){
+        this.updateProducteur(this.prod);
+      }else if (this.currentUser.privilege == "Artisant"){
+        this.updateArtisant(this.art);
+      }else if (this.currentUser.privilege == "Commercant"){
+        this.updateCommercant(this.com);}
+    }
+  
+    cestqui(truc : any){
+      
+    }
+
+    
+
+
+  ajoutArtisant(){
+    this.mods.ajoutArtisant(this.formMod.value).subscribe(()=>this.getArtisant())
+  }
+  ajoutProducteur(){
+    this.mods.ajoutProducteur(this.formMod.value).subscribe(()=>this.getProducteur())
+  }
+  ajoutCommercant(){
+    this.mods.ajoutCommercant(this.formMod.value).subscribe(()=>this.getCommercant())
   }
 
   updateProducteur(coll : any){
-    this.formMod.controls['idUser'].setValue(coll.idUser)
-    this.formMod.controls['login'].setValue(coll.login)
-    this.formMod.controls['password'].setValue(coll.password)
-    this.formMod.controls['mail'].setValue(coll.mail)
-    this.formMod.controls['nom'].setValue(coll.nom)
-    this.formMod.controls['prenom'].setValue(coll.prenom)
-    this.formMod.controls['rue'].setValue(coll.rue)
-    this.formMod.controls['ville'].setValue(coll.ville)
-    this.formMod.controls['département'].setValue(coll.département)
-    this.formMod.controls['producteur'].controls['idUser'].setValue(coll.producteur.idUser)
+
+    this.ajoutProducteur();
   }
-  updateArtisant(coll : any){
-    this.formMod.controls['idUser'].setValue(coll.idUser)
-    this.formMod.controls['login'].setValue(coll.login)
-    this.formMod.controls['password'].setValue(coll.password)
-    this.formMod.controls['mail'].setValue(coll.mail)
-    this.formMod.controls['nom'].setValue(coll.nom)
-    this.formMod.controls['prenom'].setValue(coll.prenom)
-    this.formMod.controls['rue'].setValue(coll.rue)
-    this.formMod.controls['ville'].setValue(coll.ville)
-    this.formMod.controls['département'].setValue(coll.département)
-    this.formMod.controls['artisant'].controls['idUser'].setValue(coll.artisant.idUser)
+  updateArtisant(art : any){
+    this.formMod.controls['idUser'].setValue(art.idUser)
+    this.formMod.controls['login'].setValue(art.login)
+    this.formMod.controls['password'].setValue(art.password)
+    this.formMod.controls['mail'].setValue(art.mail)
+    this.formMod.controls['nom'].setValue(art.nom)
+    this.formMod.controls['prenom'].setValue(art.prenom)
+    this.formMod.controls['rue'].setValue(art.rue)
+    this.formMod.controls['ville'].setValue(art.ville)
+    this.formMod.controls['departement'].setValue(art.departement)
+    this.formMod.controls['artisant'].controls['idUser'].setValue(art.artisant.idUser)
+    this.ajoutArtisant();
   }
-  updateCommercant(coll : any){
-    this.formMod.controls['idUser'].setValue(coll.idUser)
-    this.formMod.controls['login'].setValue(coll.login)
-    this.formMod.controls['password'].setValue(coll.password)
-    this.formMod.controls['mail'].setValue(coll.mail)
-    this.formMod.controls['nom'].setValue(coll.nom)
-    this.formMod.controls['prenom'].setValue(coll.prenom)
-    this.formMod.controls['rue'].setValue(coll.rue)
-    this.formMod.controls['ville'].setValue(coll.ville)
-    this.formMod.controls['département'].setValue(coll.département)
-    this.formMod.controls['commercant'].controls['idUser'].setValue(coll.commercant.idUser)
+  updateCommercant(com : any){
+    this.formMod.controls['idUser'].setValue(com.idUser)
+    this.formMod.controls['login'].setValue(com.login)
+    this.formMod.controls['password'].setValue(com.password)
+    this.formMod.controls['mail'].setValue(com.mail)
+    this.formMod.controls['nom'].setValue(com.nom)
+    this.formMod.controls['prenom'].setValue(com.prenom)
+    this.formMod.controls['rue'].setValue(com.rue)
+    this.formMod.controls['ville'].setValue(com.ville)
+    this.formMod.controls['departement'].setValue(com.departement)
+    this.formMod.controls['commercant'].controls['idUser'].setValue(com.commercant.idUser)
+    this.ajoutCommercant();
   }
+
+  getProducteur(){
+    this.mods.getProducteur().subscribe((data)=>{
+      this.listProd=data;
+    })
+    }
+    getArtisant(){
+      this.mods.getArtisant().subscribe((data)=>{
+        this.listArt=data;
+      })
+      }
+      getCommercant(){
+        this.mods.getCommercant().subscribe((data)=>{
+          this.listCom=data;
+        })
+        }
+    
 }
+

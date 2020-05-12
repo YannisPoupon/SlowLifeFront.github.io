@@ -9,6 +9,7 @@ export class CreationArticleService {
   constructor(private Http : HttpClient) { }
 
   ajoutArticle(art:any){
+
     return this.Http.post("http://localhost:8080/addArticle", art);
   }
   getArticle(){
@@ -29,6 +30,13 @@ export class CreationArticleService {
   getCommercant(){
     return this.Http.get("http://localhost:8080/Commercants");
   }
-
-
+getArticleByProd(prod : any){
+  return this.Http.post("http://localhost:8080/findarticlebyprod", prod);
+}
+getArticleByArt(art : any){
+  return this.Http.post("http://localhost:8080/findarticlebyart", art);
+}
+getArticleByCom(com : any){
+  return this.Http.post("http://localhost:8080/findarticlebycom", com);
+}
 }

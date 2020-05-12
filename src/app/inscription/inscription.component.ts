@@ -16,7 +16,7 @@ BooleanProd : boolean = false;
 BooleanArt : boolean = false;
 BooleanCom : boolean = false;
 BoolAutres : boolean = false;
-
+BooleanProf:any;
 
   formOther : any;
   formUser : any;
@@ -39,11 +39,37 @@ BoolAutres : boolean = false;
       password: new FormControl(),
       rue: new FormControl(),
       ville: new FormControl(),
-      département: new FormControl(),
-      raisonSociale:new FormControl(),
-      siret:new FormControl()
-    
+      departement: new FormControl(),
+    producteur :new FormGroup({
+      raisonSociale: new FormControl(),
+    siret: new FormControl(),
+    artisant :new FormGroup({
+      raisonSociale: new FormControl(),
+    siret: new FormControl(),
+    commercant :new FormGroup({
+      raisonSociale: new FormControl(),
+    siret: new FormControl(),
   })
+  })
+    })
+  })
+   this.formOther = new FormGroup({
+    privilege: new FormControl(),
+    idUser : new FormControl(),
+    prenom: new FormControl(),
+    nom: new FormControl(),
+    login: new FormControl(),
+    mail: new FormControl(),
+    password: new FormControl(),
+    rue: new FormControl(),
+    ville: new FormControl(),
+    departement: new FormControl(),
+    raisonSociale: new FormControl(),
+    siret: new FormControl()
+   })
+
+  
+  }
 
   }
 //________________________________________________FONCTIONS DU FORM_______________________________________________________
@@ -51,27 +77,14 @@ BoolAutres : boolean = false;
 
 /*Fonction d'inscription */
  inscription() {
-  console.log(this.formUser.value)
-
-  var test = this.formUser.value.privilege
-  if (test == 1){
-    console.log("producteur");
-    this.is.ajoutProducteur(this.formUser.value).subscribe(()=>console.log("Producteur ajouté"))}
-  else if (test == 2){
-    console.log("Artisant");
-    this.is.ajoutArtisant(this.formUser.value).subscribe(()=>console.log("Artisant ajouté"))
-  }
-  else if (test == 3){
-    console.log("Particulier");
-    this.is.ajoutParticulier(this.formUser.value).subscribe(()=>console.log("Particulier ajouté!"))
-  }
-  else if (test == 4){
-    console.log("Commercant");
-    this.is.ajoutCommercant(this.formUser.value).subscribe(()=>console.log("Commerçant ajputé"))
-  }
-  else(console.log("ERREUR"))
- }
-
+  console.log(this.formUser.value.privilege)
+  if (this.formUser.value.privilege == 3) { 
+    this.BoolAutres  = false;
+    
+  }else {
+    this.BoolAutres = true;   
+    }
+   }
 
   /*Fonction pour afficher le reste des inputs en fonction du privilège*/
  choisis(event : any){
@@ -80,6 +93,28 @@ BoolAutres : boolean = false;
   this.BoolAutres=true
  }else{this.BoolAutres=false}
  }
+ 
+onvalide(){
+  console.log(this.formUser.value.privilege)
+if (this.BooleanProd =true){
+  document.forms["formUser"].submit();
+  document.forms["formOther"].submit();
+  this.ajoutProducteur()
+}else if(this.BooleanArt=true){
+  document.forms["formUser"].submit();
+  document.forms["formOther"].submit();
+  this.ajoutArtisant();
+}else if (this.BooleanPart=true){
+  document.forms["formUser"].submit();
+  this.ajoutParticulier();
+}else if (this.BooleanCom=true){
+  document.forms["formUser"].submit();
+  document.forms["formOther"].submit();
+  this.ajoutCommercant();
+}
+
+
+}
 
 }
 
