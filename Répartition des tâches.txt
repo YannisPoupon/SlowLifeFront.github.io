@@ -17,14 +17,14 @@ dépendences : Bootstrap / primefraces
 
 
 
-Ridge 1 Composent d'accueil (type blablacar):
+Ridge 1 Composent d'accueil (type blablacar):=>ok
 
 	Recherche d'offres
 	possibilité d'aller à la carte
 	recherche par critère déjà définit (guider l'utilisateur avec des recherches prédéfinies de produits les plus recherchés)
 	description du service : dir pourquoi c'est cool
 
-Anna 2  Composent Barre de navigation : 
+Anna 2  Composent Barre de navigation : =>ok
 	accueil
 	rechercher
 	proposer JOB
@@ -32,7 +32,7 @@ Anna 2  Composent Barre de navigation :
 	connexion / Profil --> menu dépliant avec choix : Esapce perso / profil / déconnexion 
 	
 	
-Anna 3 Composent d'inscription
+Anna 3 Composent d'inscription=>ok | Améliorer avec autocomplétion pour département
 	champs d'inputs 
 	
 Ridge 4 Composent recherche produits / producteurs
