@@ -10,6 +10,7 @@ import { CreationArticleService } from '../services/creation-article.service';
 })
 export class CreationArticleComponent implements OnInit {
 
+  
 formArt : any;
 listArt : any;
 BooleanForm : boolean =false;
@@ -26,56 +27,112 @@ contenantart: any;
       prix : new FormControl(),
       quantiteDisponible : new FormControl(),
       producteur : new FormGroup({
-        idUser : new FormControl(),
-        artisant : new FormGroup({
-          idUser : new FormControl(),
-          commercant : new FormGroup({
-            idUser : new FormControl()
-    })
-  })
+        idUser : new FormControl() }),
+      artisant : new FormGroup({
+         idUser : new FormControl() }),
+      commercant : new FormGroup({
+         idUser : new FormControl()
   })
 })
-this.getArticle();
-//this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+if (this.currentUser.privilege == "Producteur"){
+  this.getArticleByProd();
+}else if (this.currentUser.privilege == "Artisant"){
+  this.getArticleByArt();
+}else if (this.currentUser.privilege == "Commercant"){
+  this.getArticleByCom();
+}
 
 }
 
-/*modifierArticle(art :any){
+modifierArticle(coll :any){
  this.BooleanForm=true;
- this.contenantart = art;
-}*/
+
+this.formArt.controls['idArticle'].setValue(coll.idArticle)
+this.formArt.controls['nom'].setValue(coll.nom)
+this.formArt.controls['typearticle'].setValue(coll.typearticle)
+
+this.formArt.controls['prix'].setValue(coll.prix)
+this.formArt.controls['quantiteDisponible'].setValue(coll.quantiteDisponible)
+if (this.currentUser.privilege == "Producteur"){
+this.formArt.controls['producteur'].controls['idUser'].setValue(coll.producteur.idUser)
+}
+else if (this.currentUser.privilege == "Artisant") {
+this.formArt.controls['artisant'].controls['idUser'].setValue(coll.artisant.idUser)
+}
+else  {
+this.formArt.controls['commercant'].controls['idUser'].setValue(coll.commercant.idUser)
+}
+
+
+}
 
 ajoutArticle(){
-  this.arts.ajoutArticle(this.formArt.value).subscribe(()=>this.getArticle())
+  console.log(this.formArt.value)
+  this.arts.ajoutArticle(this.formArt.value).subscribe/*(()=>{
+  if (this.currentUser.privilege == "Producteur"){
+    this.getArticleByProd();
+  }else if (this.currentUser.privilege == "Artisant"){
+    this.getArticleByArt();
+  }else if (this.currentUser.privilege == "Commercant"){
+    this.getArticleByCom();
+  }})*/
+  this.BooleanForm=false;
 }
+/*ajouterArticle(){
+  console.log(this.currentUser)
+  this.arts.ajoutArticle(this.formArt.value).subscribe(()=>{
+    if (this.currentUser.privilege == "Producteur"){
+      this.getArticleByProd();
+    }else if (this.currentUser.privilege == "Artisant"){
+      this.getArticleByArt();
+    }else if (this.currentUser.privilege == "Commercant"){
+      this.getArticleByCom();
+    }})
+}*/
+/*
 getArticle(){
 this.arts.getArticle().subscribe((data)=>{
   this.listArt=data;
 })
+}*/
+getArticleByProd(){
+  this.arts.getArticleByProd(this.currentUser).subscribe((data)=>{
+    this.listArt=data;
+  })
 }
-deleteArticle(id : number){
-this.arts.deleteArticle(id).subscribe(()=>this.getArticle())
+getArticleByArt(){
+  this.arts.getArticleByArt(this.currentUser).subscribe((data)=>{
+    this.listArt=data;
+  })
+}
+getArticleByCom(){
+  this.arts.getArticleByCom(this.currentUser).subscribe((data)=>{
+    this.listArt=data;
+  })
 }
 
-updateArticle(coll:any){
- /* console.log(this.contenantart)
-  this.formArt.value.idArticle =this.contenantart.idArticle
-  console.log(this.formArt.value.idArticle)
-  //this.formArt.value.prix =this.contenantart.prix
-  this.formArt.controls['prix'].setValue(this.contenantart.prix)
-  console.log(this.formArt.value.prix)*/
- 
-this.formArt.controls['idArticle'].setValue(coll.idArticle)
-this.formArt.controls['nom'].setValue(coll.nom)
-this.formArt.controls['typearticle'].setValue(coll.typearticle)
-this.formArt.controls['prix'].setValue(coll.prix)
-this.formArt.controls['quantiteDisponible'].setValue(coll.quantiteDisponible)
-this.formArt.controls['producteur'].controls['idUser'].setValue(coll.producteur.idUser)
-console.log(this.formArt.value)
-this.arts.ajoutArticle(this.formArt.value)
-//this.formArt.controls['artisant'].controls['idUser'].setValue(this.contenantart.artisant.idUser)
-//this.formArt.controls['commercant'].controls['idUser'].setValue(this.contenantart.commercant.idUser)
+
+deleteArticle(id : number){
+this.arts.deleteArticle(id).subscribe(()=>{
+if (this.currentUser.privilege == "Producteur"){
+  this.getArticleByProd();
+}else if (this.currentUser.privilege == "Artisant"){
+  this.getArticleByArt();
+}else if (this.currentUser.privilege == "Commercant"){
+  this.getArticleByCom();
+}}
+)
 }
+
+updateArticle(){
+  console.log(this.currentUser)
+  console.log(this.formArt.value)
+ //coll=this.contenantart
+//this.arts.ajoutArticle(this.formArt.value)
+this.ajoutArticle()
+}
+
 getProducteur(){
 this.arts.getProducteur().subscribe((data)=>{
   this.listArt=data;

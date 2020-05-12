@@ -2,6 +2,8 @@
 <div class="container">
   <h2>Formulaire d'inscription</h2>
   <i>Merci de bien vouloir remplir <code>tous</code> les champs :</i>
+
+  
   <form [formGroup]="formUser" (ngSubmit)="inscription()">
     <div class="form-group">
       <label for="uname">Prénom :</label>
@@ -47,7 +49,7 @@
     </div>
     <div class="form-group">
       <label for="pwd">Département:</label>
-      <input type="number" class="form-control" formControlName="département" placeholder="Entrer département" name="pswd" required>
+      <input type="number" class="form-control" formControlName="departement" placeholder="Entrer département" name="pswd" required>
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Merci de remplir ce champs.</div>
     </div>
@@ -68,9 +70,7 @@
         </div>
       </div>
 
-    
-
-
+    </form>
 
 
 <!-- ______________________________FORMULAIRE AVEC EN PLUSSSS RAISON SOCIALE ET SIRET___________________________-->
@@ -90,7 +90,7 @@
         </div>
       </form>
     </div>
-   <!--_________________________________________________________________________________________________________-->
+   <!-- _________________________________________________________________________________________________________-->
 
     <div class="form-group form-check">
       <label class="form-check-label">
@@ -99,6 +99,8 @@
         <div class="invalid-feedback">Veuillez accepter avant de continuer</div>
       </label>
     </div>
-    <button type="submit" class="btn btn-primary" (click)="onvalide()">S'inscrire</button> 
-  </form>
+    <div class="row buttonBox">
+    <button type="submit" class="btn btn btn-primary pull-right" (click)="onvalide()">S'inscrire</button> 
+
+  </div>
 </div>

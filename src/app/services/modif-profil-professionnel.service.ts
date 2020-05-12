@@ -9,9 +9,7 @@ export class ModifProfilProfessionnelService {
   constructor(private Http : HttpClient) { }
 
   
-  ajoutParticulier(user:any){
-    return this.Http.post("http://localhost:8080/addParticulier", user);
-  }
+ 
   ajoutArtisant(user:any){
     return this.Http.post("http://localhost:8080/addArtisant", user);
   }
@@ -20,5 +18,14 @@ export class ModifProfilProfessionnelService {
   }
   ajoutProducteur(user:any){
     return this.Http.post("http://localhost:8080/addProducteur", user);
+  }
+  getProducteur(){
+    return this.Http.get("http://localhost:8080/Producteurs");
+  }
+  getArtisant(){
+    return this.Http.get("http://localhost:8080/Artisants");
+  }
+  getCommercant(){
+    return this.Http.get("http://localhost:8080/Commercants");
   }
 }

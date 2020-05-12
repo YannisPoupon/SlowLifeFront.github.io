@@ -16,7 +16,7 @@ BooleanProd : boolean = false;
 BooleanArt : boolean = false;
 BooleanCom : boolean = false;
 BoolAutres : boolean = false;
-
+BooleanProf:any;
 
   formOther : any;
   formUser : any;
@@ -39,7 +39,7 @@ BoolAutres : boolean = false;
       password: new FormControl(),
       rue: new FormControl(),
       ville: new FormControl(),
-      département: new FormControl(),
+      departement: new FormControl(),
     producteur :new FormGroup({
       raisonSociale: new FormControl(),
     siret: new FormControl(),
@@ -63,7 +63,7 @@ BoolAutres : boolean = false;
     password: new FormControl(),
     rue: new FormControl(),
     ville: new FormControl(),
-    département: new FormControl(),
+    departement: new FormControl(),
     raisonSociale: new FormControl(),
     siret: new FormControl()
    })
@@ -110,8 +110,10 @@ getCommercant(){
   console.log(this.formUser.value.privilege)
   if (this.formUser.value.privilege == 3) { 
     this.BoolAutres  = false;
+    
   }else {
-    this.BoolAutres = true;   }
+    this.BoolAutres = true;   
+    }
    }
 
  choisis(event : any){
@@ -131,14 +133,23 @@ getCommercant(){
 onvalide(){
   console.log(this.formUser.value.privilege)
 if (this.BooleanProd =true){
-  this.ajoutProducteur();
+  document.forms["formUser"].submit();
+  document.forms["formOther"].submit();
+  this.ajoutProducteur()
 }else if(this.BooleanArt=true){
+  document.forms["formUser"].submit();
+  document.forms["formOther"].submit();
   this.ajoutArtisant();
 }else if (this.BooleanPart=true){
+  document.forms["formUser"].submit();
   this.ajoutParticulier();
 }else if (this.BooleanCom=true){
+  document.forms["formUser"].submit();
+  document.forms["formOther"].submit();
   this.ajoutCommercant();
 }
+
+
 }
 
 }
