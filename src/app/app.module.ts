@@ -22,6 +22,7 @@ import {ToastModule} from 'primeng/toast';
 import { ModifProfilProfessionnelComponent } from './modif-profil-professionnel/modif-profil-professionnel.component';
 import { CreationAnnonceComponent } from './creation-annonce/creation-annonce.component';
 import { CreationArticleComponent } from './creation-article/creation-article.component';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { CreationArticleComponent } from './creation-article/creation-article.co
     ReactiveFormsModule,
     GMapModule,
     FormsModule,
-    ToastModule
+    ToastModule,
+    AutoCompleteModule
 
   ],
   providers: [MessageService],
