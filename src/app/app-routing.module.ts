@@ -11,6 +11,7 @@ import { EspaceProfessionnelComponent } from './espace-professionnel/espace-prof
 import { ModifProfilProfessionnelComponent } from './modif-profil-professionnel/modif-profil-professionnel.component';
 import { CreationArticleComponent } from './creation-article/creation-article.component';
 import { CreationAnnonceComponent } from './creation-annonce/creation-annonce.component';
+import { AnnonceJobComponent } from './annonce-job/annonce-job.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: '', component:AcceuilComponent },
   { path: 'modificationprofilpro', component:ModifProfilProfessionnelComponent },
   { path: 'creationarticle', component:CreationArticleComponent },
-  { path: 'creationannonce', component:CreationAnnonceComponent }
+  { path: 'creationannonce', component:CreationAnnonceComponent },
+  { path: 'rechercheannonce', component:AnnonceJobComponent }
   
 
 ];

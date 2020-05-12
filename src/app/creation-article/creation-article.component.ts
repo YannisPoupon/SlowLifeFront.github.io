@@ -26,14 +26,13 @@ contenantart: any;
       prix : new FormControl(),
       quantiteDisponible : new FormControl(),
       producteur : new FormGroup({
-        idUser : new FormControl(),
-        artisant : new FormGroup({
-          idUser : new FormControl(),
-          commercant : new FormGroup({
-            idUser : new FormControl()
+          idUser : new FormControl()}),
+      artisant : new FormGroup({
+          idUser : new FormControl()}),
+      commercant : new FormGroup({
+          idUser : new FormControl()
     })
-  })
-  })
+  
 })
 this.getArticle();
 //this.currentUser = JSON.parse(localStorage.getItem('currentUser'))

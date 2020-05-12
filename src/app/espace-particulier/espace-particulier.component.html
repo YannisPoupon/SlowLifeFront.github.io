@@ -1,37 +1,34 @@
 <app-nav-bar></app-nav-bar>
-<!-- <br />
-<br />
-<table class="table">
-    <thead>
-        <tr>
-            <td>Nom</td>
-            <td>Prénom</td>
-            <td>mail</td>
-
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let a of listParticuliers">
-            <td>{{a.nom}}</td>
-            <td>{{a.prenom}}</td>
-            <td>{{a.mail}}</td>
-        </tr>
-    </tbody>
-</table> -->
-<br />
-<br />
-<div class="row" style="margin-top: 70px;">
-    <p>espace-particulier works!</p>
-    <div class="col mx-auto text-center" >
-        <a >Bienvenu {{currentUser?.prenom}} {{currentUser?.nom}}</a>
-    </div>
-</div>
-<br />
-<br />
-<div class="row">
+<div class="jumbotron text-center"  style="margin-top: 70px;">
+    <h2>Bienvenue </h2>
+    <p>{{currentUser?.prenom}} {{currentUser?.nom}}</p> 
+  </div>
     
-    <div class="col-lg-3 mx-auto" >Test</div>
-    <div class="col-lg-3 mx-auto" >TEst</div>
-</div>
-<div class="row">COUCOU</div>
-<div class="row"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+       
+        <div class="d-flex justify-content-center">
+          <i class="pi pi-user-minus" style="font-size: 3em;color: rgb(128, 230, 145);"></i> </div><br />
+          <h4>Mon profil :</h4>
+        <a routerLink="/modificationprofilpro">Modifier votre compte ici.</a>
+        </div>
+     
+      <div class="col-sm-4">
+        <div class="d-flex justify-content-center">
+        <i class="pi pi-align-justify" style="font-size: 3em;color: rgb(128, 230, 145);"></i> </div><br />
+        <h4>Mes missions :</h4>
+        <a routerLink="/creationannonce">Gerez vos missions.</a>
+  
+      </div>
+      <div class="col-sm-4">
+          <div class="d-flex justify-content-center">
+          <i class="pi pi-list" style="font-size: 3em;color: rgb(128, 230, 145);"></i> </div><br />
+          <h4>Mes produits :</h4>
+          <a routerLink="/creationarticle">Gérer mes produits favoris.</a>
+         
+        </div>
+    </div>
+  </div>
+  
+  
