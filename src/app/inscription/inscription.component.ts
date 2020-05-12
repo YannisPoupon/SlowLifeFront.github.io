@@ -24,7 +24,7 @@ BoolAutres : boolean = false;
   listCom : any;
   listProd : any;
   listArt : any;
-
+  NEPASUTILISER : any;
 
   constructor(private is:InscriptionService) { }
 
