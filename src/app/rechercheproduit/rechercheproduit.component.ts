@@ -119,6 +119,8 @@ export class RechercheproduitComponent implements OnInit {
           this.myLng=data.coords.longitude
           this.apiAdresseGouv.getAdresse(this.myLat,this.myLng).subscribe((data)=>{
             this.maVille=data
+            console.log(data);
+            
             this.maVille=this.maVille.features[0].properties.city
             this.rechercheForm.controls['ville'].setValue(this.maVille)
             
@@ -142,12 +144,10 @@ export class RechercheproduitComponent implements OnInit {
 
     getVilles(){
       this.apiGeoGouv.getVillesList().subscribe((data)=>{
-      this.dataVilles=data;
+      this.dataVilles=data;     
       for(var i = 0 ; i<this.dataVilles.length;i++){
         this.NomsVilles.push(this.dataVilles[i].nom)
       }  
-    
-      
     })}
 
   search(event) {
