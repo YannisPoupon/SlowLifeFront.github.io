@@ -1,106 +1,84 @@
 <app-nav-bar></app-nav-bar>
-<div class="container">
-  <h2>Formulaire d'inscription</h2>
-  <i>Merci de bien vouloir remplir <code>tous</code> les champs :</i>
-  <form [formGroup]="formUser" (ngSubmit)="inscription()">
+<p-toast  [style]="{marginTop: '72px'}"><i class="pi pi-spin pi-compass" style="font-size: 2em"></i></p-toast>
+<div class="container d-flex justify-items-center mb-4" style="margin-top: 90px;">
+  <div>
+    <h2>Formulaire d'inscription</h2>
+    <i>Merci de bien vouloir remplir <code>tous</code> les champs :</i>
+  </div>
+  <form [formGroup]="formUser" (ngSubmit)="inscription()" class="col-sm-6">
 
     <div class="form-group">
-      <label for="uname">Prénom :</label>
-      <input type="text" class="form-control" formControlName="prenom" placeholder="Entrer prenom" name="uname" required>
-      <div class="valid-feedback">Valid.</div>
-      <div class="invalid-feedback">Merci de remplir ce champs.</div>
+      <label>Prénom :</label>
+      <input type="text" class="form-control" formControlName="prenom" placeholder="Entrer prenom" required>
     </div>
 
     <div class="form-group">
-        <label for="uname">Nom :</label>
-        <input type="text" class="form-control" formControlName="nom" placeholder="Entrer nom" name="uname" required>
-        <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">Merci de remplir ce champs.</div>
+        <label>Nom :</label>
+        <input type="text" class="form-control" formControlName="nom" placeholder="Entrer nom" required>
     </div>
       <div class="form-group">
-        <label for="uname">Login:</label>
-        <input type="text" class="form-control" formControlName="login" placeholder="Entrer login" name="uname" required>
-        <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">Merci de remplir ce champs.</div>
+        <label>Login:</label>
+        <input type="text" class="form-control" formControlName="login" placeholder="Entrer login"  required>
       </div>
       <div class="form-group">
-        <label for="uname">Adresse email:</label>
-        <input type="text" class="form-control" formControlName="mail" placeholder="Entrer mail" name="uname" required>
-        <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">Merci de remplir ce champs.</div>
+        <label>Adresse email:</label>
+        <input type="text" class="form-control" formControlName="mail" placeholder="Entrer mail" required>
       </div>
       <div class="form-group">
-        <label for="uname">Mot de passe:</label>
-        <input type="password" class="form-control" formControlName="password" placeholder="Entrer password" name="uname" required>
-        <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">Merci de remplir ce champs.</div>
+        <label>Mot de passe:</label>
+        <input type="password" class="form-control" formControlName="password" placeholder="Entrer password" required>
       </div>
-      <div class="form-group">
-        <label for="uname">Rue:</label>
-        <input type="text" class="form-control" formControlName="rue" placeholder="Entrer rue" name="uname" required>
-        <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">Merci de remplir ce champs.</div>
+      <label >N° et Rue:</label>
+      <div class="form-group row d-flex justify-content-between col-sm-12">
+        <input type="number" class="form-control col-sm-2" formControlName="numero" placeholder="N°" required>
+        <input type="text" class="form-control col-sm-9" formControlName="rue" placeholder="Entrer rue" required>
       </div>
     <div class="form-group">
-      <label for="pwd">Ville:</label>
-      <input type="text" class="form-control" formControlName="ville" placeholder="Entrer ville" name="pswd" required>
-      <div class="valid-feedback">Valid.</div>
-      <div class="invalid-feedback">Merci de remplir ce champs.</div>
+      <label>Ville:</label><br/>
+      <!-- <input type="text" class="form-control" formControlName="ville" placeholder="Entrer ville" required> -->
+      <p-autoComplete [suggestions]="NomsVilles" formControlName="ville" (onSelect)="selected($event)" (completeMethod)="search($event)" field="nom" [size]="56"
+      placeholder="Ville" [minLength]="1"></p-autoComplete>
     </div>
     <div class="form-group">
-      <label for="pwd">Département:</label>
-      <input type="number" class="form-control" formControlName="departement" placeholder="Entrer département" name="pswd" required>
-      <div class="valid-feedback">Valid.</div>
-      <div class="invalid-feedback">Merci de remplir ce champs.</div>
+      <label>Département:</label>
+      <input type="number" class="form-control" formControlName="departement" placeholder="Entrer département" required>
     </div>
+    <div class="form-row align-items-center">
+      <div class="col-auto my-1">
+        <label class="mr-sm-2" for="inlineFormCustomSelect">Vous êtes :</label>
+        <select  class="custom-select mr-sm-2" formControlName="privilege" (change)="choisis($event)" >
+          
+          <option  value="1">Un producteur</option>
+          <option  value="2">Un artisant</option>
+          <option value="3" >Un particulier</option>
+          <option  value="4">Un commerçant</option>
 
-
-
-      <div class="form-row align-items-center">
-        <div class="col-auto my-1">
-          <label class="mr-sm-2" for="inlineFormCustomSelect">Vous êtes :</label>
-          <select  class="custom-select mr-sm-2" formControlName="privilege" (change)="choisis($event)" >
-            
-            <option  value="1">Un producteur</option>
-            <option  value="2">Un artisant</option>
-            <option value="3" >Un particulier</option>
-            <option  value="4">Un commerçant</option>
-
-          </select>
-        </div>
+        </select>
       </div>
-
-    
-
-
-
+    </div>
 
 <!-- ______________________________FORMULAIRE AVEC EN PLUSSSS RAISON SOCIALE ET SIRET___________________________-->
 <div *ngIf="BoolAutres" >
-      <!-- <form  [formGroup]="formOther" > -->
         <div class="form-group">
-          <label for="uname">Raison Sociale :</label>
-          <input type="text" class="form-control" formControlName="raisonSociale" placeholder="Entrer raison sociale" name="uname" required>
+          <label>Raison Sociale :</label>
+          <input type="text" class="form-control" formControlName="raisonSociale" placeholder="Entrer raison sociale" required>
           <div class="valid-feedback">Valid.</div>
           <div class="invalid-feedback">Merci de remplir ce champs.</div>
         </div>
         <div class="form-group">
-          <label for="uname">Siret :</label>
-          <input type="text" class="form-control" formControlName="siret" placeholder="Entrer siret" name="uname" required>
+          <label>Siret :</label>
+          <input type="text" class="form-control" formControlName="siret" placeholder="Entrer siret" required>
           <div class="valid-feedback">Valid.</div>
           <div class="invalid-feedback">Merci de remplir ce champs.</div>
         </div>
-      <!-- </form> NE PAS UTILISER -->
     </div>
    <!--_________________________________________________________________________________________________________-->
 
     <div class="form-group form-check">
       <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" name="remember" required> J'ai bien lu les conditions blabla
-        <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">Veuillez accepter avant de continuer</div>
+        <input class="form-check-input" (click)="checkConditions()" type="checkbox" required> J'ai bien lu les conditions blabla
       </label>
     </div>
-    <button type="submit" class="btn btn-primary">S'inscrire</button> 
+    <button type="submit" class="btn btn-outline-success" style="border-radius: 30px; width: 220px;">S'inscrire</button> 
   </form>
 </div>

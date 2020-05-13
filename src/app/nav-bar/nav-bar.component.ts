@@ -21,9 +21,6 @@ privilege :any;
     })
   this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.connexionCheck()
-    if (this.currentUser!=null){
-    console.log(this.currentUser)
-    console.log(this.currentUser.nom)}
   }
 
   connexionCheck() {
