@@ -36,7 +36,7 @@ privilege :any;
     
     localStorage.clear();
     console.log(localStorage.getItem(this.currentUser))
-    this.router.navigate(['']);
+    this.router.navigate(['Accueil']);
   }
 
 }
