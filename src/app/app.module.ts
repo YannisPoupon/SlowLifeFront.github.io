@@ -23,6 +23,7 @@ import { ModifProfilProfessionnelComponent } from './modif-profil-professionnel/
 import { CreationAnnonceComponent } from './creation-annonce/creation-annonce.component';
 import { CreationArticleComponent } from './creation-article/creation-article.component';
 import {AutoCompleteModule} from 'primeng/autocomplete';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -53,7 +54,9 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
     AutoCompleteModule
 
   ],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

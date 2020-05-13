@@ -17,14 +17,14 @@ dépendences : Bootstrap / primefraces
 
 
 
-Ridge 1 Composent d'accueil (type blablacar):=>ok
+Ridge 1 Composent d'accueil (type blablacar):=>ajout modal sur les boutons publier + navbar(YANNIS)
 
 	Recherche d'offres
 	possibilité d'aller à la carte
 	recherche par critère déjà définit (guider l'utilisateur avec des recherches prédéfinies de produits les plus recherchés)
 	description du service : dir pourquoi c'est cool
 
-Anna 2  Composent Barre de navigation : =>ok
+Anna 2  Composent Barre de navigation : =>DropDown Rechercher = Produit || Job (YANNIS)
 	accueil
 	rechercher
 	proposer JOB
@@ -32,21 +32,24 @@ Anna 2  Composent Barre de navigation : =>ok
 	connexion / Profil --> menu dépliant avec choix : Esapce perso / profil / déconnexion 
 	
 	
-Anna 3 Composent d'inscription=>ok | Améliorer avec autocomplétion pour département
+Anna 3 Composent d'inscription=>Améliorer avec autocomplétion pour département, reset form, vérif des champs, redirection et connecté, lgn & lat,(Ridge)
 	champs d'inputs 
 	
-Ridge 4 Composent recherche produits / producteurs
+Ridge 4 Composent recherche produits / producteurs=> range de résultat, 
+modal pour achat, decrement total disponible;historique dans espace particulier, mail de notification, feedback dans le card de resulat
 	carte
 
-Yannis 5 Composent annonces "jobs"
+Yannis 5 Composent annonces "jobs"=> a finaliser
 	avec recherche sur critères (géographiques / durée / types d'artisants)
 
-Yannis 6 composent Espace particulier
+Yannis 6 composent Espace particulier=>historique des achats, feedback
 	favoris 
 	historique achats 
 	panier
 	
- Anna 7 composent Espace Professionnel
+ Anna 7 composent Espace Professionnel=>feedback pour job, voir Hamza pour publication annonce
 	ajouter des produits / quantité
 	Si producteur ajout / gestion annonce jobs
+
+Yannis 8 : page de connexion =>mail d'envoi login et password
  

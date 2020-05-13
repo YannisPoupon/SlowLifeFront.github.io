@@ -11,4 +11,8 @@ export class ApiAdresseGouvService {
   getAdresse(lat:any,lng:any){
     return this.https.get('https://api-adresse.data.gouv.fr/reverse/?lat='+lat+'&lon='+lng)
   }
+
+  getCoords(rue:any, postcode:any){
+    return this.https.get('//api-adresse.data.gouv.fr/search/?q='+rue+'&postcode='+postcode)
+  }
 }

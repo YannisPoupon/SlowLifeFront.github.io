@@ -69,8 +69,78 @@
                 <i class="pi pi-user" style="font-size: 1.5em;color: rgb(128, 230, 145);"></i>{{art.producteur.nom}}
             </div>
             <div class="col-sm-5 d-flex justify-content-end">
-                <button type="button" class="btn btn-outline-success rounded-pill">Acheter</button>
+                <button *ngIf="connected==true" type="button" (click)="infosAnnonce(art)" class="btn btn-outline-success rounded-pill" data-toggle="modal" data-target="#exampleModal2">Acheter</button>
+                <button *ngIf="connected==false" type="button" class="btn btn-outline-success rounded-pill" data-toggle="modal" data-target="#exampleModal">Acheter</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Non connecté -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Non connecté</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            Vous n'êtes pas connecté.<br/>
+            Connectez-vous ou créer un compte pour pour effectuer des achats.
+        </div>
+        <div class="modal-footer">
+            <a type="btn" class="btn btn-success">Se connecter</a>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Achat -->
+<div class="modal fade" id="exampleModal2" tabindex="-1"  role="dialog" data-backdrop="static" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel2">Formulaire d'achat</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="achatForm">
+                <div class="form-group">
+                    <label style="color:rgb(128, 230, 145)">Annonce :</label>
+                    <p>{{Article.quantiteDisponible}} {{Article.nom}}(s) à {{Article.prix}} € prix unitaire sont encore disponibles dans cette offre.</p>
+                </div>
+                <div class="form-group">
+                    <i class="pi pi-user" style="font-size: 2em;color: rgb(128, 230, 145);"></i><p> Publiée par : {{nom}}</p>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <i class="pi pi-shopping-cart" style="font-size: 2em;color: rgb(128, 230, 145);"></i>
+                        <input type="number" formControlName="quantite" class="form-control col-sm-6" placeholder="quantité" (change)="calcul($event)">
+                    </div>
+                    <div class="col">
+                        <i class="pi pi-money-bill" style="font-size: 2em;color: rgb(128, 230, 145);"></i><p> Total : {{total}} €</p>
+                    </div>
+                    
+                </div>
+            </form>
+            <div *ngIf="confirmed" class="alert alert-success" role="alert">
+                Achat effectué! Veuillez patientez..
+            </div>
+            <div *ngIf="testAchat" class="alert alert-danger" role="alert">
+                Erreur dans le formulaire : la quantité désirée ne peut être fournie.
+            </div>  
+        </div>
+        <div class="modal-footer">
+            <button *ngIf="!validateButton" type="button" class="btn btn-primary" data-dismiss="modal" (click)="confirmerAchat()">Confirmer achat {{total}} €</button>
+            <button *ngIf="validateButton" type="button" class="btn btn-success" (click)="valider()">Valider</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="raz()">Annuler</button>
+        </div>
         </div>
     </div>
 </div>

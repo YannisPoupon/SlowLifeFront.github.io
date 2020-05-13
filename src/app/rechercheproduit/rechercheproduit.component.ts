@@ -8,6 +8,8 @@ import {MessageService} from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
 import { ApiGeoGouvService } from '../services/api-geo-gouv.service';
 import { ApiAdresseGouvService } from '../services/api-adresse-gouv.service';
+import { ChoixService } from '../services/choix.service';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -30,28 +32,43 @@ export class RechercheproduitComponent implements OnInit {
   myLng:any;
   map:any;
   dataVilles:any;
-  NomsVilles:string[]=[]
+  NomsVilles:string[]=[];
   center={lat: 47.092901, lng: 2.388634};
   options = {
     center: this.center,
     zoom: 5.8
   };
   afficher=true;
+  connected:any;
+  Article:any;
+  nom:any;
+  testAchat:any;
+  confirmed:any;
+  total:any;
+  validateButton:any;
+  achatForm:any;
+  nombre:any;
+  produitRECHERCHE;
+  villeRECHERCHE;
+
   constructor(private aServ:ArticleService, 
     private messageService: MessageService, 
     private apiGeoGouv:ApiGeoGouvService,
-    private apiAdresseGouv:ApiAdresseGouvService) { }
+    private apiAdresseGouv:ApiAdresseGouvService,
+    private choixService:ChoixService,
+    public datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.getVilles()
     this.getFruitsLegumes()
+    this.checkConnexion()
+    this.total=0;
+    this.testAchat=false;
+    this.confirmed=false;
+    this.validateButton=true;
+    this.Article=false;
     this.enableGeoLoc=false;
-    this.overlays = [
-      // new google.maps.Marker({position: {lat: 36.879466, lng: 30.667648}, title:"Konyaalti"}),
-      // new google.maps.Marker({position: {lat: 36.883707, lng: 30.689216}, title:"Ataturk Park"}),
-      // new google.maps.Marker({position: {lat: 36.885233, lng: 30.702323}, title:"Oldtown"})
-    
-    ];
+    this.overlays = [];
   
     this.rechercheForm=new FormGroup({
         nom:new FormControl,
@@ -59,11 +76,21 @@ export class RechercheproduitComponent implements OnInit {
         geolocalisation:new FormControl
       })
 
+      this.achatForm=new FormGroup({
+        dateAchat:new FormControl,
+        quantite:new FormControl,
+        particulier:new FormGroup({
+          idUser:new FormControl
+        }),
+        article:new FormGroup({
+          idArticle:new FormControl
+        }),
+
+      })
+
       this.infoWindow = new google.maps.InfoWindow();
   }
   showSuccess() {
-    console.log("oo");
-    
     this.messageService.add({key: 'c', severity:'success', summary: 'Success Message', detail:'Order submitted'});
 }
   findArticles(){
@@ -72,6 +99,8 @@ export class RechercheproduitComponent implements OnInit {
     }else if((this.rechercheForm.value.ville==null  || this.rechercheForm.value.ville.nom==null) && !this.enableGeoLoc){
       this.messageService.add({severity:'error', summary: 'Lieu', detail:'Définir un lieu de recherche'});
     }else{
+      this.produitRECHERCHE=this.rechercheForm.value.nom.nom;
+      this.villeRECHERCHE=this.rechercheForm.value.ville.nom;
       this.aServ.findArticles(this.rechercheForm.value.nom.nom, this.rechercheForm.value.ville.nom).subscribe((data)=>{
       this.articlesListe=data
       this.rechercheForm.reset()
@@ -123,12 +152,9 @@ export class RechercheproduitComponent implements OnInit {
             
             this.maVille=this.maVille.features[0].properties.city
             this.rechercheForm.controls['ville'].setValue(this.maVille)
-            
-            
-            
           })
-          console.log(this.myLat);
-          console.log(this.myLng);
+          console.log("lat : "+this.myLat);
+          console.log("lng : "+this.myLng);
           this.overlays.push(new google.maps.Marker({position:{lat: this.myLat, lng: this.myLng}, title:"Moi"}));
           this.center={lat:this.myLat, lng:this.myLng}
           this.options = {
@@ -164,7 +190,6 @@ searchArt(event) {
 
 }
 filtrerVille(query, ListeVilles: any[]):any[] {
-  //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
   let filtered : any[] = [];
   for(let i = 0; i < ListeVilles.length; i++) {
       let ville = ListeVilles[i];
@@ -193,9 +218,71 @@ getFruitsLegumes(){
     
     for(var i=0;i<this.temp.length;i++){
       this.ListeArticlesEnumData[i]=({'nom':data[i]})
-    }
+    } 
     this.ListeArticlesEnum=data;
   
+  })
+}
+
+checkConnexion(){
+if(localStorage.getItem('currentUser')!=null){
+  this.connected=true;
+}else{
+  this.connected=false;
+}
+}
+
+infosAnnonce(art:any){ 
+  console.log(art);
+  this.nom=art.producteur.nom
+  this.Article=art;
+}
+
+calcul(event:any){
+  this.validateButton=true;
+  this.testAchat=false;
+  this.nombre = event.target.value
+  var nb=this.nombre
+  var prix = this.Article.prix
+  this.total = nb * prix
+  
+}
+
+raz(){
+  console.log("nice");
+  this.achatForm.reset()
+  this.total=0;
+  this.validateButton=true;
+  this.testAchat=false;
+  this.confirmed=false;
+}
+
+valider(){
+  if((this.nombre>0 && this.nombre<= this.Article.quantiteDisponible)){
+    this.testAchat=false;
+    this.validateButton=false;
+  }else{
+    this.testAchat=true;
+  }
+}
+
+confirmerAchat(){
+  //var qtiteRestant = this.Article.quantiteDisponible - this.nombre
+
+  var idArticle = this.Article.idArticle
+  var idUser = JSON.parse(localStorage.getItem('currentUser')).idUser
+  var date = this.datepipe.transform(new Date(), 'yyyy-MM-dd')
+
+  this.achatForm.controls['dateAchat'].setValue(date)
+  this.achatForm.controls['particulier'].controls['idUser'].setValue(idUser)
+  this.achatForm.controls['article'].controls['idArticle'].setValue(idArticle)
+
+  this.choixService.addChoix(this.achatForm.value).subscribe(()=>{
+    console.log("achat éffectué")
+    this.aServ.findArticles(this.produitRECHERCHE, this.villeRECHERCHE).subscribe((dataArt)=>{
+      this.articlesListe=dataArt
+      this.messageService.add({severity:'success', summary: 'Achat effectué', detail:'votre achat a été effectuté'});
+      })
   })
 }
  
