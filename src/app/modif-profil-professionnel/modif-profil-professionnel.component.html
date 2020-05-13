@@ -1,9 +1,9 @@
 <app-nav-bar></app-nav-bar>
 
-<!--
 
-<br /><br /><br />
-<h4> Vous voulez modifier votre profil ?</h4>
+
+<br /><br /><br /><br /><br />
+<h4> Vous voulez modifier votre profil ?</h4><br /><br />
 <table  class="table" >
     <thead>
     <tr>
@@ -19,7 +19,7 @@
     </tr> 
 </thead>
 <tbody>
-    <tr *ngFor="let a of listMod">
+    <tr *ngFor="let a of listUser">
  <td>{{a.login}}</td>
 <td>{{a.password}}</td>
 <td>{{a.mail}}</td>
@@ -29,10 +29,48 @@
 <td>{{a.ville}}</td>
 <td>{{a.departement}}</td>
 
-<td> <button (click)="cestqui(a)" class="btn btn-success">Modifier</button>
+<td> <button (click)="updateUser(a)" class="btn btn-success">Modifier</button>
 </td>
     </tr> 
 </tbody>
 </table>
--->
+
+ <!-- _____________________apparition conditionnelle pour le update ________________________-->
+<form *ngIf="BooleanForm" [formGroup]="formArt" (ngSubmit)="ajoutUser()">
+    <div class="form-row" >
+      <div class="form-group">
+        <label for="inputEmail4"> Nom de l'article</label>
+        <input type="text" class="form-control"  formControlName="login" >
+      </div>
+      <div class="form-group">
+        <label class="mr-sm-2" for="inlineFormCustomSelect">Type d'article :</label>
+        <select  class="custom-select mr-sm-2" formControlName="typearticle" >
+          
+          <option  value="1">Legume</option>
+          <option  value="2">Fruit</option>
+          <option value="3" >Viande</option>
+          <option  value="4">Alcool</option>
+          <option value="3" >Laitage</option>
+          <option  value="4">Artisanat</option>
+        </select>
+      </div>
+
+    <div class="form-group">
+      <label for="inputCity">Prix unitaire</label>
+      <input type="text" class="form-control"  formControlName="prix" >
+    </div>
+  
+    <div class="form-group">
+      <label for="inputCity">Quantité disponible</label>
+      <input type="text" class="form-control" formControlName="quantiteDisponible" >
+    </div>
+    </div>
+    <button type="submit" class="btn btn-secondary" >Valider</button>
+  </form>
+
+
+
+<br /><br /><br />
+
+
 

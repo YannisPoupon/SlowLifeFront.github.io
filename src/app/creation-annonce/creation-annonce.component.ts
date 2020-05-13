@@ -10,53 +10,73 @@ import { CreationAnnonceService } from '../services/creation-annonce.service';
 export class CreationAnnonceComponent implements OnInit {
 
   formAnn: any;
-  listAnn : any;
   listProd : any;
+  formNew:any;
+formArt : any;
+listArt : any;
+BooleanForm : boolean =false;
+currentUser: any;
+contenantart: any;
 
 
   constructor(private cas:CreationAnnonceService) { }
 
   ngOnInit(): void {
-    this.formAnn = new FormGroup({
-      idAnnonce : new FormControl(),
-      dateDebut: new FormControl(),
-      dateFin: new FormControl(),
-      typeannonce: new FormControl(),
-      nombrePlace: new FormControl(),
-      compensation: new FormControl(),
-      producteur : new FormGroup({
-        idUser : new FormControl()
-    })
-  })
-  this.getAnnonce();
 
-  }
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+      this.getAnnonceByProd();
+      this.formArt=new FormGroup({
+        idAnnonce : new FormControl(),
+        dateDebut : new FormControl(),
+        dateFin : new FormControl(),
+        typeannonce : new FormControl(),
+        nombrePlace : new FormControl(),
+        compensation : new FormControl(),
+
+        producteur : new FormGroup({
+          idUser : new FormControl() })
+    })
+    
+
+}
+
+updateAnnonce(coll :any){
+ this.BooleanForm=true;
+this.formArt.controls['idAnnonce'].setValue(coll.idAnnonce)
+this.formArt.controls['dateDebut'].setValue(coll.dateDebut)
+this.formArt.controls['dateFin'].setValue(coll.dateFin)
+this.formArt.controls['typeannonce'].setValue(coll.typeannonce)
+this.formArt.controls['nombrePlace'].setValue(coll.nombrePlace)
+this.formArt.controls['compensation'].setValue(coll.compensation)
+this.formArt.controls['producteur'].controls['idUser'].setValue(coll.producteur.idUser)
+}
 
 ajoutAnnonce(){
-    this.cas.ajoutAnnonce(this.formAnn.value).subscribe(()=>this.getAnnonce())
-}
-getAnnonce(){
-  this.cas.getAnnonce().subscribe((data)=>{
-    this.listAnn=data;
-})
-}
-deleteAnnonce(id : number){
-  this.cas.deleteAnnonce(id).subscribe(()=>this.getAnnonce())
+  console.log(this.formArt.value)
+  this.cas.ajoutAnnonce(this.formArt.value).subscribe(()=>this.getAnnonceByProd());
+  this.BooleanForm=false;
+  alert("Vos modifications ont bien été prises en compte");
 }
 
-updateAnnonce(coll : any){
-  this.formAnn.controls['idAnnonce'].setValue(coll.idAnnonce)
-  this.formAnn.controls['dateDebut'].setValue(coll.dateDebut)
-  this.formAnn.controls['dateFin'].setValue(coll.dateFin)
-  this.formAnn.controls['typeannonce'].setValue(coll.typeannonce)
-  this.formAnn.controls['nombrePlace'].setValue(coll.nombrePlace)
-  this.formAnn.controls['compensation'].setValue(coll.compensation)
-  this.formAnn.controls['producteur'].controls['idUser'].setValue(coll.producteur.idUser)
+nouvelAnnonce(){
+  console.log(this.formArt.value)
+  this.formArt.controls['producteur'].controls['idUser'].setValue(this.currentUser.idUser)
+  this.cas.ajoutAnnonce(this.formArt.value).subscribe(()=>this.getAnnonceByProd());
 }
-getProducteur(){
-  this.cas.getProducteur().subscribe((data)=>{
-    this.listProd=data;
-})
+
+getAnnonceByProd(){
+  this.cas.getAnnonceByProd(this.currentUser).subscribe((data)=>{
+    this.listArt=data;
+  })
 }
+
+
+
+deleteAnnonce(id : number){
+this.cas.deleteAnnonce(id).subscribe(()=>this.getAnnonceByProd());
+
+}
+
+
 
 }

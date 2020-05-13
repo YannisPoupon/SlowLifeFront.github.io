@@ -24,5 +24,7 @@ export class CreationAnnonceService {
   getProducteur(){
     return this.Http.get("http://localhost:8080/Producteurs");
   }
-
+getAnnonceByProd(prod:any){
+  return this.Http.post("http://localhost:8080/findannoncebyprod", prod);
+}
 }

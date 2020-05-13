@@ -9,7 +9,6 @@ export class CreationArticleService {
   constructor(private Http : HttpClient) { }
 
   ajoutArticle(art:any){
-
     return this.Http.post("http://localhost:8080/addArticle", art);
   }
   getArticle(){

@@ -17,15 +17,15 @@
     </tr> 
 </thead>
 <tbody>
-    <tr *ngFor="let a of listAnn">
- <td>{{a.dateDebut}}</td>
-<td>{{a.dateFin}}</td>
+    <tr *ngFor="let a of listArt">
+ <td>{{a.dateDebut | date:'EEEE, MMMM d, y' }}</td>
+<td>{{a.dateFin | date:'EEEE, MMMM d, y'}}</td>
 <td>{{a.typeannonce}}</td>
 <td>{{a.nombrePlace}}</td>
 <td>{{a.compensation}}</td>
-<td> <button (click)="deleteAnnonce(a.idAnnonce)" class="btn btn-secondary">Supprimer</button>
+<td> <button (click)="deleteAnnonce(a.idAnnonce)" class="btn btn-danger">Supprimer</button>
 </td>
-<td> <button (click)="updateAnnonce(a)" class="btn btn-secondary">Modifier</button>
+<td> <button (click)="updateAnnonce(a)" class="btn btn-success">Modifier</button>
 </td>
     </tr> 
 </tbody>
@@ -33,15 +33,63 @@
 
 <br /><br />
 
+<br /><br />
+  <!-- _____________________apparition conditionnelle pour le update ________________________-->
+  <form *ngIf="BooleanForm" [formGroup]="formArt" (ngSubmit)="ajoutAnnonce()">
+    <div class="form-row" >
+      <div class="form-group">
+        <label for="inputEmail4">Date de Début</label>
+        <input type="date" class="form-control"  formControlName="dateDebut"  >
+      </div>
+      <div class="form-group">
+        <label for="inputPassword4">Date de Fin</label>
+        <input type="date" class="form-control"  formControlName="dateFin">
+      </div>
+
+    <div class="form-group">
+      <label for="inputCity">Type d'annonce</label>
+      <input type="text" class="form-control"  formControlName="typeannonce">
+    </div>
+
+    <div class="form-group">
+      <label class="mr-sm-2" for="inlineFormCustomSelect">Type d'annonce:</label>
+      <select  class="custom-select mr-sm-2" formControlName="typeannonce" >
+        
+        <option  value="1">Maraîchage</option>
+        <option  value="2">Viticole</option>
+        <option value="3" >Manuelle</option>
+        <option  value="4">Agricole</option>
+    
+      </select>
+    </div>
+  
+    <div class="form-group">
+      <label for="inputCity">Nombre de Place :</label>
+      <input type="text" class="form-control"  formControlName="nombrePlace">
+    </div>
+    
+    <div class="form-group">
+      <label for="inputCity">Compensation :</label>
+      <input type="text" class="form-control" formControlName="compensation" >
+    </div>
+    </div>
+    <button type="submit" class="btn btn-secondary" >Valider</button>
+  </form>
+
+
+
+<br /><br /><br />
+
+
 
 <!-- _________________________________________Button trigger modal _____________________________________________-->
-<button type="button" class="btn btn-lg btn-outline-success shadow" data-toggle="modal" data-target="#exampleModalCenter"style="border-radius: 30px; width: 220px;">
-    Publier une annonce  </button>
+<button type="button" class="btn btn-lg btn-outline-success shadow" data-toggle="modal" data-target=".bd-example-modal-lg"style="border-radius: 30px; width: 220px;">
+    Publier une annonce </button>
 
   
   <!-- _____________________________________________Modal _____________________________________________-->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter une annonce</h5>
@@ -56,58 +104,55 @@
 
             <div class="container p-3 my-3 bg-dark text-white" style="margin-top: 70px;">
                
-                <form [formGroup]="formAnn" (ngSubmit)="ajoutAnnonce()">
+                <form [formGroup]="formArt" (ngSubmit)="nouvelAnnonce()" >
                     <div class="form-group">
                         <label for="exampleInputEmail1">Date de début :</label>
-                        <input type="text" class="form-control" formControlName="dateDebut" aria-describedby="emailHelp" placeholder="Date de début ">
-                        <small id="emailHelp" class="form-text text-muted">exemple 2014-24-06</small>
+                        <input type="date" class="form-control" formControlName="dateDebut" aria-describedby="emailHelp" placeholder="Date de début">
+                        <small id="emailHelp" class="form-text text-muted"></small>
                       </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Date de fin :</label>
-                        <input type="text" class="form-control" formControlName="dateFin" aria-describedby="emailHelp" placeholder="Date de fin">
-                        <small id="emailHelp" class="form-text text-muted">exemple 2014-24-06</small>
+                   
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Date de fin:</label>
+                        <input type="date" class="form-control" formControlName="dateFin" aria-describedby="emailHelp" placeholder="Date de fin">
+                        <small id="emailHelp" class="form-text text-muted"></small>
                       </div>
-                     
+
                       <div class="form-row align-items-center">
                         <div class="col-auto my-1">
-                          <label class="mr-sm-2" for="inlineFormCustomSelect">Type Annonce :</label>
+                          <label class="mr-sm-2" for="inlineFormCustomSelect">Type d'annonce:</label>
                           <select  class="custom-select mr-sm-2" formControlName="typeannonce" >
                             
                             <option  value="1">Maraîchage</option>
                             <option  value="2">Viticole</option>
                             <option value="3" >Manuelle</option>
                             <option  value="4">Agricole</option>
-                
+                        
                           </select>
                         </div>
                       </div>
 
+
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Nombre de place disponible :</label>
-                        <input type="text" class="form-control" formControlName="nombrePlace" aria-describedby="emailHelp" placeholder="Nombre de place">
+                        <label for="exampleInputEmail1">Nombre de place(s) disponible(s) :</label>
+                        <input type="number" class="form-control" formControlName="nombrePlace" aria-describedby="emailHelp" placeholder="Prix unitaire">
                         <small id="emailHelp" class="form-text text-muted"></small>
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Compensation envisagée :</label>
-                        <input type="text" class="form-control" formControlName="compensation" aria-describedby="emailHelp" placeholder="Compensation">
+                        <label for="exampleInputEmail1">Compensation :</label>
+                        <input type="text" class="form-control" formControlName="compensation" aria-describedby="emailHelp" placeholder="Quantité disponible">
                         <small id="emailHelp" class="form-text text-muted"></small>
                       </div>
-                
-                
-                    
-                    
                     </form>
                       </div>
 
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-secondary"data-dismiss="modal">Ajouter</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button type="submit" class="btn btn-secondary" data-dismiss="modal" (click)="nouvelAnnonce()">Ajouter</button>
         </div>
       </div>
     </div>
   </div>
-
 
 
