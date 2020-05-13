@@ -42,4 +42,7 @@ privilege :any;
     this.router.navigate(['Accueil']);
   }
 
+  connexRedir(){
+  this.router.navigate(['connexion']);
+  }
 }
