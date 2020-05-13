@@ -23,7 +23,7 @@ import { ModifProfilProfessionnelComponent } from './modif-profil-professionnel/
 import { CreationAnnonceComponent } from './creation-annonce/creation-annonce.component';
 import { CreationArticleComponent } from './creation-article/creation-article.component';
 import {AutoCompleteModule} from 'primeng/autocomplete';
-
+import {CalendarModule} from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -39,6 +39,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
     ModifProfilProfessionnelComponent,
     CreationAnnonceComponent,
     CreationArticleComponent
+    
 
   ],
   imports: [
@@ -50,7 +51,8 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
     GMapModule,
     FormsModule,
     ToastModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    CalendarModule
 
   ],
   providers: [MessageService],
