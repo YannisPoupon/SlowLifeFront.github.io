@@ -10,48 +10,71 @@ import { CreationArticleService } from '../services/creation-article.service';
 })
 export class CreationArticleComponent implements OnInit {
 
-  
+  formNew:any;
 formArt : any;
 listArt : any;
 BooleanForm : boolean =false;
 currentUser: any;
 contenantart: any;
 
-  constructor(private arts:CreationArticleService) { }
+ListeArticlesEnum:any;
+ListeArticlesEnumData: any[] = [] ;
+temp:any;
+getTemp : any;
+
+
+  constructor(private arts:CreationArticleService, private ass:ArticleService) { }
 
   ngOnInit(): void {
+
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    if (this.currentUser.privilege == "Producteur"){
+      this.getArticleByProd();
+      this.formArt=new FormGroup({
+        idArticle : new FormControl(),
+        nom : new FormControl(),
+        typearticle : new FormControl(),
+        prix : new FormControl(),
+        quantiteDisponible : new FormControl(),
+  
+        producteur : new FormGroup({
+          idUser : new FormControl() })
+    })
+    
+    }else if (this.currentUser.privilege == "Artisant"){
+      this.getArticleByArt();
+      this.formArt=new FormGroup({
+        idArticle : new FormControl(),
+        nom : new FormControl(),
+        typearticle : new FormControl(),
+        prix : new FormControl(),
+        quantiteDisponible : new FormControl(),
+
+        artisant : new FormGroup({
+           idUser : new FormControl() })
+    })
+    }else if (this.currentUser.privilege == "Commercant"){
+      this.getArticleByCom();
     this.formArt=new FormGroup({
       idArticle : new FormControl(),
       nom : new FormControl(),
       typearticle : new FormControl(),
       prix : new FormControl(),
       quantiteDisponible : new FormControl(),
-      producteur : new FormGroup({
-        idUser : new FormControl() }),
-      artisant : new FormGroup({
-         idUser : new FormControl() }),
+
       commercant : new FormGroup({
          idUser : new FormControl()
   })
-})
-this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-if (this.currentUser.privilege == "Producteur"){
-  this.getArticleByProd();
-}else if (this.currentUser.privilege == "Artisant"){
-  this.getArticleByArt();
-}else if (this.currentUser.privilege == "Commercant"){
-  this.getArticleByCom();
-}
+})}
 
+this.getFruitsLegumes();
 }
 
 modifierArticle(coll :any){
  this.BooleanForm=true;
-
 this.formArt.controls['idArticle'].setValue(coll.idArticle)
 this.formArt.controls['nom'].setValue(coll.nom)
 this.formArt.controls['typearticle'].setValue(coll.typearticle)
-
 this.formArt.controls['prix'].setValue(coll.prix)
 this.formArt.controls['quantiteDisponible'].setValue(coll.quantiteDisponible)
 if (this.currentUser.privilege == "Producteur"){
@@ -63,24 +86,10 @@ this.formArt.controls['artisant'].controls['idUser'].setValue(coll.artisant.idUs
 else  {
 this.formArt.controls['commercant'].controls['idUser'].setValue(coll.commercant.idUser)
 }
-
-
 }
 
 ajoutArticle(){
   console.log(this.formArt.value)
-  this.arts.ajoutArticle(this.formArt.value).subscribe/*(()=>{
-  if (this.currentUser.privilege == "Producteur"){
-    this.getArticleByProd();
-  }else if (this.currentUser.privilege == "Artisant"){
-    this.getArticleByArt();
-  }else if (this.currentUser.privilege == "Commercant"){
-    this.getArticleByCom();
-  }})*/
-  this.BooleanForm=false;
-}
-/*ajouterArticle(){
-  console.log(this.currentUser)
   this.arts.ajoutArticle(this.formArt.value).subscribe(()=>{
     if (this.currentUser.privilege == "Producteur"){
       this.getArticleByProd();
@@ -89,13 +98,23 @@ ajoutArticle(){
     }else if (this.currentUser.privilege == "Commercant"){
       this.getArticleByCom();
     }})
-}*/
-/*
-getArticle(){
-this.arts.getArticle().subscribe((data)=>{
-  this.listArt=data;
-})
-}*/
+  this.BooleanForm=false;
+  alert("Vos modifications ont bien été prises en compte");
+}
+
+nouvelArticle(){
+  console.log(this.formArt.value)
+  this.formArt.controls['producteur'].controls['idUser'].setValue(this.currentUser.idUser)
+  this.arts.ajoutArticle(this.formArt.value).subscribe(()=>{
+    if (this.currentUser.privilege == "Producteur"){
+      this.getArticleByProd();
+    }else if (this.currentUser.privilege == "Artisant"){
+      this.getArticleByArt();
+    }else if (this.currentUser.privilege == "Commercant"){
+      this.getArticleByCom();
+    }})
+}
+
 getArticleByProd(){
   this.arts.getArticleByProd(this.currentUser).subscribe((data)=>{
     this.listArt=data;
@@ -125,31 +144,34 @@ if (this.currentUser.privilege == "Producteur"){
 )
 }
 
-updateArticle(){
-  console.log(this.currentUser)
-  console.log(this.formArt.value)
- //coll=this.contenantart
-//this.arts.ajoutArticle(this.formArt.value)
-this.ajoutArticle()
+//_______________Partie Enum du nom des produits_______________
+
+searchArt(event) {
+  let query = event.query;
+  var ListeArt=this.ListeArticlesEnumData
+  this.ListeArticlesEnum = this.filtrerArt(query, ListeArt);
 }
 
-getProducteur(){
-this.arts.getProducteur().subscribe((data)=>{
-  this.listArt=data;
-})
-}
-getArtisant(){
-  this.arts.getArtisant().subscribe((data)=>{
-    this.listArt=data;
-  })
+filtrerArt(query, ListeArt: any[]):any[] {
+  //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+  let filtered : any[] = [];
+  for(let i = 0; i < ListeArt.length; i++) {
+      let art = ListeArt[i];
+      if (art.nom.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+          filtered.push(art);
+      }
   }
-  getCommercant(){
-    this.arts.getCommercant().subscribe((data)=>{
-      this.listArt=data;
-    })
-    }
+  return filtered;
+}
 
+getFruitsLegumes(){
+  this.ass.getFruitsLegumEnum().subscribe((data)=>{
+    this.temp=data;
+    for(var i=0;i<this.temp.length;i++){
+      this.ListeArticlesEnumData[i]=({'nom':data[i]})
+    } 
+    this.ListeArticlesEnum=data;
 
-
-
+  })
+}
 }
