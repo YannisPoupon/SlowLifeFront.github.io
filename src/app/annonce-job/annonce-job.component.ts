@@ -30,8 +30,42 @@ export class AnnonceJobComponent implements OnInit {
   afficher=true;
   constructor(private messageService: MessageService, private annServ : AnnonceJobService) { }
   coord :any;
+  dates: Date[];
+  rangeDates: Date[];
+  minDate: Date;
+  maxDate: Date;
+  es: any;
+  invalidDates: Array<Date>
   ngOnInit(): void {
+ this.es = {
+            firstDayOfWeek: 1,
+            dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+            dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+            dayNamesMin: [ "D","L","M","X","J","V","S" ],
+            monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
+            monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+            today: 'Hoy',
+            clear: 'Borrar'
+        }
 
+        let today = new Date();
+        let month = today.getMonth();
+        let year = today.getFullYear();
+        let prevMonth = (month === 0) ? 11 : month -1;
+        let prevYear = (prevMonth === 11) ? year - 1 : year;
+        let nextMonth = (month === 11) ? 0 : month + 1;
+        let nextYear = (nextMonth === 0) ? year + 1 : year;
+        this.minDate = new Date();
+        this.minDate.setMonth(prevMonth);
+        this.minDate.setFullYear(prevYear);
+        this.maxDate = new Date();
+        this.maxDate.setMonth(nextMonth);
+        this.maxDate.setFullYear(nextYear);
+
+        let invalidDate = new Date();
+        invalidDate.setDate(today.getDate() - 1);
+        this.invalidDates = [today,invalidDate];
+    
     this.enableGeoLoc=false;
     this.overlays = [
       // new google.maps.Marker({position: {lat: 36.879466, lng: 30.667648}, title:"Konyaalti"}),
@@ -58,7 +92,7 @@ export class AnnonceJobComponent implements OnInit {
       this.messageService.add({severity:'success', summary: 'Succès', detail:this.articlesListe.length+' résustats'});
     }
   }
-  getByNom(){
+  getAnnonces(){
     console.log(this.rechercheForm.value.nom);
     console.log(this.rechercheForm.value.ville);
     console.log(this.enableGeoLoc);

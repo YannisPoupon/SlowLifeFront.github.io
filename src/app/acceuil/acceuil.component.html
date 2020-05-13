@@ -28,10 +28,44 @@
 				<h3>trouvez des personnes disponibles pour vous</h3>
 				<h6>Cliquez et dites ce dont vous avez besoin</h6>
 				<br /> 
-				<a class="btn btn-lg btn-outline-success shadow" data-toggle="modal"
-					data-target="#accesRefuse" href="#"
+				<a *ngIf="currentUser!=null" class="btn btn-lg btn-outline-success shadow"  href="rechercheannonce"
 					style="border-radius: 30px; width: 220px;">
-					Publier une annonce</a>
+					Publier une annonce</a> 
+			
+			
+				<!-- Button to Open the Modal -->
+				<button *ngIf="currentUser==null" class="btn btn-lg btn-outline-success shadow" 
+				style="border-radius: 30px; width: 220px;" data-toggle="modal" data-target="#myModal">
+				Publier une annonce
+				</button>
+			  
+				<!-- The Modal -->
+				<div class="modal" id="myModal">
+				  <div class="modal-dialog">
+					<div class="modal-content">
+					
+					  <!-- Modal Header -->
+					  <div class="modal-header">
+						<h4 class="modal-title">Modal Heading</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					  </div>
+					  
+					  <!-- Modal body -->
+					  <div class="modal-body">
+						Vous devez être connecté afin de publier une annonce
+					  </div>
+					  
+					  <!-- Modal footer -->
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					  </div>
+					  
+					</div>
+				  </div>
+				</div>
+				
+			  
+			  
 			</form>
 	</div>
 </div>

@@ -1,9 +1,9 @@
 <app-nav-bar></app-nav-bar>
-<app-nav-bar></app-nav-bar>
-<h3 style="margin-top: 70px;">Rechercher des missions autours de chez vous</h3>
+
+<h3 style="margin-top: 70px; text-center">Rechercher des missions autours de chez vous</h3>
 <p-toast  [style]="{marginTop: '72px'}"></p-toast>
 <div class="d-flex justify-content-center"> 
-    <form class="form my-4 d-flex justify-content-around d-flex align-items-center col-sm-10" [formGroup]="rechercheForm" (ngSubmit)="getByNom()">
+    <form class="form my-4 d-flex justify-content-around d-flex align-items-center col-sm-10" [formGroup]="rechercheForm" (ngSubmit)="getAnnonces()">
         <div class="col-sm-4">
             <div class="text-muted font-italic my-3">
                 Que recherchez-vous?
@@ -12,10 +12,20 @@
                 <input type="text" class="form-control col-sm-7" formControlName="nom" id="produit" placeholder="Maraîchage, vendanges...">
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-5">
+            <div class="text-muted font-italic my-3">
+                Disponibilités
+            </div>
+            <div class="ui-g-12 ui-md-4">
+                
+                <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true"></p-calendar>
+            </div>
+        </div>
+        <div class="col-sm-4">
             <div class="text-muted font-italic my-3">
                 A quel endroit?
             </div>
+            
             <div class="row">
                 <div class="col-sm-4">
                     <input type="email" class="form-control" formControlName="ville" id="ville" placeholder="Saisir une ville">
@@ -23,7 +33,7 @@
                
                 <div *ngIf="!enableGeoLoc" (click)="geolocalisation()" 
                     class="form-group col-sm-4 d-flex justify-content-around align-items-center">
-                    <i class="pi pi-globe" style="font-size: 2em"></i>utiliser ma position
+                    <i class="pi pi-globe" style="font-size: 2em;"></i>utiliser ma position
                 </div>
                 <div *ngIf="enableGeoLoc" (click)="geolocalisation()" 
                     class="shadow form-group col-sm-4 d-flex justify-content-around align-items-center"

@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'connexion', component:ConnexionComponent },
   { path: 'espaceprofessionnel', component:EspaceProfessionnelComponent },
   { path: '', component:AcceuilComponent },
+  { path: 'Accueil', component:AcceuilComponent },
   { path: 'modificationprofilpro', component:ModifProfilProfessionnelComponent },
   { path: 'creationarticle', component:CreationArticleComponent },
   { path: 'creationannonce', component:CreationAnnonceComponent },
