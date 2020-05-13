@@ -103,11 +103,51 @@ export class RechercheproduitComponent implements OnInit {
       this.villeRECHERCHE=this.rechercheForm.value.ville.nom;
       this.aServ.findArticles(this.rechercheForm.value.nom.nom, this.rechercheForm.value.ville.nom).subscribe((data)=>{
       this.articlesListe=data
+      console.log(this.articlesListe);
+      
       this.rechercheForm.reset()
       this.showResultMessage(this.articlesListe.length)
+      this.afficherResCarte()
     })
     }
   }
+
+  afficherResCarte(){
+    this.afficher=false;
+    this.articlesListe
+    var echec = 0
+    var ok = 0
+    for(var i = 0; i<this.articlesListe.length;i++){
+      if(!(this.articlesListe[i].producteur.latitude ==0 || this.articlesListe[i].producteur.latitude == null || this.articlesListe[i].producteur.longitude ==0 || this.articlesListe[i].producteur.longitude == null )){
+        ok=1
+        var lat = this.articlesListe[i].producteur.latitude
+        var lng = this.articlesListe[i].producteur.longitude
+        console.log("lat : "+lat);
+        console.log("lng : "+lng);
+        this.overlays.push(new google.maps.Marker({position:{lat: lat, lng: lng}, title:this.articlesListe[i].producteur.nom}));
+        console.log(this.articlesListe[0].producteur.latitude);
+        console.log(this.articlesListe[0].producteur.longitude);
+        
+        
+        this.center={lat:this.articlesListe[0].producteur.latitude, lng:this.articlesListe[0].producteur.longitude}
+          this.options = {
+            center: this.center,
+            zoom: 12
+          };
+      }else{
+        echec = echec + 1
+      }
+    }
+    console.log(ok);
+  
+    this.afficher=true;
+   
+    if(echec>0){
+      this.messageService.add({severity:'warn', summary: 'Mise à jour carte', detail:echec+" résultats n'ont pas pu êtres affichés sur la carte, mais tous les résultats sont listés."});
+    }
+   
+  }
+  
 
   showResultMessage(nb){
     if(nb==0){
