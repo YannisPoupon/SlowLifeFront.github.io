@@ -30,5 +30,26 @@
         </div>
     </div>
   </div>
+<!------------------ liste favoris ------------------------->
+  <div class="col-sm-12 d-flex justify-content-around" *ngFor="let fav of listeFavoris">
+    <div class="shadow card col-sm-10 card-body my-3">
+        <div class="row d-flex justify-content-around mb-4">
+            <div class="col-sm-5  d-flex justify-content-start">
+                {{fav.quantiteDisponible}} disponibles
+            </div>
+            <div class="col-sm-5 d-flex justify-content-end">
+                <i class="pi pi-shopping-cart" style="font-size: 1.5em;"></i> : {{fav.prix}} €/kg
+            </div>
+        </div>
+        <div class="row d-flex justify-content-around mt-4">
+            <div class="col-sm-5 d-flex justify-content-start">
+                <i class="pi pi-user" style="font-size: 1.5em;color: rgb(128, 230, 145);"></i>{{fav.producteur.nom}}
+            </div>
+            <div class="col-sm-5 d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-success rounded-pill">Acheter</button>
+            </div>
+        </div>
+    </div>
+</div>
   
   
