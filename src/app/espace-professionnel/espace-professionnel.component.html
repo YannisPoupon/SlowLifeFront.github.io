@@ -2,7 +2,7 @@
 <app-nav-bar></app-nav-bar>
 <div class="jumbotron text-center"  style="margin-top: 70px;">
   <h2>Bienvenue </h2>
-  <p>{{currentUser?.prenom}} {{currentUser?.nom}}</p> 
+  <h4>{{currentUser?.prenom}} {{currentUser?.nom}}</h4> 
 </div>
   
 <div class="container">
@@ -31,8 +31,35 @@
       </div>
   </div>
 </div>
+<br /><br /><br />
 
 
+<!--
+<center>
+<h4>Voici ce que vos saisonniers ont pensé du temps passé avec vous :</h4>
+</center>
 
 
+<p-carousel [value]="cars" [numVisible]="4" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions">
+
+  <ng-template let-car pTemplate="item">
+      <div class="car-details">
+          <div class="p-grid p-nogutter">
+              <div class="p-col-12">
+                  <img src="assets/showcase/images/demo/car/{{car.brand}}.png" />
+              </div>
+              <div class="p-col-12 car-data">
+                  <div class="car-title">{{car.brand}}</div>
+                  <div class="car-subtitle">{{car.year}} | {{car.color}}</div>
+
+                  <div class="car-buttons">
+                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-search"></button>
+                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-star"></button>
+                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-cog"></button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </ng-template>
+</p-carousel>-->
 

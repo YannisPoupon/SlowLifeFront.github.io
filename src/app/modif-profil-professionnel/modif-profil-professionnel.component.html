@@ -7,29 +7,31 @@
 <table  class="table" >
     <thead>
     <tr>
-<td>login  </td>
-<td>password</td>
-<td>mail</td>
-<td>nom </td>
-<td>prenom</td>
-<td>rue</td>
-<td>ville</td>
-<td>département</td>
+<td>Login  </td>
+<td>Mot de passe</td>
+<td>Adresse email</td>
+<td>Nom </td>
+<td>Prenom</td>
+<td>Numéro de rue</td>
+<td>Rue</td>
+<td>Ville</td>
+<td>Département</td>
 <td>Modifier ?</td>
     </tr> 
 </thead>
 <tbody>
-    <tr *ngFor="let a of listUser">
- <td>{{a.login}}</td>
-<td>{{a.password}}</td>
-<td>{{a.mail}}</td>
-<td>{{a.nom}}</td>
-<td>{{a.prenom}}</td>
-<td>{{a.rue}}</td>
-<td>{{a.ville}}</td>
-<td>{{a.departement}}</td>
+    <tr>
+ <td>{{currentUser.login}}</td>
+<td>{{currentUser.password}}</td>
+<td>{{currentUser.mail}}</td>
+<td>{{currentUser.nom}}</td>
+<td>{{currentUser.prenom}}</td>
+<td>{{currentUser.numero}}</td>
+<td>{{currentUser.rue}}</td>
+<td>{{currentUser.ville}}</td>
+<td>{{currentUser.departement}}</td>
 
-<td> <button (click)="updateUser(a)" class="btn btn-success">Modifier</button>
+<td> <button (click)="updateUser(currentUser)" class="btn btn-success">Modifier</button>
 </td>
     </tr> 
 </tbody>
@@ -39,32 +41,65 @@
 <form *ngIf="BooleanForm" [formGroup]="formArt" (ngSubmit)="ajoutUser()">
     <div class="form-row" >
       <div class="form-group">
-        <label for="inputEmail4"> Nom de l'article</label>
+        <label for="inputEmail4"> Login :</label>
         <input type="text" class="form-control"  formControlName="login" >
       </div>
-      <div class="form-group">
-        <label class="mr-sm-2" for="inlineFormCustomSelect">Type d'article :</label>
-        <select  class="custom-select mr-sm-2" formControlName="typearticle" >
-          
-          <option  value="1">Legume</option>
-          <option  value="2">Fruit</option>
-          <option value="3" >Viande</option>
-          <option  value="4">Alcool</option>
-          <option value="3" >Laitage</option>
-          <option  value="4">Artisanat</option>
-        </select>
-      </div>
+    </div>
+     
+      <div class="form-row" >
+        <div class="form-group">
+          <label for="inputEmail4"> Mot de passe :</label>
+          <input type="text" class="form-control"  formControlName="password" >
+        </div>
+    </div>
+        <div class="form-row" >
+            <div class="form-group">
+              <label for="inputEmail4"> Adresse email :</label>
+              <input type="text" class="form-control"  formControlName="mail" >
+            </div>
+        </div>
+            <div class="form-row" >
+                <div class="form-group">
+                  <label for="inputEmail4"> Nom :</label>
+                  <input type="text" class="form-control"  formControlName="nom" >
+                </div>
+            </div>
+                <div class="form-row" >
+                     <div class="form-group">
+                      <label for="inputEmail4"> Prénom :</label>
+                      <input type="text" class="form-control"  formControlName="prenom" >
+                    </div>
+                </div>
+    
+  
+
+                <div class="form-group">
+                  <div class="form-group">
+                <label for="inputCity">Numero : </label>
+                <input type="text" class="form-control" formControlName="numero" >
+              </div>
+          </div>
 
     <div class="form-group">
-      <label for="inputCity">Prix unitaire</label>
-      <input type="text" class="form-control"  formControlName="prix" >
+        <div class="form-group">
+      <label for="inputCity">Rue : </label>
+      <input type="text" class="form-control" formControlName="rue" >
     </div>
+</div>
   
     <div class="form-group">
-      <label for="inputCity">Quantité disponible</label>
-      <input type="text" class="form-control" formControlName="quantiteDisponible" >
+        <div class="form-group">
+        <label for="inputCity">Ville : </label>
+        <input type="text" class="form-control" formControlName="ville" >
     </div>
+</div>
+    <div class="form-group">
+        <div class="form-group">
+        <label for="inputCity">Département :</label>
+        <input type="text" class="form-control" formControlName="departement" >
+      </div>
     </div>
+               
     <button type="submit" class="btn btn-secondary" >Valider</button>
   </form>
 
