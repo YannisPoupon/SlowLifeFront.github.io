@@ -2,7 +2,7 @@
 <br />
 
 <br />
-<p-toast  [style]="{marginTop: '350px', marginRight: '900px'}"></p-toast>
+<p-toast  [style]="{marginTop: '72px'}"></p-toast>
 <div class="row" style="margin-top: 70px;">
     <div class="col-sm-4 mx-auto text-center">
         <form [formGroup]="formConnex" (ngSubmit)="connexionUser()" style="margin-top: 70px;">
@@ -37,12 +37,24 @@
         <!-- Modal body -->
         <div class="modal-body">
             <div class="col mx-auto text-center">
-                <i>Veuillez renseigner l'adresse mail associée à votre compte</i>
-                <form [formGroup]="formRecup" (ngSubmit)="recupUser()" style="margin-top: 20px;">
-                    <input class="form-control" placeholder="adresse mail" formControlName="mail" required="true"><br /><br />
-                    
-                    <button type="submit" class="btn btn-lg btn-outline-success shadow" style="border-radius: 30px; width: 220px; margin-top: 100px;">demander l'envoie de mes identifiants </button>
-                </form>
+                <div class="row">
+                    <div class="col mx-auto text-center">
+                    <i>Veuillez renseigner l'adresse mail associée à votre compte</i>
+                    <form [formGroup]="formRecup" (ngSubmit)="recupUser()" style="margin-top: 2%;margin-bottom: 3%;">
+                        <input class="form-control" placeholder="adresse mail" formControlName="mail" required="true"><br /><br />
+                        
+                        <button type="submit" class="btn btn-lg btn-outline-success shadow" style="border-radius: 30px; width: 220px; margin-top: 100px;">demander l'envoie de mes identifiants </button>
+                    </form>
+                </div>
+             </div>
+                <div *ngIf="recup==true" class="row alert alert-info alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     un mail de confirmation vous a été envoyé
+                </div>
+                <div *ngIf="recup==false" class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    cettre adresse mail ne correspond a aucuns comptes
+               </div>
             </div>
         </div>
         

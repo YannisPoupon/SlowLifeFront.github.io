@@ -17,6 +17,7 @@ export class ConnexionComponent implements OnInit {
   currentId: any;
   privilege: any;
   formRecup : any;
+  recup : any;
   constructor(private conServ: ConnexionService, private router: Router, private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -44,20 +45,27 @@ export class ConnexionComponent implements OnInit {
     else {
       this.conServ.connexion(this.formConnex.value).subscribe((data: any) => {
         console.log(data)
-        console.log(this.formConnex.value.login);
-        console.log(this.formConnex.value.password);
          if (data==null) {
           this.messageService.add({ severity: 'error', summary: 'Attention !', detail: 'Login ou mot de pass erronés' });
          }
         else if (data != null) {
-          this.messageService.add({ severity: 'info', summary: '', detail: 'Authentification réussie' });
-          console.log(data.idUser)
-          localStorage.setItem('currentUser', JSON.stringify(data))
-          setTimeout(() =>{
-            this.router.navigate(['accueil']);
-            }, 1300);
-         
-        } // else afficher messaeg login ou mot de pass incorrect
+
+            if(data.privilege=="Admin"){
+              console.log("ok");
+              this.messageService.add({ severity: 'info', summary: '', detail: 'Authentification réussie' });
+              localStorage.setItem('currentUser', JSON.stringify(data))
+              setTimeout(() =>{
+                this.router.navigate(['adminHome']);
+                }, 1300);
+              
+            }else{
+              this.messageService.add({ severity: 'info', summary: '', detail: 'Authentification réussie' });
+              localStorage.setItem('currentUser', JSON.stringify(data))
+              setTimeout(() =>{
+                this.router.navigate(['accueil']);
+                }, 1300);
+            }
+        } 
 
       })
     }
@@ -69,10 +77,16 @@ export class ConnexionComponent implements OnInit {
   recupUser (){
     this.conServ.recupUser(this.formRecup.value).subscribe((data)=> {
       console.log(data)
+      this.formRecup.reset()
       if (data==true) {
-        this.messageService.add({ severity: 'info', summary: 'Récupération', detail: 'Un email contenant vos identifiants vous a été envoyé' });
-      } else this.messageService.add({ severity: 'warn', summary: 'Attention !', detail: 'email inconnu' });
-
+        this.recup=true
+        setTimeout(() =>{
+          location.reload()
+          }, 1600);
+        // this.messageService.add({ severity: 'info', summary: 'Récupération', detail: 'Un email contenant vos identifiants vous a été envoyé' });
+      } else 
+      // this.messageService.add({ severity: 'warn', summary: 'Attention !', detail: 'email inconnu' });
+        this.recup=false
     })
   }
 

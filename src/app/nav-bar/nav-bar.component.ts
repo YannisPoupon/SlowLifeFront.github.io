@@ -36,7 +36,9 @@ privilege :any;
     
     localStorage.clear();
     console.log(localStorage.getItem(this.currentUser))
-    this.router.navigate(['Accueil']);
+    setTimeout(() =>{
+      this.router.navigate(['Accueil'])
+      }, 400);
   }
 
   connexRedir(){
