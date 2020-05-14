@@ -2,79 +2,79 @@
 <br /><br /><br />
 
 <br /><br />
-<h4> →  Liste de vos annonces :</h4>
+<div class="container col-sm-10">
+  <h4> →  Liste de vos annonces :</h4>
+</div>
 <br /><br />
-<table  class="table" >
-    <thead>
-    <tr>
-<td>Date de Début  </td>
-<td>Date de fin </td>
-<td>Type d'annonce </td>
-<td>Nombre de place </td>
-<td>Compensation </td>
-<td>Supprimer ?</td>
-<td>Modifier ?</td>
-    </tr> 
-</thead>
-<tbody>
-    <tr *ngFor="let a of listArt">
- <td>{{a.dateDebut | date:'EEEE, MMMM d, y' }}</td>
-<td>{{a.dateFin | date:'EEEE, MMMM d, y'}}</td>
-<td>{{a.typeannonce}}</td>
-<td>{{a.nombrePlace}}</td>
-<td>{{a.compensation}}</td>
-<td> <button (click)="deleteAnnonce(a.idAnnonce)" class="btn btn-danger">Supprimer</button>
-</td>
-<td> <button (click)="updateAnnonce(a)" class="btn btn-success">Modifier</button>
-</td>
-    </tr> 
-</tbody>
-</table>
 
+<div class="container col-sm-10">
+  <table  class="table" >
+    <thead>
+      <tr>
+        <td>Date de Début  </td>
+        <td>Date de fin </td>
+        <td>Type d'annonce </td>
+        <td>Nombre de place </td>
+        <td>Compensation </td>
+        <td>Supprimer ?</td>
+        <td>Modifier ?</td>
+      </tr> 
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of listArt">
+        <td>{{a.dateDebut | date:'EEEE, MMMM d, y' }}</td>
+        <td>{{a.dateFin | date:'EEEE, MMMM d, y'}}</td>
+        <td>{{a.typeannonce}}</td>
+        <td>{{a.nombrePlace}}</td>
+        <td>{{a.compensation}}</td>
+        <td> <button (click)="deleteAnnonce(a.idAnnonce)" class="btn btn-danger">Supprimer</button></td>
+        <td> <button (click)="updateAnnonce(a)" class="btn btn-success">Modifier</button></td>
+      </tr> 
+    </tbody>
+  </table>
+</div>
 <br /><br />
 
 <br /><br />
   <!-- _____________________apparition conditionnelle pour le update ________________________-->
-  <form *ngIf="BooleanForm" [formGroup]="formArt" (ngSubmit)="ajoutAnnonce()">
-    <div class="form-row" >
-      <div class="form-group">
-        <label for="inputEmail4">Date de Début</label>
-        <input type="date" class="form-control"  formControlName="dateDebut"  >
-      </div>
-      <div class="form-group">
-        <label for="inputPassword4">Date de Fin</label>
-        <input type="date" class="form-control"  formControlName="dateFin">
-      </div>
-
+<div class="container col-sm-10">
+<form *ngIf="BooleanForm" [formGroup]="formArt" (ngSubmit)="ajoutAnnonce()">
+  <div class="form-row" >
+    <div class="form-group">
+      <label for="inputEmail4">Date de Début</label>
+      <input type="date" class="form-control"  formControlName="dateDebut">
+    </div>
+    <div class="form-group">
+      <label for="inputPassword4">Date de Fin</label>
+      <input type="date" class="form-control"  formControlName="dateFin">
+    </div>
     <div class="form-group">
       <label for="inputCity">Type d'annonce</label>
       <input type="text" class="form-control"  formControlName="typeannonce">
     </div>
-
     <div class="form-group">
       <label class="mr-sm-2" for="inlineFormCustomSelect">Type d'annonce:</label>
       <select  class="custom-select mr-sm-2" formControlName="typeannonce" >
-        
         <option  value="1">Maraîchage</option>
         <option  value="2">Viticole</option>
         <option value="3" >Manuelle</option>
         <option  value="4">Agricole</option>
-    
       </select>
     </div>
-  
+
     <div class="form-group">
-      <label for="inputCity">Nombre de Place :</label>
-      <input type="text" class="form-control"  formControlName="nombrePlace">
+    <label for="inputCity">Nombre de Place :</label>
+    <input type="text" class="form-control"  formControlName="nombrePlace">
     </div>
-    
+
     <div class="form-group">
-      <label for="inputCity">Compensation :</label>
-      <input type="text" class="form-control" formControlName="compensation" >
+    <label for="inputCity">Compensation :</label>
+    <input type="text" class="form-control" formControlName="compensation" >
     </div>
-    </div>
-    <button type="submit" class="btn btn-secondary" >Valider</button>
-  </form>
+  </div>
+  <button type="submit" class="btn btn-secondary" >Valider</button>
+</form>
+</div>
 
 
 
@@ -83,8 +83,10 @@
 
 
 <!-- _________________________________________Button trigger modal _____________________________________________-->
+<div class="container col-sm-10">
 <button type="button" class="btn btn-lg btn-outline-success shadow" data-toggle="modal" data-target=".bd-example-modal-lg"style="border-radius: 30px; width: 220px;">
     Publier une annonce </button>
+</div>
 
   
   <!-- _____________________________________________Modal _____________________________________________-->
@@ -134,12 +136,12 @@
 
                       <div class="form-group">
                         <label for="exampleInputEmail1">Nombre de place(s) disponible(s) :</label>
-                        <input type="number" class="form-control" formControlName="nombrePlace" aria-describedby="emailHelp" placeholder="Prix unitaire">
+                        <input type="number" class="form-control" formControlName="nombrePlace" aria-describedby="emailHelp" placeholder=" de combien de personnes avez vous besoin?">
                         <small id="emailHelp" class="form-text text-muted"></small>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Compensation :</label>
-                        <input type="text" class="form-control" formControlName="compensation" aria-describedby="emailHelp" placeholder="Quantité disponible">
+                        <input type="text" class="form-control" formControlName="compensation" aria-describedby="emailHelp" placeholder="rémunértion, service, nouriture, etc..">
                         <small id="emailHelp" class="form-text text-muted"></small>
                       </div>
                     </form>
@@ -148,8 +150,8 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-          <button type="submit" class="btn btn-secondary" data-dismiss="modal" (click)="nouvelAnnonce()">Ajouter</button>
+          <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="nouvelAnnonce()">Ajouter</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Fermer</button>
         </div>
       </div>
     </div>
