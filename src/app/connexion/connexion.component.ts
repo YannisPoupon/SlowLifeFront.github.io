@@ -40,8 +40,10 @@ export class ConnexionComponent implements OnInit {
         console.log(data)
         console.log(this.formConnex.value.login);
         console.log(this.formConnex.value.password);
-
-        if (data != null) {
+         if (data==null) {
+          this.messageService.add({ severity: 'error', summary: 'Attention !', detail: 'Login ou mot de pass erronés' });
+         }
+        else if (data != null) {
           this.messageService.add({ severity: 'info', summary: '', detail: 'Authentification réussie' });
           console.log(data.idUser)
           localStorage.setItem('currentUser', JSON.stringify(data))

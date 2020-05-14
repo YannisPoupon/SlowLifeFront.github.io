@@ -66,7 +66,7 @@ getTemp : any;
          idUser : new FormControl()
   })
 })}
-
+console.log(this.currentUser)
 this.getFruitsLegumes();
 }
 
@@ -118,6 +118,7 @@ nouvelArticle(){
 getArticleByProd(){
   this.arts.getArticleByProd(this.currentUser).subscribe((data)=>{
     this.listArt=data;
+    console.log(this.listArt)
   })
 }
 getArticleByArt(){
