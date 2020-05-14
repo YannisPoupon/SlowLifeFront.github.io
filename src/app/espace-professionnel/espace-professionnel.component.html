@@ -56,10 +56,10 @@
     
       </tr> 
     </thead>
-    <tbody>
-        <tr *ngFor="let a of listFeed" >
+    <tbody *ngFor="let a of listFeed">
+        <tr *ngIf="a.userRecoit.idUser == currentUser.idUser">
         
-          <td>{{a.note}}</td>
+          <td >{{a.note}}</td>
           <td> {{a.commentaire}}</td>
           <td>{{a.userDonne.nom}}</td>
           <td>{{a.choix.article.nom}}</td>

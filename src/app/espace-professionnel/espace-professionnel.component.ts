@@ -16,6 +16,7 @@ export class EspaceProfessionnelComponent implements OnInit {
 Boolprod: boolean=false;
 formFeedB: any;
 listFeed : any;
+recup : boolean =false;
 
 
   constructor(private profServ: EspaceParticulierService, private feeds:FeedbackService) { }
@@ -34,7 +35,7 @@ listFeed : any;
           idUser : new FormControl()
         })
       }) 
-        
+    
     
     }else if (this.currentUser.privilege == "Artisant"){
       
@@ -81,12 +82,12 @@ if (this.currentUser.privilege =="Producteur"){
 //________________list feedbacks______________
 
 getFeedback(){
-
+  
 this.feeds.getAllFeedback().subscribe((data)=>{
   this.listFeed=data;
   console.log(this.listFeed);
- 
-})//ngIf si idUser_Recoit == à celle de currentUser.IdUSer
+})
+
 }
 
 }
