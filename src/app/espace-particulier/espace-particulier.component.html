@@ -140,20 +140,23 @@
   <table  class="table" >
     <thead>
       <tr>
-        <td>Quantite</td>
         <td>Date d'achat</td>
-      
-      <td>Votre avis</td>
+        <td>Producteur</td>
+        <td>Article commandé</td>
+      <td>Quantité</td>
+      <td>Votre avis nous intéresse</td>
       </tr> 
     </thead>
     <tbody>
         <tr *ngFor="let a of listChoix">
-          <td>{{a.quantite}}</td>
-          <td>{{a.dateAchat  | date:'EEEE, MMMM d, y'}}</td>
         
+          <td>{{a.dateAchat  | date:'EEEE, MMMM d, y'}}</td>
+          <td>  {{a.article.producteur.nom}}</td>
+          <td>  {{a.article.nom}}</td>
+          <td>{{a.quantite}}</td>
           <td>
           <div class="container col-sm-10" >
-            <button type="button" class="btn btn-lg btn-outline-success shadow" (click)=donnerFeed(a) data-toggle="modal" data-target=".bd-example-modal-lg"style="border-radius: 30px; width: 220px;">
+            <button type="button" class="btn btn-lg btn-outline-success shadow" (click)=donnerFeed(a) data-toggle="modal" data-target=".bd-example-modal-lg"style="border-radius: 30px; width: 240px;">
             Donnez votre avis </button>
         </div></td>
         </tr> 

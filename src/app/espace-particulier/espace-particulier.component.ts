@@ -314,11 +314,9 @@ getListFeed(){
 
 verif(ch: any){
    var present  =false;
-   
 for (var i=0 ; i < this.listFeed.length ; i++){
   if (ch.idChoix == this.listFeed[i].choix.idChoix){
     present=true;
-    
   }
 }
 return present;

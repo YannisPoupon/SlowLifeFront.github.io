@@ -31,35 +31,41 @@
       </div>
   </div>
 </div>
-<br /><br /><br />
+<br /><br /><br /><br />
 
 
-<!--
-<center>
-<h4>Voici ce que vos saisonniers ont pensé du temps passé avec vous :</h4>
-</center>
+<!--____________________________________PARTIE FEEDBACK ICI_________________________________-->
 
+<div class="row-sm-4 text-left" style=" margin-top: 50px; background-color: rgb(128, 230, 145);">
+  <div class="col text-left" style="margin-left :20px">
+    <h2>Ce qu'ils en ont pensé</h2>
+    <p>Retrouvez ici les avis de vos clients.</p>
+  
+  </div>
+</div>
 
-<p-carousel [value]="cars" [numVisible]="4" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions">
-
-  <ng-template let-car pTemplate="item">
-      <div class="car-details">
-          <div class="p-grid p-nogutter">
-              <div class="p-col-12">
-                  <img src="assets/showcase/images/demo/car/{{car.brand}}.png" />
-              </div>
-              <div class="p-col-12 car-data">
-                  <div class="car-title">{{car.brand}}</div>
-                  <div class="car-subtitle">{{car.year}} | {{car.color}}</div>
-
-                  <div class="car-buttons">
-                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-search"></button>
-                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-star"></button>
-                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-cog"></button>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </ng-template>
-</p-carousel>-->
-
+<br /><br />
+<div class="container col-sm-10">
+  <table  class="table" >
+    <thead>
+      <tr>
+        <td>Note</td>
+        <td>Commentaire</td>
+   <td>Votre client</td>
+   <td>Produit commandé</td>
+    
+      </tr> 
+    </thead>
+    <tbody>
+        <tr *ngFor="let a of listFeed" >
+        
+          <td>{{a.note}}</td>
+          <td> {{a.commentaire}}</td>
+          <td>{{a.userDonne.nom}}</td>
+          <td>{{a.choix.article.nom}}</td>
+        
+        </tr> 
+    </tbody>
+  </table>
+</div>
+<br /><br />
