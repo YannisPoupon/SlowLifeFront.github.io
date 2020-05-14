@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CreationAnnonceService } from '../services/creation-annonce.service';
+import { ArticleService } from '../services/article.service';
 
 @Component({
   selector: 'app-creation-annonce',
@@ -19,7 +20,8 @@ currentUser: any;
 contenantart: any;
 
 
-  constructor(private cas:CreationAnnonceService) { }
+
+  constructor(private cas:CreationAnnonceService, private aServ:ArticleService) { }
 
   ngOnInit(): void {
 
@@ -61,7 +63,9 @@ ajoutAnnonce(){
 nouvelAnnonce(){
   console.log(this.formArt.value)
   this.formArt.controls['producteur'].controls['idUser'].setValue(this.currentUser.idUser)
-  this.cas.ajoutAnnonce(this.formArt.value).subscribe(()=>this.getAnnonceByProd());
+  this.cas.ajoutAnnonce(this.formArt.value).subscribe(()=>{
+    this.formArt.reset()
+    this.getAnnonceByProd()});
 }
 
 getAnnonceByProd(){
@@ -76,6 +80,7 @@ deleteAnnonce(id : number){
 this.cas.deleteAnnonce(id).subscribe(()=>this.getAnnonceByProd());
 
 }
+
 
 
 

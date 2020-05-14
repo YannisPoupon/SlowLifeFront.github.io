@@ -22,39 +22,56 @@ BooleanForm: boolean=false;
   ngOnInit(): void {
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    console.log(this.currentUser)
     if (this.currentUser.privilege == "Producteur"){
-
-      this.formArt=new FormGroup({
-        idArticle : new FormControl(),
-        nom : new FormControl(),
-        typearticle : new FormControl(),
-        prix : new FormControl(),
-        quantiteDisponible : new FormControl(),
+      this.currentUser.idUSer
   
+      this.formArt=new FormGroup({
+        login: new FormControl(),
+        password : new FormControl(),
+        mail : new FormControl(),
+        nom : new FormControl(),
+        prenom: new FormControl(),
+        numero : new FormControl(),
+        rue : new FormControl(),
+        ville : new FormControl(),
+        departement : new FormControl(),
+
+
         producteur : new FormGroup({
           idUser : new FormControl() })
     })
     
     }else if (this.currentUser.privilege == "Artisant"){
- 
+      this.currentUser.idUSer
+
       this.formArt=new FormGroup({
-        idArticle : new FormControl(),
+        login: new FormControl(),
+        password : new FormControl(),
+        mail : new FormControl(),
         nom : new FormControl(),
-        typearticle : new FormControl(),
-        prix : new FormControl(),
-        quantiteDisponible : new FormControl(),
+        prenom: new FormControl(),
+        numero : new FormControl(),
+        rue : new FormControl(),
+        ville : new FormControl(),
+        departement : new FormControl(),
 
         artisant : new FormGroup({
            idUser : new FormControl() })
     })
     }else if (this.currentUser.privilege == "Commercant"){
-  
-    this.formArt=new FormGroup({
-      idArticle : new FormControl(),
-      nom : new FormControl(),
-      typearticle : new FormControl(),
-      prix : new FormControl(),
-      quantiteDisponible : new FormControl(),
+      this.currentUser.idUser
+
+      this.formArt=new FormGroup({
+        login: new FormControl(),
+        password : new FormControl(),
+        mail : new FormControl(),
+        nom : new FormControl(),
+        prenom: new FormControl(),
+        numero : new FormControl(),
+        rue : new FormControl(),
+        ville : new FormControl(),
+        departement : new FormControl(),
 
       commercant : new FormGroup({
          idUser : new FormControl()
@@ -64,50 +81,43 @@ BooleanForm: boolean=false;
 
     
   ajoutUser(){
-    this.mods.ajoutArtisant(this.formArt.value).subscribe(()=>{
+    console.log(this.formArt.value);
+    
       if (this.currentUser.privilege == "Producteur"){
-        this.mods.ajoutProducteur(this.user);
+     //   this.formArt.controls['producteur'].controls['idUser'].setValue(this.currentUser.idUser)
+        this.mods.ajoutProducteur(this.formArt.value).subscribe(()=>console.log("OK"))
       }else if (this.currentUser.privilege == "Artisant"){
-        this.mods.ajoutArtisant(this.user);
+        this.mods.ajoutArtisant(this.formArt.value).subscribe()
       }else if (this.currentUser.privilege == "Commercant"){
-        this.mods.ajoutCommercant(this.user);
-      }})
-  }
+        this.mods.ajoutCommercant(this.formArt.value).subscribe()
+      }
+      this.BooleanForm=false;
+    }
+      
+  
 
-  updateUser(art : any){
-   // this.formArt.controls['idUser'].setValue(art.idUser)
-    this.formArt.controls['login'].setValue(art.login)
-    this.formArt.controls['password'].setValue(art.password)
-    this.formArt.controls['mail'].setValue(art.mail)
-    this.formArt.controls['nom'].setValue(art.nom)
-    this.formArt.controls['prenom'].setValue(art.prenom)
-    this.formArt.controls['rue'].setValue(art.rue)
-    this.formArt.controls['ville'].setValue(art.ville)
-    this.formArt.controls['departement'].setValue(art.departement)
+  updateUser(currentUser : any){
+  
+    console.log(this.currentUser)
+    //this.formArt.controls['idUser'].setValue(currentUser.idUser)
+    this.formArt.controls['login'].setValue(currentUser.login)
+    this.formArt.controls['password'].setValue(currentUser.password)
+    this.formArt.controls['mail'].setValue(currentUser.mail)
+    this.formArt.controls['nom'].setValue(currentUser.nom)
+    this.formArt.controls['prenom'].setValue(currentUser.prenom)
+    this.formArt.controls['rue'].setValue(currentUser.rue)
+    this.formArt.controls['numero'].setValue(currentUser.numero)
+    this.formArt.controls['ville'].setValue(currentUser.ville)
+    this.formArt.controls['departement'].setValue(currentUser.departement)
     if (this.currentUser.privilege == "Artisant"){
-    this.formArt.controls['artisant'].controls['idUser'].setValue(art.artisant.idUser)}
+    this.formArt.controls['artisant'].controls['idUser'].setValue(currentUser.idUser)}
     else if (this.currentUser.privilege == "Producteur"){
-      this.formArt.controls['producteur'].controls['idUser'].setValue(art.artisant.idUser)}
+      this.formArt.controls['producteur'].controls['idUser'].setValue(currentUser.idUser)}
     else if (this.currentUser.privilege == "Commercant"){
-      this.formArt.controls['commercant'].controls['idUser'].setValue(art.artisant.idUser)}
+      this.formArt.controls['commercant'].controls['idUser'].setValue(currentUser.idUser)}
+      this.BooleanForm=true;
     }
   
 
-  getProducteur(){
-    this.mods.getProducteur().subscribe((data)=>{
-      this.listUser=data;
-    })
-    }
-    getArtisant(){
-      this.mods.getArtisant().subscribe((data)=>{
-        this.listUser=data;
-      })
-      }
-      getCommercant(){
-        this.mods.getCommercant().subscribe((data)=>{
-          this.listUser=data;
-        })
-        }
-    
 }
 

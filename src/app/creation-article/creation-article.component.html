@@ -2,41 +2,44 @@
 <br /><br /><br />
 
 <br /><br />
-<h4> →  Liste de vos articles :</h4>
+<p-toast  [style]="{marginTop: '72px'}"></p-toast>
+<div class="container col-sm-10">
+  <h4> →  Liste de vos articles :</h4>
+</div>
+
 <br /><br />
-<table  class="table" >
+<div class="container col-sm-10">
+  <table  class="table" >
     <thead>
-    <tr>
-<td>Nom  </td>
-<td>Type d'article</td>
-<td>Prix</td>
-<td>Quantité disponible </td>
-<td>Supprimer ?</td>
-<td>Modifier ?</td>
-    </tr> 
-</thead>
-<tbody>
-    <tr *ngFor="let a of listArt">
- <td>{{a.nom}}</td>
-<td>{{a.typearticle}}</td>
-<td>{{a.prix}}</td>
-<td>{{a.quantiteDisponible}}</td>
-<td> <button (click)="deleteArticle(a.idArticle)" class="btn btn-danger">Supprimer</button>
-</td>
-
-<td> <button (click)="modifierArticle(a)" class="btn btn-success">Modifier</button>
-</td>
-    </tr> 
-</tbody>
-</table>
-
+      <tr>
+        <td>Nom  </td>
+        <td>Type d'article</td>
+        <td>Prix</td>
+        <td>Quantité disponible </td>
+        <td>Supprimer ?</td>
+        <td>Modifier ?</td>
+      </tr> 
+    </thead>
+    <tbody>
+        <tr *ngFor="let a of listArt">
+          <td>{{a.nom}}</td>
+          <td>{{a.typearticle}}</td>
+          <td>{{a.prix}}</td>
+          <td>{{a.quantiteDisponible}}</td>
+          <td> <button (click)="deleteArticle(a.idArticle)" class="btn btn-danger">Supprimer</button></td>
+          <td> <button (click)="modifierArticle(a)" class="btn btn-success">Modifier</button></td>
+        </tr> 
+    </tbody>
+  </table>
+</div>
 <br /><br />
   <!-- _____________________apparition conditionnelle pour le update ________________________-->
+<div class="container col-sm-10">
   <form *ngIf="BooleanForm" [formGroup]="formArt" (ngSubmit)="ajoutArticle()">
-    <div class="form-row" >
+    <div class="form-row d-flex justify-content-around" >
 
       <div class="form-group">
-        <label for="inputEmail4"> Nom de l'article</label>
+        <label for="inputEmail4"> Nom de l'article</label><br/>
         <p-autoComplete formControlName="nom" [suggestions]="ListeArticlesEnum" (completeMethod)="searchArt($event)"  field="nom" [size]="30"
         placeholder="pomme, courgettes, etc" [minLength]="1"></p-autoComplete>
       </div>
@@ -54,18 +57,25 @@
         </select>
       </div>
 
-    <div class="form-group">
-      <label for="inputCity">Prix unitaire</label>
-      <input type="text" class="form-control"  formControlName="prix" >
+      <div class="form-group">
+        <label for="inputCity">Prix unitaire</label>
+        <input type="text" class="form-control"  formControlName="prix" >
+      </div>
+    
+      <div class="form-group">
+        <label for="inputCity">Quantité disponible</label>
+        <input type="text" class="form-control" formControlName="quantiteDisponible" >
+      </div>
+
     </div>
-  
-    <div class="form-group">
-      <label for="inputCity">Quantité disponible</label>
-      <input type="text" class="form-control" formControlName="quantiteDisponible" >
+    <div>
+      <button type="submit" class="btn btn-success mx-2" >Valider</button>
+      <button class="btn btn-warning mx-2" (click)="annulerModif()">Annuler</button>
     </div>
-    </div>
-    <button type="submit" class="btn btn-secondary" >Valider</button>
+    
   </form>
+</div>
+
 
 
 
@@ -74,8 +84,10 @@
 
 
 <!-- _________________________________________Button trigger modal _____________________________________________-->
-<button type="button" class="btn btn-lg btn-outline-success shadow" data-toggle="modal" data-target=".bd-example-modal-lg"style="border-radius: 30px; width: 220px;">
+<div class="container col-sm-10">
+    <button type="button" class="btn btn-lg btn-outline-success shadow" data-toggle="modal" data-target=".bd-example-modal-lg"style="border-radius: 30px; width: 220px;">
     Publier un article  </button>
+</div>
 
   
   <!-- _____________________________________________Modal _____________________________________________-->
@@ -89,21 +101,18 @@
           </button>
         </div>
         <div class="modal-body">
-         
+          <div class="container p-3 my-3 bg-dark text-white" style="margin-top: 70px;">
+              <form [formGroup]="formArt" (ngSubmit)="nouvelArticle()" >
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Nom :</label><br/>
+                      <!-- <input type="text" class="form-control" formControlName="nom" aria-describedby="emailHelp" placeholder="Nom"> -->
+                      <p-autoComplete formControlName="nom" [suggestions]="ListeArticlesEnum" (completeMethod)="searchArt($event)"  field="nom" [size]="30"
+                      placeholder="pomme, courgettes, etc" [minLength]="1"></p-autoComplete>
+                      <small id="emailHelp" class="form-text text-muted"></small>
+                  </div>
 
-
-
-            <div class="container p-3 my-3 bg-dark text-white" style="margin-top: 70px;">
-               
-                <form [formGroup]="formArt" (ngSubmit)="nouvelArticle()" >
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Nom :</label>
-                        <input type="text" class="form-control" formControlName="nom" aria-describedby="emailHelp" placeholder="Nom">
-                        <small id="emailHelp" class="form-text text-muted"></small>
-                      </div>
-                   
-                      <div class="form-row align-items-center">
-                        <div class="col-auto my-1">
+                  <div class="form-row align-items-center">
+                      <div class="col-auto my-1">
                           <label class="mr-sm-2" for="inlineFormCustomSelect">Type d'article :</label>
                           <select  class="custom-select mr-sm-2" formControlName="typearticle" >
                             
@@ -114,28 +123,25 @@
                             <option value="4" >Laitage</option>
                             <option  value="5">Artisanat</option>
                           </select>
-                        </div>
                       </div>
+                  </div>
 
-
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Prix unitaire :</label>
-                        <input type="text" class="form-control" formControlName="prix" aria-describedby="emailHelp" placeholder="Prix unitaire">
-                        <small id="emailHelp" class="form-text text-muted"></small>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Quantité disponible :</label>
-                        <input type="number" class="form-control" formControlName="quantiteDisponible" aria-describedby="emailHelp" placeholder="Quantité disponible">
-                        <small id="emailHelp" class="form-text text-muted"></small>
-                      </div>
-                    </form>
-                      </div>
-
-
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Prix unitaire :</label>
+                      <input type="text" class="form-control" formControlName="prix" aria-describedby="emailHelp" placeholder="Prix unitaire">
+                      <small id="emailHelp" class="form-text text-muted"></small>
+                  </div>
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Quantité disponible :</label>
+                      <input type="number" class="form-control" formControlName="quantiteDisponible" aria-describedby="emailHelp" placeholder="Quantité disponible">
+                      <small id="emailHelp" class="form-text text-muted"></small>
+                  </div>
+              </form>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-          <button type="submit" class="btn btn-secondary" data-dismiss="modal" (click)="nouvelArticle()">Ajouter</button>
+          <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="nouvelArticle()">Ajouter</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Fermer</button>
         </div>
       </div>
     </div>

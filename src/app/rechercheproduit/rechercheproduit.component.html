@@ -2,7 +2,7 @@
 <h3 style="margin-top: 70px;">Rechercher des produits autours de chez vous</h3>
 <p-toast  [style]="{marginTop: '72px'}"></p-toast>
 <div class="d-flex justify-content-center"> 
-    <form class="form my-4 d-flex justify-content-around d-flex align-items-end col-sm-10" [formGroup]="rechercheForm" (ngSubmit)="findArticles()">
+    <form class="form my-4 d-flex justify-content-around d-flex align-items-end col-sm-10" [formGroup]="rechercheForm" (ngSubmit)="findArticles(gmap.getMap())">
         <div class="col-sm-4">
             <div class="text-muted font-italic my-3">
                 Que recherchez-vous?
@@ -19,14 +19,14 @@
             <div class="row d-flex align-items-center justify-content-around col-sm-11">
                 <div >
                     <p-autoComplete formControlName="ville" [suggestions]="NomsVilles" (completeMethod)="search($event)" field="nom" [size]="30"
-    placeholder="Ville" [minLength]="1"></p-autoComplete>
+                    placeholder="Ville" [minLength]="1"></p-autoComplete>
                 </div>
                
-                <div *ngIf="!enableGeoLoc" (click)="geolocalisation()" 
+                <div *ngIf="!enableGeoLoc" (click)="geolocalisation(gmap.getMap())" 
                     class="form-group col-sm-5 d-flex justify-content-around">
                     <i class="pi pi-globe" style="font-size: 2em"></i>utiliser ma position
                 </div>
-                <div *ngIf="enableGeoLoc" (click)="geolocalisation()" 
+                <div *ngIf="enableGeoLoc" (click)="geolocalisation(gmap.getMap())" 
                     class="shadow form-group col-sm-5 d-flex justify-content-around "
                     style="color: red;">
                     <i class="pi pi-globe" style="font-size: 2em;color: red;"></i>utiliser ma position
@@ -45,9 +45,10 @@
 <!-- Carte GMAP -->
 <div class="col-sm-12 d-flex justify-content-around">
     <div class="shadow col-sm-10 rounded">
-        <p-gmap [options]="options" *ngIf="afficher" id="test" class="border border-light" [overlays]="overlays" 
+        <p-gmap  #gmap [options]="options" class="border border-light" [overlays]="overlays" 
         (onOverlayClick)="handleOverlayClick($event)" [style]="{'width':'100%','height':'400px'}" ></p-gmap>
     </div>
+    
 </div>
 
 <!-- Résultat recherche -->

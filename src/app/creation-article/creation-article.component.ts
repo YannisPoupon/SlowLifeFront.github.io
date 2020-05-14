@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../services/article.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CreationArticleService } from '../services/creation-article.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-creation-article',
@@ -10,20 +11,19 @@ import { CreationArticleService } from '../services/creation-article.service';
 })
 export class CreationArticleComponent implements OnInit {
 
-  formNew:any;
+formNew:any;
 formArt : any;
 listArt : any;
 BooleanForm : boolean =false;
 currentUser: any;
 contenantart: any;
-
 ListeArticlesEnum:any;
 ListeArticlesEnumData: any[] = [] ;
 temp:any;
 getTemp : any;
 
 
-  constructor(private arts:CreationArticleService, private ass:ArticleService) { }
+  constructor(private arts:CreationArticleService, private ass:ArticleService,private messageService: MessageService) { }
 
   ngOnInit(): void {
 
@@ -71,7 +71,7 @@ this.getFruitsLegumes();
 }
 
 modifierArticle(coll :any){
- this.BooleanForm=true;
+this.BooleanForm=true;
 this.formArt.controls['idArticle'].setValue(coll.idArticle)
 this.formArt.controls['nom'].setValue(coll.nom)
 this.formArt.controls['typearticle'].setValue(coll.typearticle)
@@ -88,8 +88,14 @@ this.formArt.controls['commercant'].controls['idUser'].setValue(coll.commercant.
 }
 }
 
+annulerModif(){
+  this.BooleanForm=false;
+}
+
 ajoutArticle(){
   console.log(this.formArt.value)
+  var lenom = this.formArt.value.nom.nom
+  this.formArt.controls['nom'].setValue(lenom)
   this.arts.ajoutArticle(this.formArt.value).subscribe(()=>{
     if (this.currentUser.privilege == "Producteur"){
       this.getArticleByProd();
@@ -99,10 +105,11 @@ ajoutArticle(){
       this.getArticleByCom();
     }})
   this.BooleanForm=false;
-  alert("Vos modifications ont bien été prises en compte");
+  this.messageService.add({severity:'success', summary: 'Mise à jour carte', detail:"Vos modifications ont bien été prises en compte"});
 }
 
 nouvelArticle(){
+  this.formArt.controls['nom'].setValue(this.formArt.value.nom.nom)
   console.log(this.formArt.value)
   this.formArt.controls['producteur'].controls['idUser'].setValue(this.currentUser.idUser)
   this.arts.ajoutArticle(this.formArt.value).subscribe(()=>{
@@ -154,7 +161,6 @@ searchArt(event) {
 }
 
 filtrerArt(query, ListeArt: any[]):any[] {
-  //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
   let filtered : any[] = [];
   for(let i = 0; i < ListeArt.length; i++) {
       let art = ListeArt[i];

@@ -35,11 +35,11 @@ export class RechercheproduitComponent implements OnInit {
   map:any;
   dataVilles:any;
   NomsVilles:string[]=[];
-  center={lat: 47.092901, lng: 2.388634};
-  options = {
-    center: this.center,
-    zoom: 5.8
-  };
+  center: any;
+  options :any;
+  latInit=47.092901
+  lngInit=2.388634
+  zoom=5.8
   afficher=true;
   connected:any;
   Article:any;
@@ -101,6 +101,13 @@ export class RechercheproduitComponent implements OnInit {
     })
 
     
+    this.center={lat: this.latInit, lng: this.lngInit};
+    this.options = {
+      center: this.center,
+      zoom: this.zoom
+    };
+  
+
     this.rechercheForm=new FormGroup({
         nom:new FormControl,
         ville:new FormControl,
@@ -181,7 +188,12 @@ export class RechercheproduitComponent implements OnInit {
 }
 
 
-  findArticles(){
+zoomIn(map) {
+  map.setZoom(map.getZoom()+1);
+}
+
+  findArticles(map){
+
     if(this.rechercheForm.value.nom==null || this.rechercheForm.value.nom.length==0){
       this.messageService.add({severity:'error', summary: 'Produit', detail:'le champ «Produit» est requis'});
     }else if((this.rechercheForm.value.ville==null  || this.rechercheForm.value.ville.nom==null) && !this.enableGeoLoc){
@@ -189,19 +201,27 @@ export class RechercheproduitComponent implements OnInit {
     }else{
       this.produitRECHERCHE=this.rechercheForm.value.nom.nom;
       this.villeRECHERCHE=this.rechercheForm.value.ville.nom;
-      this.aServ.findArticles(this.rechercheForm.value.nom.nom, this.rechercheForm.value.ville.nom).subscribe((data)=>{
+      var laville:any;
+      if(this.enableGeoLoc){
+        laville=this.maVille;
+      }else{
+        laville=this.rechercheForm.value.ville.nom
+      }
+      this.aServ.findArticles(this.rechercheForm.value.nom.nom, laville).subscribe((data)=>{
       this.articlesListe=data
       console.log(this.articlesListe);
       
       this.rechercheForm.reset()
       this.showResultMessage(this.articlesListe.length)
-      this.afficherResCarte()
+      this.afficher=false;
+      this.afficherResCarte(map)
+      this.afficher=true;
+      
     })
     }
   }
 
-  afficherResCarte(){
-    this.afficher=false;
+  afficherResCarte(map){
     this.articlesListe
     var echec = 0
     var ok = 0
@@ -210,30 +230,20 @@ export class RechercheproduitComponent implements OnInit {
         ok=1
         var lat = this.articlesListe[i].producteur.latitude
         var lng = this.articlesListe[i].producteur.longitude
-        console.log("lat : "+lat);
-        console.log("lng : "+lng);
         this.overlays.push(new google.maps.Marker({position:{lat: lat, lng: lng}, title:this.articlesListe[i].producteur.nom}));
-        console.log(this.articlesListe[0].producteur.latitude);
-        console.log(this.articlesListe[0].producteur.longitude);
-        
-        
-        this.center={lat:this.articlesListe[0].producteur.latitude, lng:this.articlesListe[0].producteur.longitude}
-          this.options = {
-            center: this.center,
-            zoom: 12
-          };
       }else{
         echec = echec + 1
       }
     }
-    console.log(ok);
-  
-    this.afficher=true;
-   
     if(echec>0){
       this.messageService.add({severity:'warn', summary: 'Mise à jour carte', detail:echec+" résultats n'ont pas pu êtres affichés sur la carte, mais tous les résultats sont listés."});
     }
-   
+    if(ok==1){
+      var newCenter = {lat : this.articlesListe[0].producteur.latitude, lng : this.articlesListe[0].producteur.longitude}
+      map.setCenter(newCenter)
+      map.setZoom(12)
+    }
+ 
   }
   
 
@@ -265,10 +275,9 @@ export class RechercheproduitComponent implements OnInit {
     console.log("ee");
     this.messageService.clear('c');
   }
-  geolocalisation(){
+  geolocalisation(map){
       if(this.enableGeoLoc){this.enableGeoLoc=false}
       else{
-        this.afficher=false; //masquer le conteneur gmap du html pour le réafficher par la suite, cela permet une prise en compte automatique des modifs lors du afficher=true
         this.enableGeoLoc=true
         if(navigator.geolocation)
         navigator.geolocation.getCurrentPosition((data)=>{
@@ -276,20 +285,14 @@ export class RechercheproduitComponent implements OnInit {
           this.myLng=data.coords.longitude
           this.apiAdresseGouv.getAdresse(this.myLat,this.myLng).subscribe((data)=>{
             this.maVille=data
-            console.log(data);
-            
             this.maVille=this.maVille.features[0].properties.city
-            this.rechercheForm.controls['ville'].setValue(this.maVille)
+            this.rechercheForm.controls['ville'].setValue(this.maVille) /*Pas réussi*/
+            this.messageService.add({severity:'success', summary: 'Mise à jour carte', detail:"Vous avez été localisé à "+this.maVille});
           })
-          console.log("lat : "+this.myLat);
-          console.log("lng : "+this.myLng);
           this.overlays.push(new google.maps.Marker({position:{lat: this.myLat, lng: this.myLng}, title:"Moi"}));
           this.center={lat:this.myLat, lng:this.myLng}
-          this.options = {
-            center: this.center,
-            zoom: 12
-          };
-          this.afficher=true;
+          map.setCenter(this.center)
+          map.setZoom(12)
           });
 
       }

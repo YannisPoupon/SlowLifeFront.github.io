@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EspaceParticulierService } from '../services/espace-professionnel.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-espace-professionnel',
@@ -12,52 +13,66 @@ export class EspaceProfessionnelComponent implements OnInit {
   listCom : any;
   listProd : any;
 Boolprod: boolean=false;
+formFeedB: any;
+
 
   constructor(private profServ: EspaceParticulierService) { }
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    if (this.currentUser.privilege == "Producteur"){
+      this.currentUser
 
-//_________________Condition affichage annonces si jamais producteur______________
+      this.formFeedB=new FormGroup({
+        idArticle : new FormControl(),
+        nom : new FormControl(),
+        typearticle : new FormControl(),
+        prix : new FormControl(),
+        quantiteDisponible : new FormControl(),
+  
+        producteur : new FormGroup({
+          idUser : new FormControl() })
+    })
+    
+    }else if (this.currentUser.privilege == "Artisant"){
+      
+
+      this.formFeedB=new FormGroup({
+        idArticle : new FormControl(),
+        nom : new FormControl(),
+        typearticle : new FormControl(),
+        prix : new FormControl(),
+        quantiteDisponible : new FormControl(),
+
+        artisant : new FormGroup({
+           idUser : new FormControl() })
+    })
+    }else if (this.currentUser.privilege == "Commercant"){
+     
+    this.formFeedB=new FormGroup({
+      idArticle : new FormControl(),
+      nom : new FormControl(),
+      typearticle : new FormControl(),
+      prix : new FormControl(),
+      quantiteDisponible : new FormControl(),
+
+      commercant : new FormGroup({
+         idUser : new FormControl()
+  })
+})}
+    
+  
+//________Condition affichage annonces si jamais producteur________
 if (this.currentUser.privilege =="Producteur"){
   this.Boolprod=true;
 }else {
   this.Boolprod=false;
 }
 
-}
+  }
 
 //______________________________________Partie de récup en fonction du privilege___________________________________
-  artisant(id : number){
-    this.profServ.Artisant(id).subscribe((data) => {
-      this.currentUser = data
-    })
-  }
-  Artisants() {
-    this.profServ.Artisants().subscribe((data) => {
-      this.listArt = data
-    })
-  }
-  commercant(id : number){
-    this.profServ.Commercant(id).subscribe((data) => {
-      this.currentUser = data
-    })
-  }
-  Commercants() {
-    this.profServ.Commercants().subscribe((data) => {
-      this.listArt = data
-    })
-  }
-  producteur(id : number){
-    this.profServ.Producteur(id).subscribe((data) => {
-      this.currentUser = data
-    })
-  }
-  Producteurs() {
-    this.profServ.Producteurs().subscribe((data) => {
-      this.listArt = data
-    })
-  }
+
   deconnexion() {
     localStorage.clear();
   }
