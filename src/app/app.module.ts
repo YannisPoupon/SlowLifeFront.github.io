@@ -22,6 +22,9 @@ import { CreationArticleComponent } from './creation-article/creation-article.co
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import { DatePipe } from '@angular/common';
 import {CalendarModule} from 'primeng/calendar';
+import { AdminhomeComponent } from './adminhome/adminhome.component';
+import { AdmingestionusersComponent } from './admingestionusers/admingestionusers.component';
+import { AdmingestionannoncesComponent } from './admingestionannonces/admingestionannonces.component';
 
 
 
@@ -38,7 +41,10 @@ import {CalendarModule} from 'primeng/calendar';
     EspaceProfessionnelComponent,
     ModifProfilProfessionnelComponent,
     CreationAnnonceComponent,
-    CreationArticleComponent
+    CreationArticleComponent,
+    AdminhomeComponent,
+    AdmingestionusersComponent,
+    AdmingestionannoncesComponent
     
 
   ],
