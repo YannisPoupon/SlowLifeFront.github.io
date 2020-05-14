@@ -124,7 +124,75 @@
  <td> <button (click)="ajouterFavori()" class="btn btn-danger">Ajouter</button> </td> 
 </tr> -->
 
+<!--____________________________________PARTIE FEEDBACK ICI_________________________________-->
 
+<div class="row-sm-4 text-left" style=" margin-top: 50px; background-color: rgb(128, 230, 145);">
+  <div class="col text-left" style="margin-left :20px">
+    <h2>Mon historique de commandes</h2>
+    <p>N'hésitez pas à donner votre avis.</p>
+  
+  </div>
+</div>
+<!--____________________________________Liste des commandes passées _________________________________-->
 
-  
-  
+<br /><br />
+<div class="container col-sm-10">
+  <table  class="table" >
+    <thead>
+      <tr>
+        <td>Quantite</td>
+        <td>Date d'achat</td>
+      
+      <td>Votre avis</td>
+      </tr> 
+    </thead>
+    <tbody>
+        <tr *ngFor="let a of listChoix">
+          <td>{{a.quantite}}</td>
+          <td>{{a.dateAchat  | date:'EEEE, MMMM d, y'}}</td>
+        
+          <td>
+          <div class="container col-sm-10" >
+            <button type="button" class="btn btn-lg btn-outline-success shadow" (click)=donnerFeed(a) data-toggle="modal" data-target=".bd-example-modal-lg"style="border-radius: 30px; width: 220px;">
+            Donnez votre avis </button>
+        </div></td>
+        </tr> 
+    </tbody>
+  </table>
+</div>
+<br /><br />
+<!--_____________________________form feedback __________________________-->
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Notez vos commandes précédentes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container p-3 my-3 bg-dark text-white" style="margin-top: 70px;">
+            <form [formGroup]="formFeed" (ngSubmit)="ajoutFeedback()" >
+              <div class="form-group">
+                <label for="exampleInputEmail1">Note :</label>
+                <input type="number" class="form-control" formControlName="note" aria-describedby="emailHelp" placeholder="Note ">
+                <small id="emailHelp" class="form-text text-muted"></small>
+            </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Commentaire :</label>
+                    <textarea class="form-control" formControlName="commentaire" aria-describedby="emailHelp" placeholder="Commentaire"></textarea>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
+            
+            </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="ajoutFeedback()">Noter</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
