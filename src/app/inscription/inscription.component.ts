@@ -121,6 +121,7 @@ getCoords(){
    console.log("****************");
    this.save()
 
+   console.log(data)
  })
 }
 
