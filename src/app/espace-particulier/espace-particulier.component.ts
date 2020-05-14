@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { EspaceParticulierService } from '../services/espace-particulier.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormControlName } from '@angular/forms';
 import { NgStyle, DatePipe } from '@angular/common';
 import { CreationArticleService } from '../services/creation-article.service';
 import { ChoixService } from '../services/choix.service';
 import { ArticleService } from '../services/article.service';
 import { MessageService } from 'primeng/api';
+import { FeedbackService } from '../services/feedback.service';
 
 
 @Component({
@@ -29,12 +30,18 @@ achatForm : any;
 articlesListe:any;
 idFav:any;
 nom :any;
+formFeed :any;
+listChoix : any ;
+listFeed: any;
+Affiche: boolean=false;
+
   constructor(private partServ : EspaceParticulierService,
      private arts:CreationArticleService,
      private choixService:ChoixService,
      public datepipe: DatePipe, 
     private aServ : ArticleService,
-     private messageService: MessageService
+     private messageService: MessageService,
+     private feedb: FeedbackService
      ) { }
 
   ngOnInit(): void {
@@ -70,7 +77,9 @@ nom :any;
         })
       })
     })
-     
+  
+
+
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     console.log(this.currentUser)
@@ -83,6 +92,25 @@ nom :any;
     this.listeFavoris = this.currentUser.articles
     console.log(this.listeFavoris)
 
+//partie Feedback___________________
+    console.log(this.currentUser);
+    this.getChoixPart();
+this.getListFeed();
+  
+    
+    this.formFeed=new FormGroup({
+      note : new FormControl(),
+      commentaire : new FormControl(),
+      choix : new FormGroup({
+        idChoix : new FormControl()
+      }),
+      userDonne : new FormGroup({
+        idUser : new FormControl()
+      }),
+      userRecoit : new FormGroup({
+        idUser : new FormControl()
+      })
+    }) 
   }
 
   supprimerFavori(supFav : any) {
@@ -160,5 +188,49 @@ nom :any;
     this.total = nb * prix
     
   }
+
+  //___________________Partie feedback___________________
+
+  getChoixPart(){
+    this.feedb.getChoixPart(this.currentUser).subscribe((data)=>{
+      this.listChoix=data;
+  })
+}
+  donnerFeed(fee : any){
+ this.verif(fee);
+ if (!this.verif(fee)){
+    this.formFeed.controls['choix'].controls['idChoix'].setValue(fee.idChoix)
+    this.formFeed.controls['userDonne'].controls['idUser'].setValue(this.currentUser.idUser)
+    this.formFeed.controls['userRecoit'].controls['idUser'].setValue(fee.article.producteur.idUser)
+ }
+  }
+
+  ajoutFeedback(){
+this.feedb.ajoutFeedback(this.formFeed.value).subscribe((data)=>console.log(data));
+this.formFeed.reset();
+this.getListFeed();
+  }
+
+getListFeed(){
+  this.feedb.getAllFeedback().subscribe((data)=>{
+    console.log(data)
+   this.listFeed=data
+   console.log(this.listFeed);
+  });
+}
+
+verif(ch: any){
+   var present  =false;
+   
+for (var i=0 ; i < this.listFeed.length ; i++){
+  if (ch.idChoix == this.listFeed[i].choix.idChoix){
+    present=true;
+    
+  }
+}
+return present;
+
+}
+
 
 }
