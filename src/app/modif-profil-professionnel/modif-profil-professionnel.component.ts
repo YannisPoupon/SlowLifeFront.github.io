@@ -118,6 +118,8 @@ BooleanForm: boolean=false;
       this.BooleanForm=true;
     }
   
-
+    annulerModif(){
+      this.BooleanForm=false;
+    }
 }
 

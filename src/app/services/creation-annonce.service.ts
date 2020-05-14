@@ -27,4 +27,8 @@ export class CreationAnnonceService {
 getAnnonceByProd(prod:any){
   return this.Http.post("http://localhost:8080/findannoncebyprod", prod);
 }
+
+getTypeAnnonceEnum(){
+  return this.Http.get("http://localhost:8080/typeAnnonceEnum");
+}
 }

@@ -105,7 +105,7 @@ ajoutArticle(){
       this.getArticleByCom();
     }})
   this.BooleanForm=false;
-  this.messageService.add({severity:'success', summary: 'Mise à jour carte', detail:"Vos modifications ont bien été prises en compte"});
+  this.messageService.add({severity:'success', summary: 'Modification article', detail:"Vos modifications ont bien été prises en compte"});
 }
 
 nouvelArticle(){
