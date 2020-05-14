@@ -11,7 +11,7 @@ export class EspaceParticulierComponent implements OnInit {
 currentUser : any;
 listParticuliers : any;
 formPart : any;
-MesFavoris : any;
+listeFavoris : any;
   constructor(private partServ : EspaceParticulierService) { }
 
   ngOnInit(): void {
