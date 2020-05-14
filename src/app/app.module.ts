@@ -24,6 +24,7 @@ import { DatePipe } from '@angular/common';
 import {CalendarModule} from 'primeng/calendar';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,10 @@ import {CalendarModule} from 'primeng/calendar';
     
 
   ],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -51,6 +56,7 @@ import {CalendarModule} from 'primeng/calendar';
     FormsModule,
     ToastModule,
     AutoCompleteModule,
+    ReactiveFormsModule,
     CalendarModule
 
   ],

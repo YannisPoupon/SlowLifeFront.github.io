@@ -70,6 +70,7 @@
                 <i class="pi pi-user" style="font-size: 1.5em;color: rgb(128, 230, 145);"></i>{{art.producteur.nom}}
             </div>
             <div class="col-sm-5 d-flex justify-content-end">
+                <button *ngIf="connected==true"  type="submit" (click)="ajouterFavori(art)" class="btn btn-outline-success rounded-pill"  style="margin-right:20px;"><i class="pi pi-angle-double-down"></i>Ajouter aux favoris</button>
                 <button *ngIf="connected==true" type="button" (click)="infosAnnonce(art)" class="btn btn-outline-success rounded-pill" data-toggle="modal" data-target="#exampleModal2">Acheter</button>
                 <button *ngIf="connected==false" type="button" class="btn btn-outline-success rounded-pill" data-toggle="modal" data-target="#exampleModal">Acheter</button>
             </div>

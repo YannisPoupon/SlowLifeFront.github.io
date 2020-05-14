@@ -18,16 +18,23 @@
         <div class="d-flex justify-content-center">
         <i class="pi pi-align-justify" style="font-size: 3em;color: rgb(128, 230, 145);"></i> </div><br />
         <h4>Mes missions :</h4>
-        <a routerLink="/creationannonce">Gerez vos missions.</a>
+        <a routerLink="#">Gerez vos missions.</a>
   
       </div>
       <div class="col-sm-4">
           <div class="d-flex justify-content-center">
           <i class="pi pi-list" style="font-size: 3em;color: rgb(128, 230, 145);"></i> </div><br />
           <h4>Mes produits :</h4>
-          <a routerLink="/creationarticle">Gérer mes produits favoris.</a>
+          <a routerLink="#">Gérer mes produits favoris.</a>
          
         </div>
+    </div>
+  </div>
+
+<div class="row-sm-4 text-left" style=" margin-top: 50px; background-color: rgb(128, 230, 145);">
+    <div class="col text-left" style="margin-left :20px">
+      <h1>Mes favoris</h1>
+      <p>Miam !</p>
     </div>
   </div>
 <!------------------ liste favoris ------------------------->
@@ -35,7 +42,8 @@
     <div class="shadow card col-sm-10 card-body my-3">
         <div class="row d-flex justify-content-around mb-4">
             <div class="col-sm-5  d-flex justify-content-start">
-                {{fav.quantiteDisponible}} disponibles
+                {{fav.quantiteDisponible}} {{fav.nom}} disponibles <br /><br />
+                producteur : {{fav.producteur.nom}} {{fav.producteur.prenom}} 
             </div>
             <div class="col-sm-5 d-flex justify-content-end">
                 <i class="pi pi-shopping-cart" style="font-size: 1.5em;"></i> : {{fav.prix}} €/kg
@@ -43,13 +51,78 @@
         </div>
         <div class="row d-flex justify-content-around mt-4">
             <div class="col-sm-5 d-flex justify-content-start">
-                <i class="pi pi-user" style="font-size: 1.5em;color: rgb(128, 230, 145);"></i>{{fav.producteur.nom}}
+                <!-- <i class="pi pi-user" style="font-size: 1.5em;color: rgb(128, 230, 145);"></i>{{fav.nom}} -->
             </div>
             <div class="col-sm-5 d-flex justify-content-end">
-                <button type="button" class="btn btn-outline-success rounded-pill">Acheter</button>
+                <button type="button"(click)="infosAnnonce(fav)" data-toggle="modal" data-target="#exampleModal2" class="btn btn-outline-success rounded-pill">Acheter de nouveau</button>
             </div>
+            <div class="col-sm-5 d-flex justify-content-end">
+              <button type="button" (click)="supprimerFavori(fav)" class="btn btn-outline-success rounded-pill">Retirer des favoris</button>
+          </div>
         </div>
     </div>
+
+
 </div>
+
+
+    <!-- Modal Achat -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1"  role="dialog" data-backdrop="static" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel2">Formulaire d'achat</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <form [formGroup]="achatForm">
+                  <div class="form-group">
+                      <label style="color:rgb(128, 230, 145)">Annonce :</label>
+                      <p>{{Article.quantiteDisponible}} {{Article.nom}}(s) à {{Article.prix}} € prix unitaire sont encore disponibles dans cette offre.</p>
+                  </div>
+                  <div class="form-group">
+                      <i class="pi pi-user" style="font-size: 2em;color: rgb(128, 230, 145);"></i><p> Publiée par :
+                         <!-- {{nom}} -->
+                        </p>
+                  </div>
+                  <div class="form-group row">
+                      <div class="col">
+                          <i class="pi pi-shopping-cart" style="font-size: 2em;color: rgb(128, 230, 145);"></i>
+                          <input type="number" formControlName="quantite" class="form-control col-sm-6" placeholder="quantité" (change)="calcul($event)">
+                      </div>
+                      <div class="col">
+                          <i class="pi pi-money-bill" style="font-size: 2em;color: rgb(128, 230, 145);"></i><p> Total : {{total}} €</p>
+                      </div>
+                      
+                  </div>
+              </form>
+              <div *ngIf="confirmed" class="alert alert-success" role="alert">
+                  Achat effectué! Veuillez patientez..
+              </div>
+              <div *ngIf="testAchat" class="alert alert-danger" role="alert">
+                  Erreur dans le formulaire : la quantité désirée ne peut être fournie.
+              </div>  
+          </div>
+          <div class="modal-footer">
+              <button *ngIf="!validateButton" type="button" class="btn btn-primary" data-dismiss="modal" (click)="confirmerAchat()">Confirmer achat {{total}} €</button>
+              <button *ngIf="validateButton" type="button" class="btn btn-success" (click)="valider()">Valider</button>
+              <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="raz()">Annuler</button>
+          </div>
+          </div>
+      </div>
+    </div>
+
+<!-- <tr *ngFor="let a of listeFavoris">
+  <td>{{a.nom}}</td>
+ <td>{{a.typearticle}}</td>
+ <td>{{a.prix}}</td>
+ <td>{{a.quantiteDisponible}}</td>
+ <td> <button (click)="ajouterFavori()" class="btn btn-danger">Ajouter</button> </td> 
+</tr> -->
+
+
+
   
   

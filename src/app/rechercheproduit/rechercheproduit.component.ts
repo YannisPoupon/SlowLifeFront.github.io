@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {GMapModule} from 'primeng/gmap';
-
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { google } from "google-maps";
 import { ArticleService } from '../services/article.service';
 import {MessageService} from 'primeng/api';
@@ -10,6 +9,9 @@ import { ApiGeoGouvService } from '../services/api-geo-gouv.service';
 import { ApiAdresseGouvService } from '../services/api-adresse-gouv.service';
 import { ChoixService } from '../services/choix.service';
 import { DatePipe } from '@angular/common';
+import { CreationArticleService } from '../services/creation-article.service';
+import { InscriptionService } from '../services/inscription.service';
+import { ConnexionService } from '../services/connexion.service';
 
 
 @Component({
@@ -50,15 +52,23 @@ export class RechercheproduitComponent implements OnInit {
   nombre:any;
   produitRECHERCHE;
   villeRECHERCHE;
+  newFav :any;
+  favItems : any;
+  newItem : any;
+  currentUser : any;
 
   constructor(private aServ:ArticleService, 
     private messageService: MessageService, 
     private apiGeoGouv:ApiGeoGouvService,
     private apiAdresseGouv:ApiAdresseGouvService,
     private choixService:ChoixService,
-    public datepipe: DatePipe) { }
+    public datepipe: DatePipe,
+    private arts:CreationArticleService,
+    private is:InscriptionService,
+    private conServ: ConnexionService) { }
 
   ngOnInit(): void {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.getVilles()
     this.getFruitsLegumes()
     this.checkConnexion()
@@ -69,12 +79,35 @@ export class RechercheproduitComponent implements OnInit {
     this.Article=false;
     this.enableGeoLoc=false;
     this.overlays = [];
+  this.newItem = [];
+
+    this.newFav = new FormGroup ({
+      idUser : new FormControl(),
+      login : new FormControl(),
+      password : new FormControl(),
+      mail : new FormControl(),
+      nom : new FormControl(),
+      prenom : new FormControl(),
+      numero : new FormControl(),
+      rue : new FormControl(),
+      ville : new FormControl(),
+      departement : new FormControl(),
+      longitude : new FormControl(),
+      latitude : new FormControl(),
+      feedbacksD: new FormControl(),
+      feedbacksR: new FormControl(),
+      privilege: new FormControl(),
+      articles : new FormControl()
+    })
+
+    
     this.center={lat: this.latInit, lng: this.lngInit};
     this.options = {
       center: this.center,
       zoom: this.zoom
     };
   
+
     this.rechercheForm=new FormGroup({
         nom:new FormControl,
         ville:new FormControl,
@@ -87,22 +120,80 @@ export class RechercheproduitComponent implements OnInit {
         particulier:new FormGroup({
           idUser:new FormControl
         }),
+
         article:new FormGroup({
           idArticle:new FormControl
-        }),
+        })
 
       })
 
       this.infoWindow = new google.maps.InfoWindow();
   }
+
+  ajouterFavori(fav : any){
+    console.log(this.currentUser) 
+    this.newFav.controls['idUser'].setValue(this.currentUser.idUser)
+    this.newFav.controls['login'].setValue(this.currentUser.login)
+    this.newFav.controls['password'].setValue(this.currentUser.password)
+    this.newFav.controls['mail'].setValue(this.currentUser.mail)
+    this.newFav.controls['nom'].setValue(this.currentUser.nom)
+    this.newFav.controls['prenom'].setValue(this.currentUser.prenom)
+    this.newFav.controls['numero'].setValue(this.currentUser.numero)
+    this.newFav.controls['rue'].setValue(this.currentUser.rue)
+    this.newFav.controls['ville'].setValue(this.currentUser.ville)
+    this.newFav.controls['departement'].setValue(this.currentUser.departement)
+    this.newFav.controls['latitude'].setValue(this.currentUser.latitude)
+    this.newFav.controls['longitude'].setValue(this.currentUser.longitude)
+    this.newFav.controls['feedbacksD'].setValue(this.currentUser.feedbacksD)
+    this.newFav.controls['feedbacksR'].setValue(this.currentUser.feedbacksD)
+    this.newFav.controls['privilege'].setValue(this.currentUser.privilege)
+    this.newFav.controls['articles'].setValue(this.currentUser.articles)
+
+    console.log(this.newFav.value)
+    console.log(fav.idArticle)
+
+
+    if (fav.producteur=!null) {
+    this.newItem = this.currentUser.articles
+    this.newItem.push({idArticle : fav.idArticle, nom : fav.nom, typearticle : fav.typearticle
+      , prix : fav.prix, quantiteDisponible : fav.quantiteDisponible,  producteur : { idUser : fav.producteur.idUser}})
+    }
+    else if (fav.commercant!=null) {
+      this.newItem.push({idArticle : fav.idArticle, nom : fav.nom, typearticle : fav.typearticle
+        , prix : fav.prix, quantiteDisponible : fav.quantiteDisponible, commercant : { idUser : fav.commercant.idUser}})
+    } else if (fav.artisant!=null) {
+      this.newItem.push({idArticle : fav.idArticle, nom : fav.nom, typearticle : fav.typearticle
+        , prix : fav.prix, quantiteDisponible : fav.quantiteDisponible, artisant : { idUser : fav.artisant.idUser}})
+    }
+    this.newFav.controls['articles'].setValue(this.newItem)
+    console.log(this.newFav.value)
+    
+    // console.log(this.favItems.value)
+    // this.newFav.controls['articles'].setValue(this.favItems)
+    
+    this.is.ajoutParticulier(this.newFav.value).subscribe(() => {
+    this.conServ.connexion(this.newFav.value).subscribe((data: any) => {
+    localStorage.setItem('currentUser', JSON.stringify(data))
+
+      }) 
+      console.log(this.currentUser)
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    })
+    this.messageService.add({severity:'success', summary: ' Sauvé !', detail:'article ajouté aux favoris'});
+    }
+
+
   showSuccess() {
     this.messageService.add({key: 'c', severity:'success', summary: 'Success Message', detail:'Order submitted'});
 }
 
+
 zoomIn(map) {
   map.setZoom(map.getZoom()+1);
 }
+
   findArticles(map){
+
     if(this.rechercheForm.value.nom==null || this.rechercheForm.value.nom.length==0){
       this.messageService.add({severity:'error', summary: 'Produit', detail:'le champ «Produit» est requis'});
     }else if((this.rechercheForm.value.ville==null  || this.rechercheForm.value.ville.nom==null) && !this.enableGeoLoc){
