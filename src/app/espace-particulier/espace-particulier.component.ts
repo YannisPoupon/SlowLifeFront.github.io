@@ -6,6 +6,8 @@ import { CreationArticleService } from '../services/creation-article.service';
 import { ChoixService } from '../services/choix.service';
 import { ArticleService } from '../services/article.service';
 import { MessageService } from 'primeng/api';
+import { InscriptionService } from '../services/inscription.service';
+import { ConnexionService } from '../services/connexion.service';
 
 
 @Component({
@@ -29,12 +31,16 @@ achatForm : any;
 articlesListe:any;
 idFav:any;
 nom :any;
+newFav : any;
+newItem : any;
   constructor(private partServ : EspaceParticulierService,
      private arts:CreationArticleService,
      private choixService:ChoixService,
      public datepipe: DatePipe, 
     private aServ : ArticleService,
-     private messageService: MessageService
+     private messageService: MessageService,
+     private is:InscriptionService,
+     private conServ: ConnexionService
      ) { }
 
   ngOnInit(): void {
@@ -44,6 +50,26 @@ nom :any;
     this.validateButton=true;
     this.Article=false;
 
+    this.newItem = [];
+
+    this.newFav = new FormGroup ({
+      idUser : new FormControl(),
+      login : new FormControl(),
+      password : new FormControl(),
+      mail : new FormControl(),
+      nom : new FormControl(),
+      prenom : new FormControl(),
+      numero : new FormControl(),
+      rue : new FormControl(),
+      ville : new FormControl(),
+      departement : new FormControl(),
+      longitude : new FormControl(),
+      latitude : new FormControl(),
+      feedbacksD: new FormControl(),
+      feedbacksR: new FormControl(),
+      privilege: new FormControl(),
+      articles : new FormControl()
+    })
     
     this.achatForm=new FormGroup({
       dateAchat:new FormControl,
@@ -79,16 +105,74 @@ nom :any;
     this.formPart.controls['nom'].setValue(this.currentUser.nom)
     this.formPart.controls['mail'].setValue(this.currentUser.mail)
   
-
+    this.listeFavoris = []
     this.listeFavoris = this.currentUser.articles
     console.log(this.listeFavoris)
 
   }
 
-  supprimerFavori(supFav : any) {
+  // supprimerFavori(supFav : any) {
+  //   console.log(this.listeFavoris)
+  //   this.index = this.listeFavoris.findIndex(x => x.idArticle === supFav.idArticle);
+  //   console.log(this.index)
+  //   this.listeFavoris.splice(this.index, 1);
+  //   console.log(this.listeFavoris)
+  // }
 
-    this.index = this.listParticuliers.findIndex(x => x.idArticle === supFav.idArticle);
-  }
+  supprimerFavori(fav : any){
+    console.log(this.currentUser) 
+    this.newFav.controls['idUser'].setValue(this.currentUser.idUser)
+    this.newFav.controls['login'].setValue(this.currentUser.login)
+    this.newFav.controls['password'].setValue(this.currentUser.password)
+    this.newFav.controls['mail'].setValue(this.currentUser.mail)
+    this.newFav.controls['nom'].setValue(this.currentUser.nom)
+    this.newFav.controls['prenom'].setValue(this.currentUser.prenom)
+    this.newFav.controls['numero'].setValue(this.currentUser.numero)
+    this.newFav.controls['rue'].setValue(this.currentUser.rue)
+    this.newFav.controls['ville'].setValue(this.currentUser.ville)
+    this.newFav.controls['departement'].setValue(this.currentUser.departement)
+    this.newFav.controls['latitude'].setValue(this.currentUser.latitude)
+    this.newFav.controls['longitude'].setValue(this.currentUser.longitude)
+    this.newFav.controls['feedbacksD'].setValue(this.currentUser.feedbacksD)
+    this.newFav.controls['feedbacksR'].setValue(this.currentUser.feedbacksD)
+    this.newFav.controls['privilege'].setValue(this.currentUser.privilege)
+    this.newFav.controls['articles'].setValue(this.currentUser.articles)
+
+    console.log(this.newFav.value)
+    console.log(fav.idArticle)
+
+
+    // if (fav.producteur.idUser=!null) {
+    this.listeFavoris = this.currentUser.articles
+    console.log(this.listeFavoris)
+    this.index = this.listeFavoris.findIndex(x => x.idArticle === fav.idArticle);
+    console.log(this.index)
+    this.listeFavoris.splice(this.index, 1);
+    console.log(this.listeFavoris)
+    this.newFav.controls['articles'].setValue(this.listeFavoris)
+    // }
+    // else if (fav.commercant.idUser!=null) {
+    //   this.newItem.push({idArticle : fav.idArticle, nom : fav.nom, typearticle : fav.typearticle
+    //     , prix : fav.prix, quantiteDisponible : fav.quantiteDisponible, commercant : { idUser : fav.commercant.idUser}})
+    // } else if (fav.artisant.idUser!=null) {
+    //   this.newItem.push({idArticle : fav.idArticle, nom : fav.nom, typearticle : fav.typearticle
+    //     , prix : fav.prix, quantiteDisponible : fav.quantiteDisponible, artisant : { idUser : fav.artisant.idUser}})
+    // }
+    
+    // console.log(this.favItems.value)
+    // this.newFav.controls['articles'].setValue(this.favItems)
+    
+    this.is.ajoutParticulier(this.newFav.value).subscribe(() => {
+    this.conServ.connexion(this.newFav.value).subscribe((data: any) => {
+    localStorage.setItem('currentUser', JSON.stringify(data))
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    this.listeFavoris = this.currentUser.articles
+      }) 
+      console.log(this.currentUser)
+      
+    })
+    this.messageService.add({severity:'success', summary: ' triste ', detail:'article supprimé des favoris'});
+    }
 
   particulier(id : number){
     this.partServ.Particulier(id).subscribe((data) => {
@@ -138,10 +222,16 @@ nom :any;
   
     this.choixService.addChoix(this.achatForm.value).subscribe(()=>{
       console.log("achat éffectué")
-      this.aServ.findArticleById (this.Article.idArticle).subscribe((dataArt)=>{
-        this.articlesListe=dataArt
+      // this.aServ.findArticleById (this.Article.idArticle).subscribe((dataArt)=>{
+      //   this.articlesListe=dataArt
+      this.conServ.connexion(this.currentUser).subscribe((data: any) => {
+        localStorage.setItem('currentUser', JSON.stringify(data))
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+        this.listeFavoris = this.currentUser.articles
+          }) 
         this.messageService.add({severity:'success', summary: 'Achat effectué', detail:'votre achat a été effectuté'});
-        })
+        // })
+        console.log(this.listeFavoris)
     })
   }
 

@@ -12,4 +12,8 @@ export class ConnexionService {
     return this.http.post("http://localhost:8080/connexion", User)
  }
 
+ recupUser(User : any){
+  return this.http.post("http://localhost:8080/recup", User)
+}
+
 }

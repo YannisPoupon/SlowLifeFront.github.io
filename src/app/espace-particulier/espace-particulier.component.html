@@ -43,6 +43,7 @@
         <div class="row d-flex justify-content-around mb-4">
             <div class="col-sm-5  d-flex justify-content-start">
                 {{fav.quantiteDisponible}} {{fav.nom}} disponibles <br /><br />
+                <br /><br />
                 producteur : {{fav.producteur.nom}} {{fav.producteur.prenom}} 
             </div>
             <div class="col-sm-5 d-flex justify-content-end">
@@ -53,12 +54,13 @@
             <div class="col-sm-5 d-flex justify-content-start">
                 <!-- <i class="pi pi-user" style="font-size: 1.5em;color: rgb(128, 230, 145);"></i>{{fav.nom}} -->
             </div>
-            <div class="col-sm-5 d-flex justify-content-end">
-                <button type="button"(click)="infosAnnonce(fav)" data-toggle="modal" data-target="#exampleModal2" class="btn btn-outline-success rounded-pill">Acheter de nouveau</button>
-            </div>
-            <div class="col-sm-5 d-flex justify-content-end">
+            <div class="col-sm-3 d-flex justify-content-end">
               <button type="button" (click)="supprimerFavori(fav)" class="btn btn-outline-success rounded-pill">Retirer des favoris</button>
           </div>
+            <div class="col-sm-3 d-flex justify-content-end">
+                <button type="button"(click)="infosAnnonce(fav)" data-toggle="modal" data-target="#exampleModal2" class="btn btn-outline-success rounded-pill">Acheter de nouveau</button>
+            </div>
+           
         </div>
     </div>
 
