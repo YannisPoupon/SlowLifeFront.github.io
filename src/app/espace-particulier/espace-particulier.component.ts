@@ -38,6 +38,7 @@ newItem : any;
 formFeed :any;
 listChoix : any ;
 listFeed: any;
+listFeedIdChoix:any[]=[]; //Liste des Id Choix présents dans listFeed(liste des choix pour lesquels il y a un feedback)
 Affiche: boolean=false;
 
 
@@ -111,22 +112,16 @@ Affiche: boolean=false;
 
 
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-    console.log(this.currentUser)
-
     this.formPart.controls['idUser'].setValue(this.currentUser.idUser)
     this.formPart.controls['nom'].setValue(this.currentUser.nom)
     this.formPart.controls['mail'].setValue(this.currentUser.mail)
   
     this.listeFavoris = []
     this.listeFavoris = this.currentUser.articles
-    console.log(this.listeFavoris)
 
 //partie Feedback___________________
-    console.log(this.currentUser);
     this.getChoixPart();
-this.getListFeed();
-  
-    
+    this.getListFeed()
     this.formFeed=new FormGroup({
       note : new FormControl(),
       commentaire : new FormControl(),
@@ -151,7 +146,6 @@ this.getListFeed();
   // }
 
   supprimerFavori(fav : any){
-    console.log(this.currentUser) 
     this.newFav.controls['idUser'].setValue(this.currentUser.idUser)
     this.newFav.controls['login'].setValue(this.currentUser.login)
     this.newFav.controls['password'].setValue(this.currentUser.password)
@@ -169,17 +163,14 @@ this.getListFeed();
     this.newFav.controls['privilege'].setValue(this.currentUser.privilege)
     this.newFav.controls['articles'].setValue(this.currentUser.articles)
 
-    console.log(this.newFav.value)
-    console.log(fav.idArticle)
 
 
     // if (fav.producteur.idUser=!null) {
     this.listeFavoris = this.currentUser.articles
-    
+
     this.index = this.listeFavoris.findIndex(x => x.idArticle === fav.idArticle);
-   
     this.listeFavoris.splice(this.index, 1);
-   
+
     this.newFav.controls['articles'].setValue(this.listeFavoris)
     // }
     // else if (fav.commercant.idUser!=null) {
@@ -199,7 +190,6 @@ this.getListFeed();
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.listeFavoris = this.currentUser.articles
       }) 
-      console.log(this.currentUser)
       
     })
     this.messageService.add({severity:'success', summary: ' triste ', detail:'article supprimé des favoris'});
@@ -212,7 +202,6 @@ this.getListFeed();
   }
 
   ajoutArticle(){
-    console.log(this.formPart.value)
     this.arts.ajoutArticle(this.formPart.value).subscribe()
       
     }
@@ -223,7 +212,6 @@ this.getListFeed();
 
 // --------------- fonctions achat modal---------------------
   raz(){
-    console.log("nice");
     this.achatForm.reset()
     this.total=0;
     this.validateButton=true;
@@ -252,7 +240,6 @@ this.getListFeed();
     this.achatForm.controls['article'].controls['idArticle'].setValue(idArticle)
   
     this.choixService.addChoix(this.achatForm.value).subscribe(()=>{
-      console.log("achat éffectué")
       // this.aServ.findArticleById (this.Article.idArticle).subscribe((dataArt)=>{
       //   this.articlesListe=dataArt
       this.conServ.connexion(this.currentUser).subscribe((data: any) => {
@@ -262,12 +249,10 @@ this.getListFeed();
           }) 
         this.messageService.add({severity:'success', summary: 'Achat effectué', detail:'votre achat a été effectuté'});
         // })
-        console.log(this.listeFavoris)
     })
   }
 
   infosAnnonce(art:any){ 
-    console.log(art);
     this.nom=art.producteur.nom
     this.Article=art;
   }
@@ -290,39 +275,52 @@ this.getListFeed();
   })
 }
   donnerFeed(fee : any){
- this.verif(fee);
- if (!this.verif(fee)){
-    this.formFeed.controls['choix'].controls['idChoix'].setValue(fee.idChoix)
-    this.formFeed.controls['userDonne'].controls['idUser'].setValue(this.currentUser.idUser)
-    this.formFeed.controls['userRecoit'].controls['idUser'].setValue(fee.article.producteur.idUser)
- }
+    this.verif(fee);
+    if (!this.verif(fee)){
+        this.formFeed.controls['choix'].controls['idChoix'].setValue(fee.idChoix)
+        this.formFeed.controls['userDonne'].controls['idUser'].setValue(this.currentUser.idUser)
+        if(fee.article.producteur.idUser != null){
+          this.formFeed.controls['userRecoit'].controls['idUser'].setValue(fee.article.producteur.idUser)
+        }else if(fee.article.artisant.idUser != null){
+          this.formFeed.controls['userRecoit'].controls['idUser'].setValue(fee.article.artisant.idUser)
+        }else if(fee.article.commercant.idUser != null){
+          this.formFeed.controls['userRecoit'].controls['idUser'].setValue(fee.article.commercant.idUser)
+        }else{
+          console.log("ERREUR : IDUSER");
+        }
+        
+    }
   }
 
   ajoutFeedback(){
-this.feedb.ajoutFeedback(this.formFeed.value).subscribe((data)=>console.log(data));
-this.formFeed.reset();
-this.getListFeed();
+    this.feedb.ajoutFeedback(this.formFeed.value).subscribe((data)=>{
+      console.log(data)
+      this.getListFeed();      
+    });
+    this.formFeed.reset();
+    
   }
 
 getListFeed(){
   this.feedb.getAllFeedback().subscribe((data)=>{
-    console.log(data)
-   this.listFeed=data
-   console.log(this.listFeed);
+  this.listFeed=data
+  this.listFeedIdChoix
+  for(var i = 0;i<this.listFeed.length;i++){
+    this.listFeedIdChoix.push(this.listFeed[i].choix.idChoix)
+  }
+   console.log(this.listFeedIdChoix);
   });
 }
 
 verif(ch: any){
-   var present  =false;
-   
-for (var i=0 ; i < this.listFeed.length ; i++){
-  if (ch.idChoix == this.listFeed[i].choix.idChoix){
-    present=true;
-    
+  var present  =false;
+  for (var i=0 ; i < this.listFeed.length ; i++){
+    if (ch.idChoix == this.listFeed[i].choix.idChoix){
+      present=true;
+      
+    }
   }
-}
-return present;
-
+  return present;
 }
 
 
