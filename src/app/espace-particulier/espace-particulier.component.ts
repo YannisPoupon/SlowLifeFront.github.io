@@ -167,8 +167,10 @@ Affiche: boolean=false;
 
     // if (fav.producteur.idUser=!null) {
     this.listeFavoris = this.currentUser.articles
+
     this.index = this.listeFavoris.findIndex(x => x.idArticle === fav.idArticle);
     this.listeFavoris.splice(this.index, 1);
+
     this.newFav.controls['articles'].setValue(this.listeFavoris)
     // }
     // else if (fav.commercant.idUser!=null) {
