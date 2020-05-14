@@ -111,16 +111,32 @@ ajoutArticle(){
 nouvelArticle(){
   this.formArt.controls['nom'].setValue(this.formArt.value.nom.nom)
   console.log(this.formArt.value)
+  if (this.currentUser.privilege == "Producteur"){
   this.formArt.controls['producteur'].controls['idUser'].setValue(this.currentUser.idUser)
   this.arts.ajoutArticle(this.formArt.value).subscribe(()=>{
-    if (this.currentUser.privilege == "Producteur"){
       this.getArticleByProd();
-    }else if (this.currentUser.privilege == "Artisant"){
-      this.getArticleByArt();
-    }else if (this.currentUser.privilege == "Commercant"){
-      this.getArticleByCom();
-    }})
+    })
+  }
+ else if (this.currentUser.privilege == "Artisant"){
+    this.formArt.controls['artisant'].controls['idUser'].setValue(this.currentUser.idUser)
+    this.arts.ajoutArticle(this.formArt.value).subscribe(()=>{
+        this.getArticleByArt();
+      })
+    }
+    else if (this.currentUser.privilege == "Commercant"){
+      this.formArt.controls['commercant'].controls['idUser'].setValue(this.currentUser.idUser)
+      this.arts.ajoutArticle(this.formArt.value).subscribe(()=>{
+          this.getArticleByCom();
+        })
+      }
+
 }
+
+// }else if (this.currentUser.privilege == "Artisant"){
+//   this.getArticleByArt();
+// }else if (this.currentUser.privilege == "Commercant"){
+//   this.getArticleByCom();
+// }
 
 getArticleByProd(){
   this.arts.getArticleByProd(this.currentUser).subscribe((data)=>{

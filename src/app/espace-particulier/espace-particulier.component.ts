@@ -175,11 +175,11 @@ this.getListFeed();
 
     // if (fav.producteur.idUser=!null) {
     this.listeFavoris = this.currentUser.articles
-    console.log(this.listeFavoris)
+    
     this.index = this.listeFavoris.findIndex(x => x.idArticle === fav.idArticle);
-    console.log(this.index)
+   
     this.listeFavoris.splice(this.index, 1);
-    console.log(this.listeFavoris)
+   
     this.newFav.controls['articles'].setValue(this.listeFavoris)
     // }
     // else if (fav.commercant.idUser!=null) {

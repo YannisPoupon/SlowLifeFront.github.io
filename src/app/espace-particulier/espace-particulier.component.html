@@ -4,7 +4,7 @@
     <p>{{currentUser?.prenom}} {{currentUser?.nom}}</p> 
   </div>
     
-  <div class="container">
+  <!-- <div class="container">
     <div class="row">
       <div class="col-sm-4">
        
@@ -29,7 +29,7 @@
          
         </div>
     </div>
-  </div>
+  </div> -->
 
 <div class="row-sm-4 text-left" style=" margin-top: 50px; background-color: rgb(128, 230, 145);">
     <div class="col text-left" style="margin-left :20px">
@@ -41,11 +41,21 @@
   <div class="col-sm-12 d-flex justify-content-around" *ngFor="let fav of listeFavoris">
     <div class="shadow card col-sm-10 card-body my-3">
         <div class="row d-flex justify-content-around mb-4">
-            <div class="col-sm-5  d-flex justify-content-start">
+            <div *ngIf="fav.producteur!=null" class="col-sm-5  d-flex justify-content-start">
                 {{fav.quantiteDisponible}} {{fav.nom}} disponibles <br /><br />
                 <br /><br />
                 producteur : {{fav.producteur.nom}} {{fav.producteur.prenom}} 
             </div>
+            <div *ngIf="fav.artisant!=null" class="col-sm-5  d-flex justify-content-start">
+              {{fav.quantiteDisponible}} {{fav.nom}} disponibles <br /><br />
+              <br /><br />
+              Arstiant : {{fav.artisant.nom}} {{fav.artisant.prenom}} 
+          </div>
+          <div *ngIf="fav.commercant!=null" class="col-sm-5  d-flex justify-content-start">
+            {{fav.quantiteDisponible}} {{fav.nom}} disponibles <br /><br />
+            <br /><br />
+            Commercant : {{fav.commercant.nom}} {{fav.commercant.prenom}} 
+        </div>
             <div class="col-sm-5 d-flex justify-content-end">
                 <i class="pi pi-shopping-cart" style="font-size: 1.5em;"></i> : {{fav.prix}} €/kg
             </div>
