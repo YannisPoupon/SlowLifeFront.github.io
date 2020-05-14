@@ -29,5 +29,7 @@ export class AnnonceJobService {
   findAnnonces(coord:any){
     return this.http.post("http://localhost:8080/findAnnonce/", coord);
   }
+
+  
 }
 

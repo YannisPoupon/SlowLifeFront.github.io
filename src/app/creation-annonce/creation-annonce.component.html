@@ -2,6 +2,7 @@
 <br /><br /><br />
 
 <br /><br />
+<p-toast  [style]="{marginTop: '72px'}"></p-toast>
 <div class="container col-sm-10">
   <h4> →  Liste de vos annonces :</h4>
 </div>
@@ -34,12 +35,10 @@
   </table>
 </div>
 <br /><br />
-
-<br /><br />
   <!-- _____________________apparition conditionnelle pour le update ________________________-->
 <div class="container col-sm-10">
 <form *ngIf="BooleanForm" [formGroup]="formArt" (ngSubmit)="ajoutAnnonce()">
-  <div class="form-row" >
+  <div class="form-row d-flex justify-content-around" >
     <div class="form-group">
       <label for="inputEmail4">Date de Début</label>
       <input type="date" class="form-control"  formControlName="dateDebut">
@@ -47,32 +46,28 @@
     <div class="form-group">
       <label for="inputPassword4">Date de Fin</label>
       <input type="date" class="form-control"  formControlName="dateFin">
-    </div>
-    <div class="form-group">
-      <label for="inputCity">Type d'annonce</label>
-      <input type="text" class="form-control"  formControlName="typeannonce">
-    </div>
+    </div>      
     <div class="form-group">
       <label class="mr-sm-2" for="inlineFormCustomSelect">Type d'annonce:</label>
       <select  class="custom-select mr-sm-2" formControlName="typeannonce" >
-        <option  value="1">Maraîchage</option>
-        <option  value="2">Viticole</option>
-        <option value="3" >Manuelle</option>
-        <option  value="4">Agricole</option>
+        <option  *ngFor="let an of ListeAnnoncesEnum" value={{an}}>{{an}}</option>
       </select>
     </div>
-
     <div class="form-group">
-    <label for="inputCity">Nombre de Place :</label>
-    <input type="text" class="form-control"  formControlName="nombrePlace">
+      <label for="inputCity">Nombre de Place :</label>
+      <input type="text" class="form-control"  formControlName="nombrePlace">
     </div>
-
+  </div>
+  <div class="d-flex justify-content-start col-sm-7">
     <div class="form-group">
     <label for="inputCity">Compensation :</label>
     <input type="text" class="form-control" formControlName="compensation" >
     </div>
   </div>
-  <button type="submit" class="btn btn-secondary" >Valider</button>
+  <div>
+    <button type="submit" class="btn btn-success mx-2" >Valider</button>
+    <button class="btn btn-warning mx-2" (click)="annulerModif()" >Annuler</button>
+  </div>
 </form>
 </div>
 
@@ -123,12 +118,7 @@
                         <div class="col-auto my-1">
                           <label class="mr-sm-2" for="inlineFormCustomSelect">Type d'annonce:</label>
                           <select  class="custom-select mr-sm-2" formControlName="typeannonce" >
-                            
-                            <option  value="1">Maraîchage</option>
-                            <option  value="2">Viticole</option>
-                            <option value="3" >Manuelle</option>
-                            <option  value="4">Agricole</option>
-                        
+                            <option  *ngFor="let an of ListeAnnoncesEnum" value={{an}}>{{an}}</option>
                           </select>
                         </div>
                       </div>
