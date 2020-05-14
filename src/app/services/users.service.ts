@@ -15,4 +15,8 @@ export class UsersService {
   updateUser(user:any){
     return this.http.post("http://localhost:8080/updateUser",user);
   }
+
+  deleteById(id :any) {
+    return this.http.delete("http://localhost:8080/delUser/"+id);
+  }
 }

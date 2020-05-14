@@ -275,6 +275,7 @@ Affiche: boolean=false;
   })
 }
   donnerFeed(fee : any){
+    console.log(this.listChoix)
     this.verif(fee);
     if (!this.verif(fee)){
         this.formFeed.controls['choix'].controls['idChoix'].setValue(fee.idChoix)

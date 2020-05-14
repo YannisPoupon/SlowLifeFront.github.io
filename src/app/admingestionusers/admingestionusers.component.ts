@@ -30,10 +30,17 @@ formUser:any;
     })
   }
   
-
+  deleteUser(id : any){
+    this.us.deleteById(id).subscribe((data)=>this.listeUsers=data)  
+    console.log(this.listeUsers)
+  }
+  
   getAll(){
     this.us.getAllUsers().subscribe((data)=>this.listeUsers=data)  
+    console.log(this.listeUsers)
   }
+
+  
    
   
 
