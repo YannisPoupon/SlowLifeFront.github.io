@@ -12,20 +12,45 @@
         </form>
     </div>
 </div>
-<div class="row" style="margin-top: 40px;">
-    <div class="col mx-auto text-right">
-        <a>login oublié</a>
-    </div><div class="col-sm-1  mx-auto text-center">
-         | 
+<div class="row-sm-2" style="margin-top: 40px;margin-bottom: 40px;">
+    <div class="col mx-auto text-center">
+        <a class="btn" data-toggle="modal" data-target="#modalrecup">identifiants oubliés ?</a>
     </div>
-    <div class="col mx-auto text-left">
-         <a>Mot de pass oublié</a>
-    </div>
-</div>
-<div class="row" style="margin-top: 40px;">
+<div class="row-sm-2" style="margin-top: 40px;">
     
     <div class="col mx-auto text-center">
          <a>Pas encore membre ?</a> <a href="inscription"> rejoignez-nous !</a>
     </div>
 </div>
 
+<!-- The Modal -->
+<div class="modal" id="modalrecup">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Récupération d'identifiants</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="col mx-auto text-center">
+                <i>Veuillez renseigner l'adresse mail associée à votre compte</i>
+                <form [formGroup]="formRecup" (ngSubmit)="recupUser()" style="margin-top: 20px;">
+                    <input class="form-control" placeholder="adresse mail" formControlName="mail" required="true"><br /><br />
+                    
+                    <button type="submit" class="btn btn-lg btn-outline-success shadow" style="border-radius: 30px; width: 220px; margin-top: 100px;">demander l'envoie de mes identifiants </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+</div>

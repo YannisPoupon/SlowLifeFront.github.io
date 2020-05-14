@@ -148,23 +148,24 @@ export class RechercheproduitComponent implements OnInit {
     this.newFav.controls['feedbacksR'].setValue(this.currentUser.feedbacksD)
     this.newFav.controls['privilege'].setValue(this.currentUser.privilege)
     this.newFav.controls['articles'].setValue(this.currentUser.articles)
+    
 
     console.log(this.newFav.value)
     console.log(fav.idArticle)
 
 
-    if (fav.producteur=!null) {
+    // if (fav.producteur.idUser=!null) {
     this.newItem = this.currentUser.articles
     this.newItem.push({idArticle : fav.idArticle, nom : fav.nom, typearticle : fav.typearticle
       , prix : fav.prix, quantiteDisponible : fav.quantiteDisponible,  producteur : { idUser : fav.producteur.idUser}})
-    }
-    else if (fav.commercant!=null) {
-      this.newItem.push({idArticle : fav.idArticle, nom : fav.nom, typearticle : fav.typearticle
-        , prix : fav.prix, quantiteDisponible : fav.quantiteDisponible, commercant : { idUser : fav.commercant.idUser}})
-    } else if (fav.artisant!=null) {
-      this.newItem.push({idArticle : fav.idArticle, nom : fav.nom, typearticle : fav.typearticle
-        , prix : fav.prix, quantiteDisponible : fav.quantiteDisponible, artisant : { idUser : fav.artisant.idUser}})
-    }
+    // }
+    // else if (fav.commercant.idUser!=null) {
+    //   this.newItem.push({idArticle : fav.idArticle, nom : fav.nom, typearticle : fav.typearticle
+    //     , prix : fav.prix, quantiteDisponible : fav.quantiteDisponible, commercant : { idUser : fav.commercant.idUser}})
+    // } else if (fav.artisant.idUser!=null) {
+    //   this.newItem.push({idArticle : fav.idArticle, nom : fav.nom, typearticle : fav.typearticle
+    //     , prix : fav.prix, quantiteDisponible : fav.quantiteDisponible, artisant : { idUser : fav.artisant.idUser}})
+    // }
     this.newFav.controls['articles'].setValue(this.newItem)
     console.log(this.newFav.value)
     
@@ -174,10 +175,10 @@ export class RechercheproduitComponent implements OnInit {
     this.is.ajoutParticulier(this.newFav.value).subscribe(() => {
     this.conServ.connexion(this.newFav.value).subscribe((data: any) => {
     localStorage.setItem('currentUser', JSON.stringify(data))
-
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
       }) 
       console.log(this.currentUser)
-      this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+      
     })
     this.messageService.add({severity:'success', summary: ' Sauvé !', detail:'article ajouté aux favoris'});
     }

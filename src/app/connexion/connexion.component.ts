@@ -16,6 +16,7 @@ export class ConnexionComponent implements OnInit {
   formConnex: any;
   currentId: any;
   privilege: any;
+  formRecup : any;
   constructor(private conServ: ConnexionService, private router: Router, private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -23,6 +24,11 @@ export class ConnexionComponent implements OnInit {
       login: new FormControl(),
       password: new FormControl()
     })
+
+    this.formRecup = new FormGroup({
+      mail : new FormControl(),
+    })
+
 
   }
 
@@ -56,8 +62,18 @@ export class ConnexionComponent implements OnInit {
       })
     }
 
+  
 
+  }
 
+  recupUser (){
+    this.conServ.recupUser(this.formRecup.value).subscribe((data)=> {
+      console.log(data)
+      if (data==true) {
+        this.messageService.add({ severity: 'info', summary: 'Récupération', detail: 'Un email contenant vos identifiants vous a été envoyé' });
+      } else this.messageService.add({ severity: 'warn', summary: 'Attention !', detail: 'email inconnu' });
+
+    })
   }
 
 }
