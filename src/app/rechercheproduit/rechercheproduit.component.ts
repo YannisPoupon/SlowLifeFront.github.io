@@ -155,18 +155,18 @@ export class RechercheproduitComponent implements OnInit {
 
 
     this.newItem = this.currentUser.articles
-    if (fav.producteur!=null) {
+    if (fav.producteur != null) {
       this.newItem.push({
         idArticle: fav.idArticle, nom: fav.nom, typearticle: fav.typearticle
         , prix: fav.prix, quantiteDisponible: fav.quantiteDisponible, producteur: { idUser: fav.producteur.idUser }
       })
     }
-    else if (fav.commercant!=null) {
+    else if (fav.commercant != null) {
       this.newItem.push({
         idArticle: fav.idArticle, nom: fav.nom, typearticle: fav.typearticle
         , prix: fav.prix, quantiteDisponible: fav.quantiteDisponible, commercant: { idUser: fav.commercant.idUser }
       })
-    } else if (fav.artisant.idUser!=null) {
+    } else if (fav.artisant.idUser != null) {
       this.newItem.push({
         idArticle: fav.idArticle, nom: fav.nom, typearticle: fav.typearticle
         , prix: fav.prix, quantiteDisponible: fav.quantiteDisponible, artisant: { idUser: fav.artisant.idUser }
@@ -230,7 +230,7 @@ export class RechercheproduitComponent implements OnInit {
     var echec = 0
     var ok = 0
     for (var i = 0; i < this.articlesListe.length; i++) {
-      // if (this.articlesListe.producteur != null) {
+      if (this.articlesListe[i].producteur != null) {
         if (!(this.articlesListe[i].producteur.latitude == 0 || this.articlesListe[i].producteur.latitude == null || this.articlesListe[i].producteur.longitude == 0 || this.articlesListe[i].producteur.longitude == null)) {
           ok = 1
           var lat = this.articlesListe[i].producteur.latitude
@@ -238,34 +238,45 @@ export class RechercheproduitComponent implements OnInit {
           this.overlays.push(new google.maps.Marker({ position: { lat: lat, lng: lng }, title: this.articlesListe[i].producteur.nom }));
         } else {
           echec = echec + 1
+        } 
+      } else if (this.articlesListe[i].artisant != null) {
+        if (!(this.articlesListe[i].artisant.latitude == 0 || this.articlesListe[i].artisant.latitude == null || this.articlesListe[i].artisant.longitude == 0 || this.articlesListe[i].artisant.longitude == null)) {
+          ok = 1
+          var lat = this.articlesListe[i].artisant.latitude
+          var lng = this.articlesListe[i].artisant.longitude
+          this.overlays.push(new google.maps.Marker({ position: { lat: lat, lng: lng }, title: this.articlesListe[i].artisant.nom }));
+        } else {
+          echec = echec + 1
         }
-      // } else if (this.articlesListe.artisant != null) {
-      //   if (!(this.articlesListe[i].artisant.latitude == 0 || this.articlesListe[i].artisant.latitude == null || this.articlesListe[i].artisant.longitude == 0 || this.articlesListe[i].artisant.longitude == null)) {
-      //     ok = 1
-      //     var lat = this.articlesListe[i].artisant.latitude
-      //     var lng = this.articlesListe[i].artisant.longitude
-      //     this.overlays.push(new google.maps.Marker({ position: { lat: lat, lng: lng }, title: this.articlesListe[i].artisant.nom }));
-      //   } else {
-      //     echec = echec + 1
-      //   }
-      // } else if (this.articlesListe.commercant != null) {
-      //   if (!(this.articlesListe[i].commercant.latitude == 0 || this.articlesListe[i].commercant.latitude == null || this.articlesListe[i].commercant.longitude == 0 || this.articlesListe[i].commercant.longitude == null)) {
-      //     ok = 1
-      //     var lat = this.articlesListe[i].commercant.latitude
-      //     var lng = this.articlesListe[i].commercant.longitude
-      //     this.overlays.push(new google.maps.Marker({ position: { lat: lat, lng: lng }, title: this.articlesListe[i].producteur.nom }));
-      //   } else {
-      //     echec = echec + 1
-      //   }
-      // }
+      } else if (this.articlesListe[i].commercant != null) {
+        if (!(this.articlesListe[i].commercant.latitude == 0 || this.articlesListe[i].commercant.latitude == null || this.articlesListe[i].commercant.longitude == 0 || this.articlesListe[i].commercant.longitude == null)) {
+          ok = 1
+          var lat = this.articlesListe[i].commercant.latitude
+          var lng = this.articlesListe[i].commercant.longitude
+          this.overlays.push(new google.maps.Marker({ position: { lat: lat, lng: lng }, title: this.articlesListe[i].commercant.nom }));
+        } else {
+          echec = echec + 1
+        }
+      }
 
     }
 
     if (echec > 0) {
       this.messageService.add({ severity: 'warn', summary: 'Mise à jour carte', detail: echec + " résultats n'ont pas pu êtres affichés sur la carte, mais tous les résultats sont listés." });
     }
-    if (ok == 1) {
+
+    if (ok == 1 && this.articlesListe.producteur != null) {
       var newCenter = { lat: this.articlesListe[0].producteur.latitude, lng: this.articlesListe[0].producteur.longitude }
+      map.setCenter(newCenter)
+      map.setZoom(12)
+    }
+    else if (ok == 1 && this.articlesListe.artisant != null) {
+      var newCenter = { lat: this.articlesListe[0].artisant.latitude, lng: this.articlesListe[0].artisant.longitude }
+      map.setCenter(newCenter)
+      map.setZoom(12)
+    }
+    else if (ok == 1 && this.articlesListe.commercant != null) {
+      var newCenter = { lat: this.articlesListe[0].commercant.latitude, lng: this.articlesListe[0].commercant.longitude }
       map.setCenter(newCenter)
       map.setZoom(12)
     }
