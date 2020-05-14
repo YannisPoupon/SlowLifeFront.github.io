@@ -12,6 +12,8 @@ import { ModifProfilProfessionnelComponent } from './modif-profil-professionnel/
 import { CreationArticleComponent } from './creation-article/creation-article.component';
 import { CreationAnnonceComponent } from './creation-annonce/creation-annonce.component';
 import { AnnonceJobComponent } from './annonce-job/annonce-job.component';
+import { AdminhomeComponent } from './adminhome/adminhome.component';
+import { AdmingestionusersComponent } from './admingestionusers/admingestionusers.component';
 
 
 const routes: Routes = [
@@ -27,7 +29,9 @@ const routes: Routes = [
   { path: 'modificationprofilpro', component:ModifProfilProfessionnelComponent },
   { path: 'creationarticle', component:CreationArticleComponent },
   { path: 'creationannonce', component:CreationAnnonceComponent },
-  { path: 'rechercheannonce', component:AnnonceJobComponent }
+  { path: 'rechercheannonce', component:AnnonceJobComponent },
+  { path: 'adminHome', component:AdminhomeComponent },
+  { path: 'adminGestionUsers', component:AdmingestionusersComponent }
   
 
 ];

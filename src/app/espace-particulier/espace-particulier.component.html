@@ -151,11 +151,15 @@
           <td>{{a.quantite}}</td>
           <td>{{a.dateAchat  | date:'EEEE, MMMM d, y'}}</td>
         
-          <td>
-          <div class="container col-sm-10" >
-            <button type="button" class="btn btn-lg btn-outline-success shadow" (click)=donnerFeed(a) data-toggle="modal" data-target=".bd-example-modal-lg"style="border-radius: 30px; width: 220px;">
-            Donnez votre avis </button>
-        </div></td>
+          <td style="text-align: center;">
+            <div class="container col-sm-10" *ngIf="listFeedIdChoix.includes(a.idChoix)==false">
+              <button type="button" class="btn btn-lg btn-outline-warning shadow" (click)=donnerFeed(a) data-toggle="modal" data-target=".bd-example-modal-lg"style="border-radius: 30px; width: 220px;">
+              Donnez votre avis </button>
+            </div>
+            <div class="container col-sm-10 card d-flex justify-content-center align-items-center bg-success" style="width: 220px;height: 40px;" *ngIf="listFeedIdChoix.includes(a.idChoix)==true">
+                <p class="card-text" style="color: white;">Votre avis est enregistré.</p>
+            </div>
+          </td>
         </tr> 
     </tbody>
   </table>
@@ -177,7 +181,7 @@
             <form [formGroup]="formFeed" (ngSubmit)="ajoutFeedback()" >
               <div class="form-group">
                 <label for="exampleInputEmail1">Note :</label>
-                <input type="number" class="form-control" formControlName="note" aria-describedby="emailHelp" placeholder="Note ">
+                <input type="number" min="1" max="5" class="form-control" formControlName="note" aria-describedby="emailHelp" placeholder="Note ">
                 <small id="emailHelp" class="form-text text-muted"></small>
             </div>
                 <div class="form-group">
