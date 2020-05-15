@@ -56,6 +56,8 @@ export class RechercheproduitComponent implements OnInit {
   favItems: any;
   newItem: any;
   currentUser: any;
+  listAreFav: any;
+  listAreFavId:any[]=[];
 
   constructor(private aServ: ArticleService,
     private messageService: MessageService,
@@ -126,8 +128,23 @@ export class RechercheproduitComponent implements OnInit {
       })
 
     })
-
+    this.getAreFav()
     this.infoWindow = new google.maps.InfoWindow();
+  }
+
+  
+  getAreFav() {
+
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+      this.listAreFav=this.currentUser.articles
+      this.listAreFavId
+      console.log(this.listAreFav)
+      for(var i = 0;i<this.listAreFav.length;i++){
+        this.listAreFavId.push(this.listAreFav[i].idArticle)
+      }
+      console.log(this.listAreFavId)
+      
+    
   }
 
   ajouterFavori(fav: any) {
@@ -179,11 +196,13 @@ export class RechercheproduitComponent implements OnInit {
       this.conServ.connexion(this.newFav.value).subscribe((data: any) => {
         localStorage.setItem('currentUser', JSON.stringify(data))
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+        this.getAreFav()
       })
       console.log(this.currentUser)
 
     })
     this.messageService.add({ severity: 'success', summary: ' Sauvé !', detail: 'article ajouté aux favoris' });
+    
   }
 
 

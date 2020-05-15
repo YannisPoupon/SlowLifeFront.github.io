@@ -72,7 +72,10 @@
                 <a  *ngIf="art.commercant!=null"><i class="pi pi-user" style="font-size: 1.5em;color: rgb(128, 230, 145);"></i>{{art.commercant.nom}}</a>
             </div>
             <div class="col-sm-5 d-flex justify-content-end">
-                <button *ngIf="connected==true"  type="submit" (click)="ajouterFavori(art)" class="btn btn-outline-success rounded-pill"  style="margin-right:20px;"><i class="pi pi-angle-double-down"></i>Ajouter aux favoris</button>
+                <div class="container col-sm-10 card d-flex justify-content-center align-items-center bg-success" style="width: 70px;height: 40px; margin-right: 20px;" *ngIf="listAreFavId.includes(art.idArticle)==true">
+                    <p class="card-text" style="color: white;">Fait parti de vos favoris</p>
+                </div>
+                <button *ngIf="connected==true && listAreFavId.includes(art.idArticle)==false"  type="submit" (click)="ajouterFavori(art)" class="btn btn-outline-success rounded-pill"  style="margin-right:20px;"><i class="pi pi-angle-double-down" ></i>Ajouter aux favoris</button>
                 <button *ngIf="connected==true" type="button" (click)="infosAnnonce(art)" class="btn btn-outline-success rounded-pill" data-toggle="modal" data-target="#exampleModal2">Acheter</button>
                 <button *ngIf="connected==false" type="button" class="btn btn-outline-success rounded-pill" data-toggle="modal" data-target="#exampleModal">Acheter</button>
             </div>
