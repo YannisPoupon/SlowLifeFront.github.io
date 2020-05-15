@@ -80,6 +80,10 @@
                         class="nav-link" href="creationannonce" style="font-size:larger;margin-right: 10px;color: rgba(59, 57, 57, 0.726);"><i
                             class="pi pi-plus-circle" style="font-size: 1em"></i> Publier une
                         mission</a></li>
+                        <li *ngIf="currentUser!=null && (currentUser.privilege=='Artisant' || currentUser.privilege=='Producteur' || currentUser.privilege=='Commercant')" class="nav-item)"><a
+                            class="nav-link" href="creationarticle" style="font-size:larger;margin-right: 10px;color: rgba(59, 57, 57, 0.726);"><i
+                                class="pi pi-plus-circle" style="font-size: 1em"></i> Gérer mes
+                            articles</a></li>
                 
                 <!-- <li *ngIf="currentUser!=null && currentUser.privilege!='Producteur'" class="nav-item"><a href="#modal2"
                          style="font-size:larger;margin-right: 10px;color:black;"
