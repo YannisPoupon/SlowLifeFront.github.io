@@ -306,6 +306,7 @@ getListFeed(){
   this.feedb.getAllFeedback().subscribe((data)=>{
   this.listFeed=data
   this.listFeedIdChoix
+  console.log(this.listFeed)
   for(var i = 0;i<this.listFeed.length;i++){
     this.listFeedIdChoix.push(this.listFeed[i].choix.idChoix)
   }
