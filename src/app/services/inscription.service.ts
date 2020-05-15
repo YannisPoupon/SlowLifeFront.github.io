@@ -20,6 +20,9 @@ export class InscriptionService {
   ajoutProducteur(user:any){
     return this.Http.post("http://localhost:8080/addProducteur", user);
   }
+  ajoutAdmin(user:any){
+    return this.Http.post("http://localhost:8080/addAdmin", user);
+  }
   getParticulier(){
     return this.Http.get("http://localhost:8080/Particuliers");
   }

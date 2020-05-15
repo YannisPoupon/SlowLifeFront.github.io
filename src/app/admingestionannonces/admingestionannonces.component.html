@@ -1,1 +1,97 @@
-<p>admingestionannonces works!</p>
+<div class="container col-sm-10">
+    <p-toast  [style]="{marginTop: '72px'}"></p-toast>
+    <table  class="table" >
+        <thead>
+          <tr>
+            <td>Debut</td>
+            <td>Fin</td>
+            <td>Type</td>
+            <td>Nb places</td>
+            <td>Compensation</td>
+            <td>Producteur</td>
+            <td>Supprimer</td>
+            <td>Modifier</td>
+          </tr> 
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of listeAnnonces">
+              <td>{{u.dateDebut}}</td>
+              <td>{{u.dateFin}}</td>
+              <td>{{u.typeannonce}}</td>
+              <td>{{u.nombrePlace}}</td>
+              <td>{{u.compensation}}</td>
+              <td>{{u.producteur.nom}} {{u.producteur.prenom}}</td>
+              <td><button type="button" (click)="delete(u.idAnnonce)" class="btn btn-danger">supprmmer</button></td>
+              <td><button type="button" class="btn btn-success" (click)="afficherFormModif(u)" data-toggle="modal" data-target="#exampleModal">modifier</button></td>
+            </tr> 
+        </tbody>
+      </table>
+    
+    
+    </div>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modifier</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formAnn" (ngSubmit)="Modifier()">
+                    <div class="form-row d-flex justify-content-around" >
+                        <div class="form-group">
+                          <label for="inputEmail4"> Date de debut :</label>
+                          <input type="text" class="form-control"  formControlName="dateDebut" >
+                        </div>
+                      
+                        <div class="form-group">
+                          <label for="inputEmail4"> Date de debut :</label>
+                          <input type="text" class="form-control"  formControlName="dateFin" >
+                        </div>
+                
+                        <div class="form-group">
+                          <label for="inputEmail4"> Type :</label>
+                          <input type="text" class="form-control"  formControlName="tyepannonce" >
+                        </div>
+                    </div>
+                    <div class="form-row d-flex justify-content-around" >
+                        <div class="form-group">
+                          <label for="inputEmail4"> Places :</label>
+                          <input type="text" class="form-control"  formControlName="nombrePlace" >
+                        </div>
+                        <div class="form-group">
+                          <label for="inputEmail4"> Compensation :</label>
+                          <input type="text" class="form-control"  formControlName="compensation" >
+                        </div>
+                    </div>
+                
+                    <!-- <div class="form-row d-flex justify-content-around">
+                        <div class="form-group">
+                          <label for="inputCity">Rue : </label>
+                          <input type="text" class="form-control" formControlName="rue" >
+                        </div>
+                
+                        <div class="form-group">
+                          <label for="inputCity">Ville : </label>
+                          <input type="text" class="form-control" formControlName="ville" >
+                        </div>
+                
+                        <div class="form-group">
+                          <label for="inputCity">Département :</label>
+                          <input type="text" class="form-control" formControlName="departement" >
+                        </div>
+                    </div>  -->
+                    <br/>
+                    <div class="form-row d-flex justify-content-center">
+                      <button type="submit" class="btn btn-success mr-3" >Valider</button>
+                      <button type="button" class="btn btn-warning" data-dismiss="modal">Fermer</button>
+                    </div>
+                  </form>
+            </div>
+          </div>
+        </div>
+      </div>

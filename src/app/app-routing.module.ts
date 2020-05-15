@@ -14,6 +14,7 @@ import { CreationAnnonceComponent } from './creation-annonce/creation-annonce.co
 import { AnnonceJobComponent } from './annonce-job/annonce-job.component';
 import { AdminhomeComponent } from './adminhome/adminhome.component';
 import { AdmingestionusersComponent } from './admingestionusers/admingestionusers.component';
+import { AdmingestionannoncesComponent } from './admingestionannonces/admingestionannonces.component';
 
 
 const routes: Routes = [
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path: 'creationannonce', component:CreationAnnonceComponent },
   { path: 'rechercheannonce', component:AnnonceJobComponent },
   { path: 'adminHome', component:AdminhomeComponent },
-  { path: 'adminGestionUsers', component:AdmingestionusersComponent }
+  { path: 'adminGestionUsers', component:AdmingestionusersComponent },
+  {path:'adminGestionAnnonces', component:AdmingestionannoncesComponent}
   
 
 ];
