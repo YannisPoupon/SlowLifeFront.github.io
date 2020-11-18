@@ -1,7 +1,7 @@
 <nav *ngIf="connecte==false" class="navbar navbar-expand-lg navbar-light fixed-top"
     style="background-color:  rgb(128, 230, 145); height: 70px;">
     <div class="row col-sm-12 d-flex justify-content-between">
-        <div class="row col-sm-4 ml-5">
+        <div class="row col-sm-4 ">
             <a class="navbar-brand" href=""
                 style="font-style: italic;font-family: 'Times New Roman', Times, serif;font-size: xx-large;">
                 Slow<span style="text-decoration: underline overline #FF3028;">Life</span>
@@ -11,7 +11,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
-        <div class="row col-sm-6 ml-5 collapse navbar-collapse" id="navbarNav">
+        <div class="row col-sm-6 d-flex flex-row-reverse collapse navbar-collapse" id="navbarNav">
             <div class="dropdown show">
                 <a class="dropdown-toggle pi pi-search nav-link" href="#" role="button" id="dropdownMenuLink2"
                     data-toggle="dropdown" aria-haspopup="true" style="color: rgba(59, 57, 57, 0.726);"
@@ -55,12 +55,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
-
-
-
-
-        <div class="row col-sm-5 collapse navbar-collapse" id="navbarNav">
-
+        <div class="row col-sm-7 collapse d-flex flex-row-reverse navbar-collapse" id="navbarNav">
             <div class="dropdown show">
                 <a class="dropdown-toggle pi pi-search nav-link" href="#" role="button" id="dropdownMenuLink2"
                     data-toggle="dropdown" aria-haspopup="true" style="color: rgba(59, 57, 57, 0.726);"
@@ -71,7 +66,6 @@
                             style="font-size: 1em"></i>Articles</a>
                     <a class="dropdown-item" href="rechercheannonce" style="font-size:larger;"><i
                             class="pi pi-chart-line" style="font-size: 1em"></i>Missions</a>
-
                 </div>
             </div>
             <ul class="navbar-nav">
@@ -118,9 +112,6 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
 </nav>
 
